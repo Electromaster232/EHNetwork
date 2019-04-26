@@ -4,7 +4,7 @@ import mineplex.core.common.util.C;
 
 public enum Achievement
 {
-	GLOBAL_MINEPLEX_LEVEL("Mineplex Level", 20000,
+	GLOBAL_MINEPLEX_LEVEL("EHNetwork Level", 20000,
 			new String[]{"Global.ExpEarned"},
 			new String[]{"Level up by doing well in games!"},
 			getExperienceLevels(),

@@ -146,7 +146,7 @@ public class PlayerScoreboard
 		//Side Obj
 		_sideObjective = _scoreboard.registerNewObjective(player.getName() + UtilMath.r(999999999), "dummy");
 		_sideObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
-		_sideObjective.setDisplayName(C.Bold + "   MINEPLEX   ");
+		_sideObjective.setDisplayName(C.Bold + "   EHNETWORK   ");
 
 		//Teams
 		addTeams(player);
