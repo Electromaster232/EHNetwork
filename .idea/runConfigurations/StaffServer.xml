@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="StaffServer" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="org.bukkit.craftbukkit.Main" />
+    <module name="Classpath.Dummy" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing/StaffServer" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+      <option name="BuildArtifacts" enabled="true">
+        <artifact name="Mineplex.StaffServer:test" />
+      </option>
+    </method>
+  </configuration>
+</component>
