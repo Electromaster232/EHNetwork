@@ -18,6 +18,7 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-io-2.4.jar" path-in-jar="/" />
       <element id="module-output" name="Mineplex.ServerData" />
       <element id="module-output" name="Mineplex.StaffServer" />
+      <element id="module-output" name="Mineplex.Minecraft.Game.ClassCombat" />
     </root>
   </artifact>
 </component>
