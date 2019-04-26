@@ -1,23 +1,18 @@
-# All-Mineplex-2015
-# IDEA-Ready
-# How in the hell did you get this?
-
-LF, Before it went to shit.
+# EHNetwork Source Code
+The following repository is the source code for the EHNetwork. It is based on the All-Mineplex-2015 code leak.
 
 # How do I use this?
 
-Load it up into Eclipse and edit all classpath files to match your libs.
+Clone the repository and open the folder that all the Mineplex.* folders are saved in in IntelliJ IDEA **ULTIMATE**. You can optionally install the free TeamHub plugin to collaborate with us.
 
 # Notice to Mineplex/GitHub Employees
 
-I consider this fair use. It is in a private repository which only RLME Developers get access to.
+We consider this fair use. It is in a private repository which only EH Developers get access to.
 
-We, as RATELIMITED, do not plan on releasing this to the general public.
+We do not plan on releasing this to the general public.
 
 Thank you very much
 
-# KNOWN ISSUES
-
-ServerData is broken, you must use a different serverdata class. (Can be found at [RLPlex/Hotfixes](https://internalgit.ratelimited.me/RLPlex/Hotfixes))
----------
-Courtesy of Azzeh | RATELIMITED
+# Credits
+George Tsatsis | Development Work, Original Code Finding, Bug Testing
+Adam Gilbert | Server Space, Bug Testing, Development Work
