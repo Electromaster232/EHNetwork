@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   <project name="loc" default="default" basedir=".">
+    <property name="lib.dir"     value="../Libraries"/>
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+	<target name="compileArcade1" description="Arcade Compilation Step 1">
+		<javac srcdir="../Mineplex.Core.Common/src" destdir="../Mineplex.Core.Common/bin" classpathref="classpath"/>
+		<jar jarfile="../bin/Mineplex.Core.Common.jar">
+			<fileset dir="../Mineplex.Core.Common/bin">
+				<include name="**/*.class"/>
+			</fileset>
+		</jar>
+		<copy file="../bin/Mineplex.Core.Common.jar" todir="../Libraries"/>
+	</target>
+	<target name="compileArcade2" description="Arcade Compilation Step 2">
+		<path id="classpathCommon">
+			<fileset dir="../Libraries" includes="**/*.jar"/>
+		</path>
+		<javac srcdir="../Mineplex.ServerData/src" destdir="../Mineplex.ServerData/bin" classpathref="classpathCommon"/>
+		<jar jarfile="../bin/Mineplex.ServerData.jar">
+			<fileset dir="../Mineplex.ServerData/bin">
+				<include name="**/*.class"/>
+			</fileset>
+		</jar>
+		<copy file="../bin/Mineplex.ServerData.jar" todir="../Libraries"/>
+	</target>
+	<target name="compileArcade3" description="Arcade Compilation Step 3">
+		<path id="classpathCommon">
+			<fileset dir="../Libraries" includes="**/*.jar"/>
+		</path>
+		<javac srcdir="../Mineplex.Database/src" destdir="../Mineplex.Database/bin" classpathref="classpathCommon"/>
+		<jar jarfile="../bin/Mineplex.Database.jar">
+			<fileset dir="../Mineplex.Database/bin">
+				<include name="**/*.class"/>
+			</fileset>
+		</jar>
+		<copy file="../bin/Mineplex.Database.jar" todir="../Libraries"/>
+	</target>
+	<target name="compileArcade4" description="Arcade Compilation Step 4">
+		<path id="classpathCommon">
+			<fileset dir="../Libraries" includes="**/*.jar"/>
+		</path>
+		<javac srcdir="../Mineplex.Core/src" destdir="../Mineplex.Core/bin" classpathref="classpathCommon"/>
+		<jar jarfile="../bin/Mineplex.Core.jar">
+			<fileset dir="../Mineplex.Core/bin">
+				<include name="**/*.class"/>
+			</fileset>
+		</jar>
+		<copy file="../bin/Mineplex.Core.jar" todir="../Libraries"/>
+	</target>
+	<target name="compileArcade" description="Arcade Compilation Step #">
+	</target>
+    <target name="compileArcade5" description="Arcade Compilation Step 5">
+		<path id="classpathCommon">
+			<fileset dir="../Libraries" includes="**/*.jar"/>
+		</path>
+		<javac srcdir="../Mineplex.Minecraft.Game.Core/src" destdir="../Mineplex.Minecraft.Game.Core/bin" classpathref="classpathCommon"/>
+		<javac srcdir="../Mineplex.Minecraft.Game.ClassCombat/src" destdir="../Mineplex.Minecraft.Game.ClassCombat/bin" classpathref="classpathCommon"/>
+		<javac srcdir="../Nautilus.Game.Arcade/src" destdir="../Nautilus.Game.Arcade/bin" classpathref="classpathCommon"/>
+    </target>
+	<target name ="Arcade" description="Arcade">
+		<jar jarfile="../bin/Arcade.jar">
+			<fileset dir="../Nautilus.Game.Arcade/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Core/bin">
+				<include name="**/*.class"/>
+				<include name="**/*.png"/>
+			</fileset>
+			<fileset dir="../Mineplex.Core.Common/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Minecraft.Game.ClassCombat/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Minecraft.Game.Core/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Database/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Nautilus.Game.Arcade">
+				<include name="*.yml"/>
+			</fileset>
+			<fileset dir="../Mineplex.ServerData/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			
+			<zipfileset src="../Libraries/jooq-3.5.2.jar" /> 
+			<zipfileset src="../Libraries/httpclient-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpcore-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpclient-cache-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpmime-4.2.jar" /> 
+			<zipfileset src="../Libraries/gson-2.2.1.jar" /> 
+			<zipfileset src="../Libraries/commons-logging-1.1.1.jar" /> 	
+			<zipfileset src="../Libraries/commons-codec-1.6.jar" />
+			<zipfileset src="../Libraries/commons-dbcp2-2.0.1.jar" />
+			<zipfileset src="../Libraries/jedis-2.4.2.jar" /> 
+			<zipfileset src="../Libraries/commons-pool2-2.2.jar" /> 
+			<zipfileset src="../Libraries/commons-dbcp2-2.0.1.jar" />
+		</jar>
+		<copy file="../bin/Arcade.jar" todir="../../Testing/Arcade/plugins"/>
+	</target>
+	<target name="compileHub" description="Hub Compilation">
+		<javac srcdir="../Mineplex.Core.Common/src" destdir="../Mineplex.Core.Common/bin" classpathref="classpath"/>
+		<jar jarfile="../bin/Mineplex.Core.Common.jar">
+			<fileset dir="../Mineplex.Core.Common/bin">
+				<include name="**/*.class"/>
+			</fileset>
+		</jar>
+		<copy file="../bin/Mineplex.Core.Common.jar" todir="../Libraries"/>
+		<path id="classpathCommon">
+			<fileset dir="../Libraries" includes="**/*.jar"/>
+		</path>
+		<javac srcdir="../Mineplex.Core/src" destdir="../Mineplex.Core/bin" classpathref="classpathCommon"/>
+		<jar jarfile="../bin/Mineplex.Core.jar">
+			<fileset dir="../Mineplex.Core/bin">
+				<include name="**/*.class"/>
+			</fileset>
+		</jar>
+		<copy file="../bin/Mineplex.Core.jar" todir="../Libraries"/>
+		<path id="classpathCommon">
+			<fileset dir="../Libraries" includes="**/*.jar"/>
+		</path>
+		<javac srcdir="../Mineplex.Minecraft.Game.Core/src" destdir="../Mineplex.Minecraft.Game.Core/bin" classpathref="classpathCommon"/>
+		<javac srcdir="../Mineplex.Minecraft.Game.ClassCombat/src" destdir="../Mineplex.Minecraft.Game.ClassCombat/bin" classpathref="classpathCommon"/>
+		<javac srcdir="../Mineplex.Database/src" destdir="../Mineplex.Database/bin" classpathref="classpathCommon"/>
+		<javac srcdir="../Mineplex.ServerData/src" destdir="../Mineplex.ServerData/bin" classpathref="classpathCommon"/>
+		<javac srcdir="../Mineplex.Hub/src" destdir="../Mineplex.Hub/bin" classpathref="classpathCommon"/>
+    </target>
+	<target name ="Hub" description="Hub">
+		<jar jarfile="../bin/Hub.jar">
+			<fileset dir="../Mineplex.Hub/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Core/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Core.Common/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Minecraft.Game.ClassCombat/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Minecraft.Game.Core/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Hub">
+				<include name="*.yml"/>
+			</fileset>
+			<fileset dir="../Mineplex.Database/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.ServerData/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			
+			<zipfileset src="../Libraries/httpclient-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpcore-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpclient-cache-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpmime-4.2.jar" /> 
+			<zipfileset src="../Libraries/gson-2.2.1.jar" /> 
+			<zipfileset src="../Libraries/commons-logging-1.1.1.jar" /> 
+			<zipfileset src="../Libraries/commons-io-2.4.jar" />
+			<zipfileset src="../Libraries/commons-dbcp2-2.0.1.jar" />
+			<zipfileset src="../Libraries/commons-codec-1.6.jar" />
+			<zipfileset src="../Libraries/jooq-3.5.2.jar" /> 
+			<zipfileset src="../Libraries/jedis-2.4.2.jar" /> 
+			<zipfileset src="../Libraries/commons-pool2-2.2.jar" /> 
+			<zipfileset src="../Libraries/commons-dbcp2-2.0.1.jar" />
+		</jar>
+		<copy file="../bin/Hub.jar" todir="../../Testing/Hub/plugins"/>
+	</target>
+	<target name ="Clans" description="Clans">
+		<jar jarfile="../bin/Clans.jar">
+			<fileset dir="../Mineplex.Game.Clans/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Core/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Core.Common/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Minecraft.Game.ClassCombat/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Minecraft.Game.Core/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Database/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Game.Clans">
+				<include name="*.yml"/>
+			</fileset>
+			<fileset dir="../Mineplex.ServerData/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			
+			<zipfileset src="../Libraries/jooq-3.5.2.jar" /> 
+			<zipfileset src="../Libraries/httpclient-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpcore-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpclient-cache-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpmime-4.2.jar" /> 
+			<zipfileset src="../Libraries/gson-2.2.1.jar" /> 
+			<zipfileset src="../Libraries/commons-logging-1.1.1.jar" /> 	
+			<zipfileset src="../Libraries/commons-codec-1.6.jar" />
+			<zipfileset src="../Libraries/commons-dbcp2-2.0.1.jar" />
+			<zipfileset src="../Libraries/jedis-2.4.2.jar" /> 
+			<zipfileset src="../Libraries/commons-pool2-2.2.jar" /> 
+			<zipfileset src="../Libraries/commons-dbcp2-2.0.1.jar" />
+		</jar>
+		<copy file="../bin/Clans.jar" todir="../../Testing/Clans/plugins"/>
+	</target>
+	<target name ="StaffServer" description="StaffServer">
+		<jar jarfile="../bin/StaffServer.jar">
+			<fileset dir="../Mineplex.StaffServer/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Core/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Core.Common/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.StaffServer">
+				<include name="*.yml"/>
+			</fileset>
+			<fileset dir="../Mineplex.Database/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.ServerData/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			
+			<zipfileset src="../Libraries/jooq-3.5.2.jar" /> 
+			<zipfileset src="../Libraries/httpclient-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpcore-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpclient-cache-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpmime-4.2.jar" /> 
+			<zipfileset src="../Libraries/gson-2.2.1.jar" /> 
+			<zipfileset src="../Libraries/commons-logging-1.1.1.jar" /> 	
+			<zipfileset src="../Libraries/commons-codec-1.6.jar" />
+			<zipfileset src="../Libraries/commons-dbcp2-2.0.1.jar" />
+			<zipfileset src="../Libraries/jedis-2.4.2.jar" /> 
+			<zipfileset src="../Libraries/commons-pool2-2.2.jar" /> 
+			<zipfileset src="../Libraries/commons-dbcp2-2.0.1.jar" />
+		</jar>
+		<copy file="../bin/StaffServer.jar" todir="../../Testing/StaffServer/plugins"/>
+	</target>
+	<target name ="MapParser" description="MapParser">
+		<jar jarfile="../bin/MapParser.jar">
+			<fileset dir="../Mineplex.MapParser/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			
+			<fileset dir="../Mineplex.Core.Common/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			
+			<fileset dir="../Mineplex.MapParser">
+				<include name="*.yml"/>
+			</fileset>
+			
+			<zipfileset src="../Libraries/httpclient-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpcore-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpclient-cache-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpmime-4.2.jar" /> 
+			<zipfileset src="../Libraries/gson-2.2.1.jar" /> 
+			<zipfileset src="../Libraries/commons-logging-1.1.1.jar" /> 	
+			<zipfileset src="../Libraries/commons-codec-1.6.jar" />
+		</jar>
+		<copy file="../bin/MapParser.jar" todir="../../Testing/Build/plugins"/>
+	</target>
+	<target name="NautilusCraftBukkit2" description="NautilusCraftBukkit2">
+		<mkdir dir="../bin/craftbukkit_temp" />
+		<delete file="../bin/craftbukkit.jar" />
+		<unzip src="../Libraries/craftbukkit_official.jar" dest="../bin/craftbukkit_temp" />
+		<touch datetime="01/31/1981 01:00:00 AM">
+			<fileset dir="../bin/craftbukkit_temp"/>
+		</touch>
+		<copy todir="../bin/craftbukkit_temp" overwrite="true">
+			<fileset dir="../Nautilus.Core.CraftBukkit/bin">
+				<include name="**/*.class"/>
+			</fileset>
+		</copy>
+		
+		<jar jarfile="../bin/craftbukkit.jar">
+			<fileset dir="../bin/craftbukkit_temp" />
+			<manifest>
+				<attribute name="Main-Class" value="org.bukkit.craftbukkit.Main" />
+			</manifest>
+			<zipfileset src="../Libraries/jopt-simple-3.2.jar" />
+		</jar>
+		<copy file="../bin/craftbukkit.jar" todir="../Libraries/"/>
+		<delete dir="../bin/craftbukkit_temp" />
+	</target>
+	<target name ="Mineplexer" description="Mineplexer">
+		<jar jarfile="../bin/Mineplexer.jar">
+			<fileset dir="../Mineplex.Bungee.Mineplexer/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			
+			<fileset dir="../Mineplex.Bungee.Mineplexer">
+				<include name="*.yml"/>
+			</fileset>
+			
+			<fileset dir="../Mineplex.ServerData/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			
+			<fileset dir="../Mineplex.PlayerCache/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			
+			<zipfileset src="../Libraries/commons-codec-1.6.jar" />
+			<zipfileset src="../Libraries/commons-io-2.4.jar" />
+			<zipfileset src="../Libraries/jedis-2.4.2.jar" /> 
+			<zipfileset src="../Libraries/commons-pool2-2.2.jar" />
+			<zipfileset src="../Libraries/jooq-3.5.2.jar" /> 
+			<zipfileset src="../Libraries/httpclient-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpcore-4.2.jar" /> 
+			<zipfileset src="../Libraries/commons-logging-1.1.1.jar" />
+		</jar>
+		<copy file="../bin/Mineplexer.jar" todir="../../Testing/Proxy/plugins"/>
+	</target>
+	<target name ="DDoSProtectionSwitcher" description="DDoSProtectionSwitcher">
+		<jar jarfile="../bin/DDoSProtectionSwitcher.jar">
+			<fileset dir="../Mineplex.DDoSProtectionSwitcher/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			
+			<zipfileset src="../Libraries/mysql.zip" />
+			
+			<manifest>
+			      <attribute name="Main-Class"
+			            value="mineplex.ddos.DDoSProtectionSwitcher"/>
+    			</manifest>
+    			
+			<zipfileset src="../Libraries/httpclient-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpcore-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpclient-cache-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpmime-4.2.jar" /> 
+			<zipfileset src="../Libraries/gson-2.2.1.jar" /> 
+			<zipfileset src="../Libraries/javax.mail.jar" /> 
+			<zipfileset src="../Libraries/commons-logging-1.1.1.jar" /> 	
+			<zipfileset src="../Libraries/commons-codec-1.6.jar" />
+		</jar>
+		<copy file="../bin/DDoSProtectionSwitcher.jar" todir="../../Testing/DDoSProtectionSwitcher/"/>
+	</target>
+	<target name ="BungeeRotator" description="BungeeRotator">
+		<jar jarfile="../bin/BungeeRotator.jar">
+			<fileset dir="../Mineplex.BungeeRotator/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.ServerData/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			
+			<zipfileset src="../Libraries/mysql.zip" />
+			
+			<manifest>
+			      <attribute name="Main-Class"
+			            value="mineplex.bungee.BungeeRotator"/>
+    			</manifest>
+    			
+			<zipfileset src="../Libraries/httpclient-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpcore-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpclient-cache-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpmime-4.2.jar" /> 
+			<zipfileset src="../Libraries/jooq-3.5.2.jar" /> 
+			<zipfileset src="../Libraries/gson-2.2.1.jar" /> 	
+			<zipfileset src="../Libraries/commons-codec-1.6.jar" />
+			<zipfileset src="../Libraries/commons-dbcp2-2.0.1.jar" />
+			<zipfileset src="../Libraries/jedis-2.4.2.jar" /> 
+			<zipfileset src="../Libraries/commons-pool2-2.2.jar" /> 
+			<zipfileset src="../Libraries/commons-dbcp2-2.0.1.jar" />
+			<zipfileset src="../Libraries/commons-logging-1.1.1.jar" /> 
+		</jar>
+		<copy file="../bin/BungeeRotator.jar" todir="../../Testing/BungeeRotator/"/>
+	</target>
+	<target name ="ServerMonitor" description="ServerMonitor">
+		<jar jarfile="../bin/ServerMonitor.jar">
+			<fileset dir="../Mineplex.Core.Common/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.ServerMonitor/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			
+			<fileset dir="../Mineplex.ServerData/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			
+			<zipfileset src="../Libraries/mysql.zip" />
+			
+			<manifest>
+			      <attribute name="Main-Class"
+			            value="mineplex.servermonitor.ServerMonitor"/>
+    			</manifest>
+    			
+			<zipfileset src="../Libraries/httpclient-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpcore-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpclient-cache-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpmime-4.2.jar" /> 
+			<zipfileset src="../Libraries/gson-2.2.1.jar" /> 
+			<zipfileset src="../Libraries/commons-logging-1.1.1.jar" /> 	
+			<zipfileset src="../Libraries/commons-codec-1.6.jar" />
+			<zipfileset src="../Libraries/jedis-2.4.2.jar" /> 
+			<zipfileset src="../Libraries/commons-pool2-2.2.jar" /> 
+		</jar>
+		<copy file="../bin/ServerMonitor.jar" todir="../../Testing/ServerMonitor/"/>
+	</target>
+		<target name ="ChestConverter" description="ChestConverter">
+			<jar jarfile="../bin/TaskConverter.jar">
+				<fileset dir="../Mineplex.Core.Common/bin">
+					<include name="**/*.class"/>
+				</fileset>
+				<fileset dir="../Mineplex.ChestConverter/bin">
+					<include name="**/*.class"/>
+				</fileset>
+
+				<zipfileset src="../Libraries/mysql.zip" />
+				
+				<manifest>
+				      <attribute name="Main-Class"
+				            value="mineplex.chestConverter.ChestConverter"/>
+	    			</manifest>
+	    			
+				<zipfileset src="../Libraries/httpclient-4.2.jar" /> 
+				<zipfileset src="../Libraries/httpcore-4.2.jar" /> 
+				<zipfileset src="../Libraries/httpclient-cache-4.2.jar" /> 
+				<zipfileset src="../Libraries/httpmime-4.2.jar" /> 
+				<zipfileset src="../Libraries/gson-2.2.1.jar" /> 
+				<zipfileset src="../Libraries/commons-logging-1.1.1.jar" /> 	
+				<zipfileset src="../Libraries/commons-codec-1.6.jar" />
+				<zipfileset src="../Libraries/commons-pool2-2.2.jar" /> 
+			</jar>
+			<copy file="../bin/TaskConverter.jar" todir="../../Testing/ChestConverter/"/>
+	</target>
+	<target name ="Queuer" description="Queuer">
+		<jar jarfile="../bin/Queuer.jar">
+			<fileset dir="../Mineplex.Core.Common/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Queuer/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			
+			<zipfileset src="../Libraries/mysql.zip" />
+			
+			<manifest>
+			      <attribute name="Main-Class"
+			            value="mineplex.queuer.Queuer"/>
+    			</manifest>
+    			
+			<zipfileset src="../Libraries/httpclient-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpcore-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpclient-cache-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpmime-4.2.jar" /> 
+			<zipfileset src="../Libraries/gson-2.2.1.jar" /> 
+			<zipfileset src="../Libraries/commons-logging-1.1.1.jar" /> 	
+			<zipfileset src="../Libraries/commons-codec-1.6.jar" />
+		</jar>
+		<copy file="../bin/Queuer.jar" todir="../../Testing/Queuer/"/>
+	</target>
+	<target name ="ServerStatifier" description="ServerStatifier">
+		<jar jarfile="../bin/ServerStatifier.jar">
+			<fileset dir="../Mineplex.ServerStatifier/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			
+			<zipfileset src="../Libraries/mysql.zip" />
+			
+			<manifest>
+			      <attribute name="Main-Class"
+			            value="mineplex.serverstatifier.ServerStatifier"/>
+    			</manifest>
+		</jar>
+		<copy file="../bin/ServerStatifier.jar" todir="../../Testing/ServerStatifier/"/>
+	</target>
+</project>

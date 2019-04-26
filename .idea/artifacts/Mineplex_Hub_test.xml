@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact name="Mineplex.Hub:test">
+    <output-path>$PROJECT_DIR$/../Testing/Hub/plugins</output-path>
+    <root id="root">
+      <element id="artifact" artifact-name="Mineplex.Hub:jar" />
+    </root>
+  </artifact>
+</component>

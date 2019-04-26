@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="var" path="/home/gtsatsis/Desktop/All-Mineplex-2015-Private-IDEA-Ready/IDEA-Ready/Libraries/jooq-meta-3.5.2.jar"/>
+	<classpathentry kind="var" path="/home/gtsatsis/Desktop/All-Mineplex-2015-Private-IDEA-Ready/IDEA-Ready/Libraries/jooq-codegen-3.5.2.jar"/>
+	<classpathentry kind="var" path="/home/gtsatsis/Desktop/All-Mineplex-2015-Private-IDEA-Ready/IDEA-Ready/Libraries/jooq-3.5.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

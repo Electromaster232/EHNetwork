@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Mineplex.Bungee.Mineplexer:jar">
+    <output-path>$PROJECT_DIR$/bin</output-path>
+    <root id="archive" name="Mineplexer.jar">
+      <element id="module-output" name="Mineplex.Bungee.Mineplexer" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-codec-1.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-io-2.4.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PROJECT_DIR$/Mineplex.Bungee.Mineplexer/plugin.yml" />
+    </root>
+  </artifact>
+</component>

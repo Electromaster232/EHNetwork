@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Nautilus.Core.Craftbukkit:jar">
+    <output-path>$PROJECT_DIR$/bin</output-path>
+    <root id="archive" name="craftbukkit.jar">
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/craftbukkit_official.jar" path-in-jar="/" />
+      <element id="module-output" name="Nautilus.Core.CraftBukkit" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Mineplex.ServerMonitor:jar">
+    <output-path>$PROJECT_DIR$/bin</output-path>
+    <root id="archive" name="ServerMonitor.jar">
+      <element id="module-output" name="Mineplex.ServerMonitor" />
+      <element id="module-output" name="Mineplex.Core.Common" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/httpcore-4.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/gson-2.2.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/httpclient-4.2.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

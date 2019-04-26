@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact name="Mineplex.MapParser:test">
+    <output-path>$PROJECT_DIR$/../Testing/MapParser/plugins</output-path>
+    <root id="root">
+      <element id="artifact" artifact-name="Mineplex.MapParser:jar" />
+    </root>
+  </artifact>
+</component>

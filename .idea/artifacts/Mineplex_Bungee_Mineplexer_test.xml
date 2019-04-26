@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact name="Mineplex.Bungee.Mineplexer:test">
+    <output-path>$PROJECT_DIR$/../Testing/Bungee/plugins</output-path>
+    <root id="root">
+      <element id="artifact" artifact-name="Mineplex.Bungee.Mineplexer:jar" />
+    </root>
+  </artifact>
+</component>

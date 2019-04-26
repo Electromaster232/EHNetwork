@@ -1,0 +1,9 @@
+[23:56:00] [Server thread/INFO]: Starting minecraft server version 1.7.10
+[23:56:00] [Server thread/INFO]: Loading properties
+[23:56:00] [Server thread/INFO]: Default game type: SURVIVAL
+[23:56:00] [Server thread/INFO]: This server is running CraftBukkit version git-Spigot-1.7.9-R0.2-205-gb748d57 (MC: 1.7.10) (Implementing API version 1.7.10-R0.1-SNAPSHOT)
+[23:56:00] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[23:56:00] [Server thread/INFO]: Using 4 threads for Netty based IO
+[23:56:00] [Server thread/INFO]: Debug logging is disabled
+[23:56:00] [Server thread/INFO]: Generating keypair
+[23:56:01] [Thread-4/INFO]: Stopping server
