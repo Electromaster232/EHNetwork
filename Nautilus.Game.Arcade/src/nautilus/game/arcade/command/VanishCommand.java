@@ -7,27 +7,28 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import static org.bukkit.Bukkit.getServer;
 
 import mineplex.core.command.CommandBase;
-import mineplex.core.account.CoreClientManager;
 import mineplex.core.common.Rank;
 import mineplex.core.common.util.C;
 import mineplex.core.common.util.UtilPlayer;
 import mineplex.core.common.util.UtilServer;
 import mineplex.core.visibility.VisibilityManager;
 import nautilus.game.arcade.ArcadeManager;
-import static org.bukkit.Bukkit.getServer;
+
 
 public class VanishCommand extends CommandBase<ArcadeManager> implements Listener
 {
-
+	private ArcadeManager _clientManager;
 	private HashSet<Player> _hiddenPlayers = new HashSet<Player>();
 	public VanishCommand(ArcadeManager plugin)
 	{
-		super(plugin, Rank.ADMIN, new Rank[] {Rank.YOUTUBE, Rank.TWITCH, Rank.JNR_DEV}, "vanish");
+		super(plugin, Rank.MODERATOR, new Rank[] {Rank.YOUTUBE, Rank.TWITCH}, new String[] {"vanish", "v"});
 		getServer().getPluginManager().registerEvents(this, plugin.getPlugin());
-	}
+		_clientManager = plugin;
 
+	}
 	public void addHiddenPlayer(Player player)
 	{
 		_hiddenPlayers.add(player);
@@ -48,6 +49,10 @@ public class VanishCommand extends CommandBase<ArcadeManager> implements Listene
 	public void addHiddenPlayerOnJoin(PlayerJoinEvent event)
 	{
 		for (Player toHide : _hiddenPlayers){
+			Rank rank = _clientManager.GetClients().Get(event.getPlayer()).GetRank();
+			if(rank == Rank.LT || rank == Rank.OWNER){
+				continue;
+			}
 			VisibilityManager.Instance.setVisibility(toHide, false, event.getPlayer());
 		}
 	}
@@ -69,6 +74,12 @@ public class VanishCommand extends CommandBase<ArcadeManager> implements Listene
 			{
 				if (caller.equals(other))
 					continue;
+
+
+				Rank rank = _clientManager.GetClients().Get(other).GetRank();
+				if(rank == Rank.LT || rank == Rank.OWNER){
+					continue;
+				}
 
 				if (hideMe)
 				{

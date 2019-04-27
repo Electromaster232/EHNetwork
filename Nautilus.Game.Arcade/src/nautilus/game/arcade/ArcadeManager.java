@@ -454,6 +454,7 @@ public class ArcadeManager extends MiniPlugin implements IRelation
 		return _clientManager;
 	}
 
+
 	public ConditionManager GetCondition()
 	{
 		return _conditionManager;

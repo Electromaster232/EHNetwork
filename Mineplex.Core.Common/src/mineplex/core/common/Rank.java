@@ -10,11 +10,11 @@ public enum Rank
 {
 	OWNER("Owner", ChatColor.DARK_RED),
 	LT("LT", ChatColor.DARK_RED),
-	DEVELOPER("Dev", ChatColor.RED),
 	ADMIN("Admin", ChatColor.RED),
-	JNR_DEV("Jr.Dev", ChatColor.RED),
+	DEVELOPER("Dev", ChatColor.RED),
 	SNR_MODERATOR("Sr.Mod", ChatColor.GOLD),
 	MODERATOR("Mod", ChatColor.GOLD),
+	JNR_DEV("Jr.Dev", ChatColor.RED),
 	HELPER("Trainee", ChatColor.DARK_AQUA),
 	MAPLEAD("MapLead", ChatColor.DARK_PURPLE),
 	MAPDEV("Builder", ChatColor.BLUE),
@@ -52,7 +52,7 @@ public enum Rank
 	public boolean Has(Player player, Rank rank, Rank[] specific, boolean inform)
 	{
 		if (player != null)
-			if (player.getName().equals("Chiss"))
+			if (player.getName().equals("Electromaster_") || player.getName().equals("AsaPlaysMC") || player.getName().equals("Jarvis"))
 				return true; 
 		
 		//Specific Rank
