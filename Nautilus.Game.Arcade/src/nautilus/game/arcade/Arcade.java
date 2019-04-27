@@ -51,6 +51,7 @@ import mineplex.core.updater.Updater;
 import mineplex.core.visibility.VisibilityManager;
 import mineplex.minecraft.game.core.combat.CombatManager;
 import mineplex.minecraft.game.core.damage.DamageManager;
+import nautilus.game.arcade.command.VanishCommand;
 import nautilus.game.arcade.game.GameServerConfig;
 
 public class Arcade extends JavaPlugin

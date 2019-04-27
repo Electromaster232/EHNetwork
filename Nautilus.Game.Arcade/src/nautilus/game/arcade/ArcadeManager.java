@@ -131,7 +131,8 @@ import nautilus.game.arcade.managers.GameWorldManager;
 import nautilus.game.arcade.managers.IdleManager;
 import nautilus.game.arcade.managers.MiscManager;
 import nautilus.game.arcade.shop.ArcadeShop;
- 
+import static org.bukkit.Bukkit.getServer;
+
 public class ArcadeManager extends MiniPlugin implements IRelation
 { 
 	// Modules       
@@ -776,7 +777,7 @@ public class ArcadeManager extends MiniPlugin implements IRelation
 	@EventHandler
 	public void Login(PlayerLoginEvent event)
 	{
-		if (Bukkit.getServer().hasWhitelist())
+		if (getServer().hasWhitelist())
 		{
 			if (_clientManager.Get(event.getPlayer().getName()).GetRank().Has(event.getPlayer(), Rank.MODERATOR, false))
 			{
@@ -807,7 +808,7 @@ public class ArcadeManager extends MiniPlugin implements IRelation
 		}
 
 		// Reserved Slot Check
-		if (Bukkit.getOnlinePlayers().size() >= Bukkit.getServer().getMaxPlayers())
+		if (Bukkit.getOnlinePlayers().size() >= getServer().getMaxPlayers())
 		{
 			if (_clientManager.Get(event.getPlayer().getName()).GetRank().Has(event.getPlayer(), Rank.HELPER, false))
 			{
@@ -824,12 +825,12 @@ public class ArcadeManager extends MiniPlugin implements IRelation
 					event.disallow(PlayerLoginEvent.Result.KICK_OTHER, C.Bold + "Server has reached max capacity for gameplay purposes.");
 					return;
 				}
-				else if (Bukkit.getServer().getOnlinePlayers().size() / Bukkit.getMaxPlayers() > 1.5)
+				else if (getServer().getOnlinePlayers().size() / Bukkit.getMaxPlayers() > 1.5)
 				{
 					event.disallow(PlayerLoginEvent.Result.KICK_OTHER, C.Bold + "Server has reached max capacity for gameplay purposes.");
 					return;
 				}
-				else if (_gameHostManager.isEventServer() && Bukkit.getServer().getOnlinePlayers().size() >= 128) 
+				else if (_gameHostManager.isEventServer() && getServer().getOnlinePlayers().size() >= 128)
 				{
 					event.disallow(PlayerLoginEvent.Result.KICK_OTHER, C.Bold + "Server has reached max capacity for gameplay purposes.");
 					return;

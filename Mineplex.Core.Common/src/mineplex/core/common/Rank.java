@@ -8,8 +8,8 @@ import mineplex.core.common.util.UtilPlayer;
 
 public enum Rank
 {
-	LT("LT", ChatColor.DARK_RED),
 	OWNER("Owner", ChatColor.DARK_RED),
+	LT("LT", ChatColor.DARK_RED),
 	DEVELOPER("Dev", ChatColor.RED),
 	ADMIN("Admin", ChatColor.RED),
 	JNR_DEV("Jr.Dev", ChatColor.RED),
@@ -49,7 +49,7 @@ public enum Rank
 		return Has(player, rank, null, inform);
 	}
 	
-	public boolean Has(Player player, Rank rank, Rank[] specific, boolean inform) 
+	public boolean Has(Player player, Rank rank, Rank[] specific, boolean inform)
 	{
 		if (player != null)
 			if (player.getName().equals("Chiss"))
