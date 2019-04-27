@@ -12,13 +12,13 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/httpclient-4.2.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-pool2-2.2.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-logging-1.1.1.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/httpcore-4.2.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-codec-1.6.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-dbcp2-2.0.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-io-2.4.jar" path-in-jar="/" />
       <element id="module-output" name="Mineplex.ServerData" />
       <element id="module-output" name="Mineplex.StaffServer" />
       <element id="module-output" name="Mineplex.Minecraft.Game.ClassCombat" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/httpcore-4.2.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
