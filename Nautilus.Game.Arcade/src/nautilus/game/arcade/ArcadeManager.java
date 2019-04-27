@@ -104,6 +104,7 @@ import nautilus.game.arcade.addons.SoupAddon;
 import nautilus.game.arcade.addons.TeamArmorAddon;
 import nautilus.game.arcade.command.DisguiseCommand;
 import nautilus.game.arcade.command.GameCommand;
+import nautilus.game.arcade.command.VanishCommand;
 import nautilus.game.arcade.command.WriteCommand;
 import nautilus.game.arcade.command.KitUnlockCommand;
 import nautilus.game.arcade.events.GameStateChangeEvent;
@@ -414,6 +415,7 @@ public class ArcadeManager extends MiniPlugin implements IRelation
 		addCommand(new WriteCommand(this));
 		addCommand(new KitUnlockCommand(this));
 		addCommand(new DisguiseCommand(this));
+		addCommand(new VanishCommand(this));
 	}
 
 	public GameServerConfig GetServerConfig()
