@@ -25,7 +25,7 @@ public enum Rank
 	
 	YOUTUBE("YouTube", ChatColor.RED),
 	TWITCH("Twitch", ChatColor.DARK_PURPLE),
-	STUPID("Stupid Kid", ChatColor.LIGHT_PURPLE),
+	FUCK("FUCK", ChatColor.LIGHT_PURPLE),
 	LEGEND("Legend", ChatColor.GREEN),
 	HERO("Hero", ChatColor.LIGHT_PURPLE),
 	ULTRA("Ultra", ChatColor.AQUA),
