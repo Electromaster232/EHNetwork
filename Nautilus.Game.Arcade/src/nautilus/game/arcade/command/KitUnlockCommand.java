@@ -10,7 +10,7 @@ public class KitUnlockCommand extends CommandBase<ArcadeManager>
 {
 	public KitUnlockCommand(ArcadeManager plugin)
 	{
-		super(plugin, Rank.OWNER, new Rank[] {Rank.YOUTUBE, Rank.TWITCH}, new String[] {"youtube", "twitch", "kits"});
+		super(plugin, Rank.OWNER, new Rank[] {Rank.YOUTUBE, Rank.TWITCH, Rank.ANNOYING_KID}, new String[] {"youtube", "twitch", "kits", "annoyingkid"});
 	}
 
 	@Override
