@@ -255,7 +255,7 @@ public class PreferencesPage extends ShopPageBase<PreferencesManager, Preference
 		
 		buildPreference(40, Material.RED_ROSE, "Show Pending Friend Requests", userPreferences.PendingFriendRequests, _togglePendingFriendRequests);
 		
-		if (getClientManager().Get(getPlayer()).GetRank() == Rank.YOUTUBE || getClientManager().Get(getPlayer()).GetRank() == Rank.ANNOYING_KID || getClientManager().Get(getPlayer()).GetRank() == Rank.TWITCH)
+		if (getClientManager().Get(getPlayer()).GetRank() == Rank.YOUTUBE || getClientManager().Get(getPlayer()).GetRank() == Rank.TWITCH)
 		{
 			buildPreference(38, Material.NETHER_STAR, "Hub Invisibility", userPreferences.Invisibility, _toggleHubInvisibility);
 			buildPreference(42, Material.SLIME_BALL, "Hub Forcefield", userPreferences.HubForcefield, _toggleHubForcefield);

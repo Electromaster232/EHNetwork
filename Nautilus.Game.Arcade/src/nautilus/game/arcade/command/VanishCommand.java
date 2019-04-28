@@ -5,8 +5,8 @@ import java.util.HashSet;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.server.ServerEvent;
 import static org.bukkit.Bukkit.getServer;
 
 import mineplex.core.command.CommandBase;
@@ -46,14 +46,17 @@ public class VanishCommand extends CommandBase<ArcadeManager> implements Listene
 	}
 
 	@EventHandler
-	public void addHiddenPlayerOnJoin(PlayerJoinEvent event)
+	public void gameTickEvent(ServerEvent event)
 	{
 		for (Player toHide : _hiddenPlayers){
-			Rank rank = _clientManager.GetClients().Get(event.getPlayer()).GetRank();
-			if(rank == Rank.ADMIN || rank == Rank.OWNER){
-				continue;
+			for (Player other : UtilServer.getPlayers()){
+				Rank rank = _clientManager.GetClients().Get(other).GetRank();
+				if(rank == Rank.ADMIN || rank == Rank.OWNER){
+					continue;
+				}
+				VisibilityManager.Instance.setVisibility(toHide, false, other);
 			}
-			VisibilityManager.Instance.setVisibility(toHide, false, event.getPlayer());
+
 		}
 	}
 
