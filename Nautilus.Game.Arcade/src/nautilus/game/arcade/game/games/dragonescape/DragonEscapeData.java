@@ -42,7 +42,7 @@ public class DragonEscapeData
 		Turn();
 
 		//Speed
-		double speed = 0.20;
+		double speed = 0.10;
 
 		//speed += (System.currentTimeMillis() - Host.GetStateTime())/1000d * 0.001;
 
