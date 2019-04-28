@@ -230,7 +230,7 @@ public class DrawRound
 
 	public void WordClicked(String string)
 	{
-		if (IsReady())
+		if (!IsReady())
 			return;
 
 		SetWord(string);
