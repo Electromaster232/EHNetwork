@@ -108,7 +108,7 @@ public class Build extends SoloGame
 	
 	private int _buildGameState = 0;
 	private long _buildStateTime = 0;
-	private long _buildTime = 300000;
+	private long _buildTime = 480000;
 	private long _voteTime = 14000;
 	private long _viewTime = 18000;
 	private BuildData _viewData = null;
