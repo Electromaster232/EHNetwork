@@ -232,10 +232,7 @@ public class DrawRound
 	{
 		if (IsReady())
 			return;
-		
-		if (WordChoices.contains(string))
-		{
-			SetWord(string);
-		}
+
+		SetWord(string);
 	}
 }
