@@ -1027,10 +1027,18 @@ public class ArcadeManager extends MiniPlugin implements IRelation
 		{
 			event.setCancelled(true);
 
+			// 4/27/19: Add Admin override for in-game spectator change
+			Rank player = _clientManager.Get(event.getPlayer()).GetRank();
 			if (_game != null && _game.InProgress())
 			{
-				UtilPlayer.message(event.getPlayer(), F.main("Game", "You cannot toggle Spectator during games."));
-				return;
+				if(player == Rank.ADMIN || player == Rank.OWNER){
+
+				}
+				else {
+					UtilPlayer.message(event.getPlayer(), F.main("Game", "You cannot toggle Spectator during games."));
+					return;
+				}
+
 			}
 
 			if (!_specList.remove(event.getPlayer()))

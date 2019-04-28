@@ -17,7 +17,7 @@ import mineplex.core.common.util.UtilServer;
 import mineplex.core.visibility.VisibilityManager;
 import nautilus.game.arcade.ArcadeManager;
 
-
+// 4/27/19 (DJ Electro)
 public class VanishCommand extends CommandBase<ArcadeManager> implements Listener
 {
 	private ArcadeManager _clientManager;
@@ -45,12 +45,12 @@ public class VanishCommand extends CommandBase<ArcadeManager> implements Listene
 		_hiddenPlayers.remove(event.getPlayer());
 	}
 
-	@EventHandler()
+	@EventHandler
 	public void addHiddenPlayerOnJoin(PlayerJoinEvent event)
 	{
 		for (Player toHide : _hiddenPlayers){
 			Rank rank = _clientManager.GetClients().Get(event.getPlayer()).GetRank();
-			if(rank == Rank.LT || rank == Rank.OWNER){
+			if(rank == Rank.ADMIN || rank == Rank.OWNER){
 				continue;
 			}
 			VisibilityManager.Instance.setVisibility(toHide, false, event.getPlayer());
@@ -77,7 +77,7 @@ public class VanishCommand extends CommandBase<ArcadeManager> implements Listene
 
 
 				Rank rank = _clientManager.GetClients().Get(other).GetRank();
-				if(rank == Rank.LT || rank == Rank.OWNER){
+				if(rank == Rank.ADMIN || rank == Rank.OWNER){
 					continue;
 				}
 

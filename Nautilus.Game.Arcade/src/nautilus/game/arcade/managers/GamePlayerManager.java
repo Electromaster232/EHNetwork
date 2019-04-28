@@ -397,7 +397,6 @@ public class GamePlayerManager implements Listener
 		
 		if (game.IsAlive(player) || !Manager.isSpectator(player))
 		{
-			UtilPlayer.message(player, F.main("Game", "Only Spectators can use this command."));
 			return;
 		}
 		
