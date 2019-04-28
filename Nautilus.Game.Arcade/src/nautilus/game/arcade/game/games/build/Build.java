@@ -53,6 +53,7 @@ import org.bukkit.event.hanging.HangingBreakEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -63,6 +64,7 @@ import org.bukkit.event.vehicle.VehicleCreateEvent;
 import org.bukkit.event.vehicle.VehicleDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
+import mineplex.core.account.CoreClientManager;
 import mineplex.core.common.Rank;
 import mineplex.core.common.util.C;
 import mineplex.core.common.util.F;
@@ -112,7 +114,9 @@ public class Build extends SoloGame
 	private long _voteTime = 14000;
 	private long _viewTime = 18000;
 	private BuildData _viewData = null;
-	
+
+	private boolean selectRandom = true;
+
 	private int _countdownTimerState = 0;
 
 	private String[] _words;
@@ -236,7 +240,10 @@ public class Build extends SoloGame
 				player.setFlySpeed(0.1f);
 			}
 
-			_word = _words[UtilMath.r(_words.length)];
+			if(selectRandom)
+			{
+				_word = _words[UtilMath.r(_words.length)];
+			}
 
 			UtilTextMiddle.display(null, C.cYellow + "Build " + C.cWhite + _word, 0, 80, 5);
 			
@@ -1494,5 +1501,32 @@ public class Build extends SoloGame
 				getArcadeManager().GetPortal().sendPlayerToServer(player, "Lobby");
 			}
 		}
+	}
+
+	@EventHandler
+	public void overrideWord(PlayerCommandPreprocessEvent event){
+		if (!event.getMessage().startsWith("/selectword "))
+			return;
+
+		event.setCancelled(true);
+
+		if(GetState() != GameState.Prepare){
+			UtilPlayer.message(event.getPlayer(), F.main("Game", "The game has already started!"));
+			return;
+		}
+
+		Rank pRank = Manager.GetClients().Get(event.getPlayer()).GetRank();
+
+		if(pRank == Rank.ADMIN || pRank == Rank.OWNER || pRank == Rank.YOUTUBE){
+			selectRandom = false;
+			_word = event.getMessage().substring(12);
+			UtilPlayer.message(event.getPlayer(), F.main("Game", "You have set the theme to " + C.cGreen + event.getMessage().substring(12)));
+		}
+		else{
+			UtilPlayer.message(event.getPlayer(), F.main("Permissions", "You do not have access to that command!"));
+			return;
+		}
+
+
 	}
 }
