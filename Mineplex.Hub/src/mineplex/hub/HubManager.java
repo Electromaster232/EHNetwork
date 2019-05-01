@@ -82,6 +82,7 @@ import mineplex.core.task.TaskManager;
 import mineplex.core.treasure.TreasureManager;
 import mineplex.core.updater.UpdateType;
 import mineplex.core.updater.event.UpdateEvent;
+import mineplex.hub.commands.ClientCommand;
 import mineplex.hub.commands.ForcefieldRadius;
 import mineplex.hub.commands.GadgetToggle;
 import mineplex.hub.commands.GameModeCommand;
@@ -186,6 +187,8 @@ public class HubManager extends MiniClientPlugin<HubClient>
 		
 		_forcefieldManager = new ForcefieldManager(this);
 		addCommand(new ForcefieldRadius(_forcefieldManager));
+
+		addCommand(new ClientCommand(this));
 		
 		_statsManager = statsManager;
 		_achievementManager = achievementManager;
