@@ -92,9 +92,9 @@ public class GadgetManager extends MiniPlugin
 		addGadget(new ItemPaintballGun(this));
 		addGadget(new ItemBatGun(this));
 		addGadget(new ItemCoinBomb(this));
-		//addGadget(new ItemGemBomb(this));
-		//addGadget(new ItemFootball(this));
-		//addGadget(new ItemDuelingSword(this));
+		addGadget(new ItemGemBomb(this));
+		addGadget(new ItemFootball(this));
+		addGadget(new ItemDuelingSword(this));
 		
 		// Costume
 		addGadget(new OutfitRaveSuit(this, "Rave Hat", -2, ArmorSlot.Helmet, Material.LEATHER_HELMET, (byte)0));

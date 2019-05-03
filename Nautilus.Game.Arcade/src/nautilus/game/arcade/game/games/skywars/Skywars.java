@@ -249,7 +249,7 @@ public abstract class Skywars extends Game
 	private void parseCreateZombieSpawns()
 	{
 		// Zombies
-		for (Location loc : WorldData.GetDataLocs("RED"))
+		for (Location loc : WorldData.GetDataLocs("Ropen ED"))
 		{
 			//Spawn
 			CreatureAllowOverride = true;
