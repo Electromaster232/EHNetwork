@@ -2,14 +2,17 @@ package nautilus.game.arcade;
 
 import java.io.File;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.messaging.Messenger;
 
 import net.minecraft.server.v1_7_R4.BiomeBase;
 import net.minecraft.server.v1_7_R4.MinecraftServer;
 import mineplex.core.CustomTagFix;
 import mineplex.core.TablistFix;
 import mineplex.core.account.CoreClientManager;
+import mineplex.core.account.event.BrandListener;
 import mineplex.core.achievement.AchievementManager;
 import mineplex.core.antihack.AntiHack;
 import mineplex.core.blockrestore.BlockRestore;
@@ -63,6 +66,8 @@ public class Arcade extends JavaPlugin
 	private DonationManager _donationManager; 
 	private DamageManager _damageManager;
 
+	private BrandListener _brandListener;
+
 	private ArcadeManager _gameManager;
 	 
 	private ServerConfiguration _serverConfiguration;
@@ -95,6 +100,8 @@ public class Arcade extends JavaPlugin
 		_donationManager = new DonationManager(this, _clientManager, webServerAddress);
 
 		_serverConfiguration = new ServerConfiguration(this, _clientManager);
+
+		_brandListener = new BrandListener();
 		
 		PreferencesManager preferenceManager = new PreferencesManager(this, _clientManager, _donationManager);
 
@@ -135,7 +142,7 @@ public class Arcade extends JavaPlugin
 		cosmeticManager.setInterfaceSlot(7);
 		
 		//Arcade Manager  
-		_gameManager = new ArcadeManager(this, serverStatusManager, ReadServerConfig(), _clientManager, _donationManager, _damageManager, statsManager, achievementManager, disguiseManager, creature, teleport, new Blood(this), chat, portal, preferenceManager, inventoryManager, packetHandler, cosmeticManager, projectileManager, petManager, hologramManager, webServerAddress);		
+		_gameManager = new ArcadeManager(this, serverStatusManager, ReadServerConfig(), _clientManager, _donationManager, _damageManager, statsManager, achievementManager, disguiseManager, creature, teleport, new Blood(this), chat, portal, preferenceManager, inventoryManager, packetHandler, cosmeticManager, projectileManager, petManager, hologramManager, webServerAddress, _brandListener);
 		
 		new MemoryFix(this);
 		new CustomTagFix(this, packetHandler);
@@ -151,6 +158,8 @@ public class Arcade extends JavaPlugin
 		BiomeBase.getBiomes()[BiomeBase.DEEP_OCEAN.id] = BiomeBase.PLAINS;
 		BiomeBase.getBiomes()[BiomeBase.SWAMPLAND.id] = BiomeBase.PLAINS;
 		BiomeBase.getBiomes()[BiomeBase.RIVER.id] = BiomeBase.PLAINS;
+		Messenger messenger = Bukkit.getMessenger();
+		messenger.registerIncomingPluginChannel(this, "MC|Brand", _brandListener);
 	}
 
 	@Override 

@@ -39,6 +39,7 @@ import com.google.common.base.Objects;
 
 import mineplex.core.MiniPlugin;
 import mineplex.core.account.CoreClientManager;
+import mineplex.core.account.event.BrandListener;
 import mineplex.core.achievement.AchievementManager;
 import mineplex.core.blockrestore.BlockRestore;
 import mineplex.core.blood.Blood;
@@ -184,6 +185,8 @@ public class ArcadeManager extends MiniPlugin implements IRelation
 	private PartyManager _partyManager;
 	private PreferencesManager _preferencesManager;
 
+	private BrandListener _brandListener;
+
 	private TaskManager _taskManager;
     private PacketHandler _packetHandler;
 	
@@ -210,7 +213,7 @@ public class ArcadeManager extends MiniPlugin implements IRelation
 						 CoreClientManager clientManager, DonationManager donationManager, DamageManager damageManager,
 						 StatsManager statsManager, AchievementManager achievementManager, DisguiseManager disguiseManager, Creature creature, Teleport teleport, Blood blood, Chat chat,
 						 Portal portal, PreferencesManager preferences, InventoryManager inventoryManager, PacketHandler packetHandler,
-						 CosmeticManager cosmeticManager, ProjectileManager projectileManager, PetManager petManager, HologramManager hologramManager, String webAddress)
+						 CosmeticManager cosmeticManager, ProjectileManager projectileManager, PetManager petManager, HologramManager hologramManager, String webAddress, BrandListener brandListener)
 	{
 		super("Game Manager", plugin);
 
@@ -245,6 +248,8 @@ public class ArcadeManager extends MiniPlugin implements IRelation
 		_damageManager.setConditionManager(_conditionManager);
 		
 		_disguiseManager = disguiseManager;
+
+		_brandListener = brandListener;
 
 		_donationManager = donationManager;
 
@@ -569,6 +574,10 @@ public class ArcadeManager extends MiniPlugin implements IRelation
 	{
 		return _gameWorldManager;
 	}
+
+	public BrandListener GetBrandListener(){
+		return _brandListener;
+	}
 	
 	public EventModule GetEventModule()
 	{
@@ -729,6 +738,9 @@ public class ArcadeManager extends MiniPlugin implements IRelation
 			event.setQuitMessage(F.sys("Quit", GetColor(event.getPlayer()) + name));
 		else
 			event.setQuitMessage(null);
+
+		// Threw this in here because the scheduler was giving me problems otherwise.
+		_brandListener.removePlayerOnQuit(event.getPlayer());
 	}
 
 	public Game GetGame()

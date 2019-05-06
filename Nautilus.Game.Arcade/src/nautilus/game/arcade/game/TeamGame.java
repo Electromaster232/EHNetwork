@@ -228,10 +228,16 @@ public abstract class TeamGame extends Game
 				}
 
 				for (Player player : team.GetPlayers(false))
+				{
 					if (player.isOnline())
 						AddGems(player, 10, "Participation", false, false);
+					if (this.getArcadeManager().GetBrandListener().playerUsingClient(player))
+					{
+						//UtilPlayer.message(player, "you were meant to get gems... DID YOU?????");
+						AddGems(player, 75, "Using EHNetwork Client", false, true);
+					}
+				}
 			}
-
 			//End
 			SetState(GameState.End);
 		}

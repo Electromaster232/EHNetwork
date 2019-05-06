@@ -7,7 +7,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 
+import mineplex.core.MiniPlugin;
+import mineplex.core.account.event.BrandListener;
 import mineplex.core.common.util.C;
+import mineplex.core.common.util.UtilPlayer;
 import mineplex.core.updater.UpdateType;
 import mineplex.core.updater.event.UpdateEvent;
 import nautilus.game.arcade.ArcadeManager;
@@ -63,6 +66,12 @@ public abstract class SoloGame extends Game
 			for (Player player : GetPlayers(false))
 				if (player.isOnline())
 					AddGems(player, 10, "Participation", false, false);
+
+			for (Player player : GetPlayers(false)){
+				if (player.isOnline() && this.getArcadeManager().GetBrandListener().playerUsingClient(player)){
+					AddGems(player, 75, "Using EHNetwork Client", false, true);
+				}
+			}
 
 			//End
 			SetState(GameState.End);
