@@ -5,7 +5,6 @@
       <element id="module-output" name="Mineplex.Core" />
       <element id="module-output" name="Mineplex.Core.Common" />
       <element id="module-output" name="Mineplex.Database" />
-      <element id="module-output" name="Mineplex.Game.Clans" />
       <element id="module-output" name="Mineplex.Minecraft.Game.Core" />
       <element id="module-output" name="Mineplex.Minecraft.Game.ClassCombat" />
       <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-pool2-2.2.jar" path-in-jar="/" />
@@ -18,6 +17,8 @@
       <element id="file-copy" path="$PROJECT_DIR$/Mineplex.Game.Clans/plugin.yml" />
       <element id="module-output" name="Mineplex.ServerData" />
       <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/jooq-3.5.2.jar" path-in-jar="/" />
+      <element id="module-output" name="Mineplex.Game.Clans" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-dbcp2-2.0.1.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

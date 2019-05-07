@@ -3,7 +3,6 @@
     <output-path>$PROJECT_DIR$/../Testing/Clans/plugins</output-path>
     <root id="root">
       <element id="artifact" artifact-name="Mineplex.Game.Clans:jar" />
-      <element id="library" level="project" name="NoCheatPlus" />
     </root>
   </artifact>
 </component>

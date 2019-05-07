@@ -6,6 +6,8 @@ import net.minecraft.server.v1_7_R4.MinecraftServer;
 import mineplex.core.account.CoreClientManager;
 import mineplex.core.antihack.AntiHack;
 import mineplex.core.blockrestore.BlockRestore;
+import mineplex.core.achievement.AchievementManager;
+import mineplex.core.stats.StatsManager;
 import mineplex.core.chat.Chat;
 import mineplex.core.command.CommandCenter;
 import mineplex.core.donation.DonationManager;
@@ -33,11 +35,13 @@ import mineplex.game.clans.shop.pvp.PvpShop;
 
 public class Clans extends JavaPlugin
 {      
-	private String WEB_CONFIG = "webServer";
+	private String WEB_CONFIG = "https://mplex.endlcdn.site";
  
 	//Modules   
 	private CoreClientManager _clientManager;
-	private DonationManager _donationManager; 
+	private DonationManager _donationManager;
+	private StatsManager _statsManager;
+	private AchievementManager _achievementManager;
 
 	@Override     
 	public void onEnable() 
@@ -56,10 +60,14 @@ public class Clans extends JavaPlugin
 		_clientManager = new CoreClientManager(this, webServerAddress);
 		CommandCenter.Instance.setClientManager(_clientManager);
 
+		_statsManager = new StatsManager(this, _clientManager);
+
 		ItemStackFactory.Initialize(this, false);  
 		Recharge.Initialize(this);   
 
 		_donationManager = new DonationManager(this, _clientManager, webServerAddress);
+
+		_achievementManager = new AchievementManager(_statsManager, _clientManager, _donationManager);
 
 		new ServerConfiguration(this, _clientManager);
 		
@@ -79,7 +87,7 @@ public class Clans extends JavaPlugin
 		BlockRestore blockRestore = new BlockRestore(this);
  
 		IgnoreManager ignoreManager = new IgnoreManager(this, _clientManager, preferenceManager, portal);
-		Chat chat = new Chat(this, _clientManager, preferenceManager, serverStatusManager.getCurrentServerName());
+		Chat chat = new Chat(this,_clientManager,preferenceManager,_achievementManager,"Clans");
 		new MessageManager(this, _clientManager, preferenceManager, ignoreManager, punish, new FriendManager(this, _clientManager, preferenceManager, portal), chat);
 
 		new MemoryFix(this);
@@ -97,5 +105,11 @@ public class Clans extends JavaPlugin
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Updater(this), 1, 1);
 		
 		MinecraftServer.getServer().getPropertyManager().setProperty("debug", true);
+	}
+
+	@Override
+	public void onDisable()
+	{
+
 	}
 }

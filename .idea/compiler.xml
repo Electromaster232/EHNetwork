@@ -4,7 +4,6 @@
     <option name="USE_RELEASE_OPTION" value="false" />
     <excludeFromCompile>
       <directory url="file://$PROJECT_DIR$/Nautilus.Game.PvP" includeSubdirectories="true" />
-      <directory url="file://$PROJECT_DIR$/Mineplex.Game.Clans" includeSubdirectories="true" />
     </excludeFromCompile>
     <wildcardResourcePatterns>
       <entry name="!?*.java" />
