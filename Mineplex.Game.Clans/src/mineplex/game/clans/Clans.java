@@ -35,7 +35,7 @@ import mineplex.game.clans.shop.pvp.PvpShop;
 
 public class Clans extends JavaPlugin
 {      
-	private String WEB_CONFIG = "https://mplex.endlcdn.site";
+	private String WEB_CONFIG = "webServer";
  
 	//Modules   
 	private CoreClientManager _clientManager;
@@ -48,6 +48,8 @@ public class Clans extends JavaPlugin
 	{
 		//Configs
 		getConfig().addDefault(WEB_CONFIG, "http://mplex.endlcdn.site/accounts/");
+		getConfig().addDefault("ram", "1024M");
+		getConfig().set("ram", getConfig().getString("ram"));
 		getConfig().set(WEB_CONFIG, getConfig().getString(WEB_CONFIG));
 		saveConfig();
 		
