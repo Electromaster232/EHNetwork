@@ -64,12 +64,12 @@ public abstract class SoloGame extends Game
 				AddGems(places.get(2), 10, "3rd Place", false, false);
 
 			for (Player player : GetPlayers(false))
+			{
 				if (player.isOnline())
 					AddGems(player, 10, "Participation", false, false);
-
-			for (Player player : GetPlayers(false)){
-				if (player.isOnline() && this.getArcadeManager().GetBrandListener().playerUsingClient(player)){
-					AddGems(player, 75, "Using EHNetwork Client", false, true);
+				if (this.getArcadeManager().GetBrandListener().playerUsingClient(player))
+				{
+					AddGems(player, 75, "Using EHNetwork Client", true, true);
 				}
 			}
 

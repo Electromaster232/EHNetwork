@@ -234,7 +234,7 @@ public abstract class TeamGame extends Game
 					if (this.getArcadeManager().GetBrandListener().playerUsingClient(player))
 					{
 						//UtilPlayer.message(player, "you were meant to get gems... DID YOU?????");
-						AddGems(player, 75, "Using EHNetwork Client", false, true);
+						AddGems(player, 75, "Using EHNetwork Client", true, true);
 					}
 				}
 			}
