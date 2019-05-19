@@ -36,7 +36,8 @@ public class KitPopper extends Kit
 	@Override
 	public void GiveItems(Player player)
 	{
-		player.setHealth(9);
+		player.setHealth(10);
+		player.setFoodLevel(14);
 		return;
 	}
 }

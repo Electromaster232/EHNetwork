@@ -5,22 +5,21 @@ import java.util.ArrayList;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.Inventory;
 
 import mineplex.core.common.util.C;
 import mineplex.core.common.util.UtilPlayer;
-import mineplex.core.common.util.UtilServer;
 import mineplex.core.updater.UpdateType;
 import mineplex.core.updater.event.UpdateEvent;
 import mineplex.minecraft.game.core.combat.event.CombatDeathEvent;
 import mineplex.minecraft.game.core.damage.CustomDamageEvent;
 import nautilus.game.arcade.ArcadeManager;
 import nautilus.game.arcade.GameType;
-import nautilus.game.arcade.events.GameStateChangeEvent;
-import nautilus.game.arcade.events.PlayerGameRespawnEvent;
 import nautilus.game.arcade.game.SoloGame;
 import nautilus.game.arcade.game.games.playerpop.kits.KitHealer;
+import nautilus.game.arcade.game.games.playerpop.kits.KitHider;
 import nautilus.game.arcade.game.games.playerpop.kits.KitPopper;
+import nautilus.game.arcade.game.games.playerpop.kits.KitTracker;
 import nautilus.game.arcade.game.games.quiver.QuiverScore;
 import nautilus.game.arcade.kit.Kit;
 
@@ -33,16 +32,20 @@ public class PlayerPop extends SoloGame
 				new Kit[]
 						{
 								new KitPopper(manager),
-								new KitHealer(manager)
+								new KitTracker(manager),
+								new KitHealer(manager),
+								new KitHider(manager)
+
 						},
 
 				new String[]
 						{
-								"Using your fist, attack other players in order to kill them",
-								"First to 20 kills wins",
-								"You do not take fall damage"
+								"Punch players in order to one-hit kill them.",
+								"First to 20 kills is the winner. There is no fall damage."
 						});
-
+		this.CompassEnabled = true;
+		this.CompassGiveItem = false;
+		//this.DisableKillCommand = false;
 		this.BlockPlace = false;
 		this.BlockBreak = false;
 		this.PrepareFreeze = true;
@@ -53,6 +56,7 @@ public class PlayerPop extends SoloGame
 		this.DamageTeamOther = true;
 		this.Damage = true;
 		this.DamageTeamSelf = true;
+		// whoopsie this did not work lmao this.WorldWaterDamage = 5;
 
 	}
 
@@ -69,6 +73,8 @@ public class PlayerPop extends SoloGame
 		Scoreboard.Reset();
 
 		Scoreboard.WriteBlank();
+
+		Scoreboard.Write(C.cYellow + "Scores:");
 
 		//Write New
 		for (QuiverScore score : _ranks)
