@@ -14,17 +14,20 @@ config-version: 8
 settings:
   debug: false
   save-user-cache-on-stop-only: false
-  player-shuffle: 0
-  user-cache-size: 1000
+  filter-creative-items: true
+  moved-wrongly-threshold: 0.0625
+  moved-too-quickly-threshold: 100.0
   int-cache-limit: 1024
-  bungeecord: false
   late-bind: false
   sample-count: 12
-  global-api-cache: false
+  user-cache-size: 1000
   timeout-time: 60
   restart-on-crash: true
   restart-script: ./start.sh
+  bungeecord: false
   netty-threads: 4
+  player-shuffle: 0
+  global-api-cache: false
   attribute:
     maxHealth:
       max: 2048.0
@@ -32,20 +35,17 @@ settings:
       max: 2048.0
     attackDamage:
       max: 2048.0
-  moved-too-quickly-threshold: 100.0
-  moved-wrongly-threshold: 0.0625
-  filter-creative-items: true
 commands:
   tab-complete: 0
+  silent-commandblock-console: false
+  spam-exclusions:
+  - /skill
   log: true
   replace-commands:
   - setblock
   - summon
   - testforblock
   - tellraw
-  spam-exclusions:
-  - /skill
-  silent-commandblock-console: false
 messages:
   whitelist: You are not whitelisted on this server!
   unknown-command: Unknown command. Type "/help" for help.
@@ -65,14 +65,37 @@ world-settings:
     merge-radius:
       exp: 3.0
       item: 2.5
-    zombie-aggressive-towards-villager: true
-    item-despawn-rate: 6000
     enable-zombie-pigmen-portal-spawns: true
     wither-spawn-sound-radius: 0
+    hunger:
+      walk-exhaustion: 0.2
+      sprint-exhaustion: 0.8
+      combat-exhaustion: 0.3
+      regen-exhaustion: 3.0
+    max-tnt-per-tick: 100
+    max-bulk-chunks: 5
+    item-despawn-rate: 6000
     hanging-tick-frequency: 100
+    zombie-aggressive-towards-villager: true
     arrow-despawn-rate: 1200
-    nerf-spawner-mobs: false
+    seed-village: 10387312
+    seed-feature: 14357617
+    dragon-death-sound-radius: 0
+    max-entity-collisions: 8
+    random-light-updates: false
+    save-structure-info: true
     mob-spawn-range: 4
+    entity-activation-range:
+      animals: 32
+      monsters: 32
+      misc: 16
+    entity-tracking-range:
+      players: 48
+      animals: 48
+      monsters: 48
+      misc: 32
+      other: 64
+    nerf-spawner-mobs: false
     anti-xray:
       enabled: true
       engine-mode: 1
@@ -93,15 +116,6 @@ world-settings:
       replace-blocks:
       - 1
       - 5
-    entity-activation-range:
-      animals: 32
-      monsters: 32
-      misc: 16
-    hunger:
-      walk-exhaustion: 0.2
-      sprint-exhaustion: 0.8
-      combat-exhaustion: 0.3
-      regen-exhaustion: 3.0
     growth:
       cactus-modifier: 100
       cane-modifier: 100
@@ -110,22 +124,8 @@ world-settings:
       pumpkin-modifier: 100
       sapling-modifier: 100
       wheat-modifier: 100
-    random-light-updates: false
-    entity-tracking-range:
-      players: 48
-      animals: 48
-      monsters: 48
-      misc: 32
-      other: 64
-    save-structure-info: true
-    max-tnt-per-tick: 100
-    max-bulk-chunks: 5
     hopper-alt-ticking: false
     ticks-per:
       hopper-transfer: 8
       hopper-check: 8
     hopper-amount: 1
-    max-entity-collisions: 8
-    dragon-death-sound-radius: 0
-    seed-village: 10387312
-    seed-feature: 14357617

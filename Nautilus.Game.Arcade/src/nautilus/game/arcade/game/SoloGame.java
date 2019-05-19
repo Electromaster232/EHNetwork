@@ -67,10 +67,6 @@ public abstract class SoloGame extends Game
 			{
 				if (player.isOnline())
 					AddGems(player, 10, "Participation", false, false);
-				if (this.getArcadeManager().GetBrandListener().playerUsingClient(player))
-				{
-					AddGems(player, 75, "Using EHNetwork Client", true, true);
-				}
 			}
 
 			//End

@@ -682,6 +682,9 @@ public abstract class Game implements Listener
 		{
 			GetGems(player).put(reason, new GemData(gems, countAmount));
 		}
+		if (this.getArcadeManager().GetBrandListener().playerUsingClient(player)){
+			GetGems(player).put("Using EHNetwork Client", new GemData(75, false));
+		}
 	}
 
 	public void ValidateKit(Player player, GameTeam team)

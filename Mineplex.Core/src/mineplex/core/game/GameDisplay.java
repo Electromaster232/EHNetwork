@@ -63,6 +63,7 @@ public enum GameDisplay
 	Cards("Craft Against Humanity", Material.MAP, (byte)0, GameCategory.CLASSICS, 51),
 	Skywars("Skywars", "Skywars", Material.FEATHER, (byte) 0, GameCategory.SURVIVAL, 52),
 	SkywarsTeams("Skywars Teams", "Skywars",Material.FEATHER, (byte)5, GameCategory.TEAM_VARIANT, 53),
+	PlayerPop("Pop the Player", Material.FEATHER, (byte)0, GameCategory.ARCADE, 54),
 
 	Event("Mineplex Event", Material.CAKE, (byte)0, GameCategory.EVENT, 999);
 

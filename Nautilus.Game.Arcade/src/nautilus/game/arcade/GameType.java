@@ -58,6 +58,7 @@ import nautilus.game.arcade.game.games.uhc.UHC;
 import nautilus.game.arcade.game.games.wither.WitherGame;
 import nautilus.game.arcade.game.games.wizards.Wizards;
 import nautilus.game.arcade.game.games.zombiesurvival.ZombieSurvival;
+import nautilus.game.arcade.game.games.playerpop.PlayerPop;
 
 import org.bukkit.Material;
 
@@ -98,7 +99,7 @@ public enum GameType
 	Runner(Runner.class, GameDisplay.Runner),
 	SearchAndDestroy(SearchAndDestroy.class, GameDisplay.SearchAndDestroy),
 	Sheep(SheepGame.class, GameDisplay.Sheep),
-	
+	PlayerPop(PlayerPop.class, GameDisplay.PlayerPop),
 	Smash(SoloSuperSmash.class, GameDisplay.Smash),
 	SmashDomination(SuperSmashDominate.class, GameDisplay.SmashDomination),
 	SmashTeams(TeamSuperSmash.class, GameDisplay.SmashTeams, new GameType[]{GameType.Smash}, false),
@@ -132,7 +133,7 @@ public enum GameType
 		GameType.Sheep, GameType.Skywars, GameType.SkywarsTeams, GameType.Smash, GameType.SmashDomination, GameType.SmashTeams,
 		GameType.Snake, GameType.SneakyAssassins, GameType.SnowFight, GameType.Spleef, GameType.SpleefTeams, GameType.SquidShooter,
 		GameType.Stacker, GameType.SurvivalGames, GameType.SurvivalGamesTeams, GameType.Tug, GameType.TurfWars, GameType.UHC,
-		GameType.WitherAssault, GameType.Wizards, GameType.ZombieSurvival}, true);
+		GameType.WitherAssault, GameType.Wizards, GameType.ZombieSurvival, GameType.PlayerPop}, true);
 
 	GameDisplay _display;
 	boolean _enforceResourcePack;
