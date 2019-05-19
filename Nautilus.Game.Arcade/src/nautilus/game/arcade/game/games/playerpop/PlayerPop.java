@@ -4,15 +4,20 @@ import java.util.ArrayList;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 import mineplex.core.common.util.C;
 import mineplex.core.common.util.UtilPlayer;
+import mineplex.core.common.util.UtilServer;
 import mineplex.core.updater.UpdateType;
 import mineplex.core.updater.event.UpdateEvent;
 import mineplex.minecraft.game.core.combat.event.CombatDeathEvent;
 import mineplex.minecraft.game.core.damage.CustomDamageEvent;
 import nautilus.game.arcade.ArcadeManager;
 import nautilus.game.arcade.GameType;
+import nautilus.game.arcade.events.GameStateChangeEvent;
+import nautilus.game.arcade.events.PlayerGameRespawnEvent;
 import nautilus.game.arcade.game.SoloGame;
 import nautilus.game.arcade.game.games.playerpop.kits.KitHealer;
 import nautilus.game.arcade.game.games.playerpop.kits.KitPopper;
@@ -40,10 +45,9 @@ public class PlayerPop extends SoloGame
 
 		this.BlockPlace = false;
 		this.BlockBreak = false;
-		this.HealthSet = 2;
 		this.PrepareFreeze = true;
 		this.DamageFall = false;
-		this.HungerSet = 20;
+		this.HungerSet = 14;
 		this.DeathOut = false;
 		this.StrictAntiHack = true;
 		this.DamageTeamOther = true;
@@ -144,16 +148,11 @@ public class PlayerPop extends SoloGame
 	@EventHandler
 	public void FistDamage(CustomDamageEvent event)
 	{
-
-		Player player = event.GetDamageePlayer();
-		Kit currentkit = GetKit(player);
-		if(currentkit.GetName().contains("Heal")){
-			event.AddMod("Fist", "Instagib", 1, false);
+		if(event.GetCause() == EntityDamageEvent.DamageCause.FALL)
+		{
+			return;
 		}
-		else{
-			event.AddMod("Fist", "Instagib", 2, false);
-		}
-
+		event.AddMod("Fist", "Attack", 10, false);
 	}
 
 	public void AddKill(Player player)
@@ -172,6 +171,5 @@ public class PlayerPop extends SoloGame
 
 		_ranks.add(new QuiverScore(player, 1));
 	}
-
 
 }

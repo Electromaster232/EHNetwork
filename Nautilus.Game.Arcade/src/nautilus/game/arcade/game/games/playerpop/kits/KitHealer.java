@@ -9,6 +9,8 @@ import nautilus.game.arcade.ArcadeManager;
 import nautilus.game.arcade.kit.Kit;
 import nautilus.game.arcade.kit.KitAvailability;
 import nautilus.game.arcade.kit.Perk;
+import nautilus.game.arcade.kit.perks.PerkHealthBoost;
+
 
 public class KitHealer extends Kit
 {
@@ -23,6 +25,7 @@ public class KitHealer extends Kit
 
 				new Perk[]
 						{
+								//new PerkHealthBoost(9)
 						},
 				EntityType.MUSHROOM_COW,
 				new ItemStack(Material.AIR));
