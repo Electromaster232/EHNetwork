@@ -85,7 +85,7 @@ public class NewsManager extends MiniPlugin
 							else if (newsPos == 4)	col = ChatColor.AQUA;
 							else if (newsPos == 5)	col = ChatColor.LIGHT_PURPLE;
 							
-							newsStrings[newsPos - 1] = col + C.Bold + "EHPlex" + ChatColor.RESET + " - " + newsEntries.get(newsPos + "");
+							newsStrings[newsPos - 1] = col + C.Bold + "EHNetwork" + ChatColor.RESET + " - " + newsEntries.get(newsPos + "");
 							
 							if (newsStrings[newsPos - 1].length() > 64)
 								newsStrings[newsPos - 1] = newsStrings[newsPos - 1].substring(0, 64);
@@ -297,7 +297,7 @@ public class NewsManager extends MiniPlugin
 				@Override
 				public void run()
 				{
-					UtilTextMiddle.display(C.cGold + C.Bold + "MINEPLEX" + ChatColor.RESET, _news[_news.length - 1 - count] + ChatColor.RESET, (count == 0) ? 20 : 0, 60, 20, event.getPlayer());
+					UtilTextMiddle.display(C.cGold + C.Bold + "EHNETWORK" + ChatColor.RESET, _news[_news.length - 1 - count] + ChatColor.RESET, (count == 0) ? 20 : 0, 60, 20, event.getPlayer());
 				}
 			}, 60 * i + (i != 0 ? 20 : 0));		
 		}

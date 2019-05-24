@@ -727,7 +727,7 @@ public class ServerManager extends MiniPlugin
 
 	public ServerNpcShop getPlayerGamesShop()
 	{
-		return _serverNpcShopMap.get("Mineplex Player Servers");
+		return _serverNpcShopMap.get("EHNetwork Player Servers");
 	}
 	
 	private Vector ParseVector(String vectorString)
