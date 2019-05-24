@@ -323,11 +323,11 @@ public class HideSeek extends TeamGame
         if (event.GetState() != GameState.Recruit)
             return;
 
-        _hiders = GetTeamList().get(0);
+        _hiders = GetTeamList().get(1);
         _hiders.SetColor(ChatColor.AQUA);
         _hiders.SetName("Hiders");
 
-        _seekers = GetTeamList().get(1);
+        _seekers = GetTeamList().get(0);
         _seekers.SetColor(ChatColor.RED);
         _seekers.SetName("Hunters");
 

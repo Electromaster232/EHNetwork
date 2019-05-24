@@ -103,9 +103,11 @@ import mineplex.minecraft.game.core.fire.Fire;
 import nautilus.game.arcade.addons.CompassAddon;
 import nautilus.game.arcade.addons.SoupAddon;
 import nautilus.game.arcade.addons.TeamArmorAddon;
+import nautilus.game.arcade.command.CrashCommand;
 import nautilus.game.arcade.command.DisguiseCommand;
 import nautilus.game.arcade.command.FlyCommand;
 import nautilus.game.arcade.command.GameCommand;
+import nautilus.game.arcade.command.OofCommand;
 import nautilus.game.arcade.command.VanishCommand;
 import nautilus.game.arcade.command.WriteCommand;
 import nautilus.game.arcade.command.KitUnlockCommand;
@@ -424,6 +426,8 @@ public class ArcadeManager extends MiniPlugin implements IRelation
 		addCommand(new DisguiseCommand(this));
 		addCommand(new VanishCommand(this));
 		addCommand(new FlyCommand(this));
+		addCommand(new OofCommand(this));
+		addCommand(new CrashCommand(this));
 	}
 
 	public GameServerConfig GetServerConfig()
