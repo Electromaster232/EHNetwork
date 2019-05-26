@@ -203,9 +203,9 @@ public class Arcade extends JavaPlugin
 			GameType[] _gameList = new GameType[] {GameType.BaconBrawl, GameType.Barbarians,
 					GameType.DeathTag, GameType.DragonEscape, GameType.DragonEscapeTeams, GameType.DragonRiders, GameType.Dragons,
 					GameType.HoleInTheWall, GameType.Horse, GameType.Micro, GameType.MilkCow, GameType.Paintball, GameType.Runner, GameType.SearchAndDestroy,
-					GameType.Sheep, GameType.Smash, GameType.SmashTeams,
+					GameType.Smash, GameType.SmashTeams,
 					GameType.Snake, GameType.SneakyAssassins, GameType.SnowFight, GameType.Spleef, GameType.SpleefTeams, GameType.SquidShooter,
-					GameType.Stacker, GameType.SurvivalGames, GameType.WitherAssault, GameType.ZombieSurvival, GameType.PlayerPop};
+					GameType.Stacker, GameType.WitherAssault, GameType.ZombieSurvival, GameType.PlayerPop};
 
 			config.GameList.addAll(Arrays.asList(_gameList));
 		}
@@ -224,7 +224,7 @@ public class Arcade extends JavaPlugin
 	{
 		GameServerConfig config = new GameServerConfig();
 
-		config.ServerType = "Minigames";
+		config.ServerType = "Micro Games";
 		config.MinPlayers = 8;
 		config.MaxPlayers = 16;
 		config.Tournament = false;

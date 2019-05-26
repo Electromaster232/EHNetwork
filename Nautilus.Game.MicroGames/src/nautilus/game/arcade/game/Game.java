@@ -85,6 +85,9 @@ public abstract class Game implements Listener
 	private GameType _gameType;
 	protected String[] _gameDesc;
 
+
+	private boolean _sentTimeout = false;
+
 	//Map
 	private HashMap<GameType, ArrayList<String>> _files;
 
@@ -241,7 +244,7 @@ public abstract class Game implements Listener
 	public boolean GemBoosterEnabled = true;
 	public boolean GemDoubleEnabled = true;
 	
-	public long PrepareTime = 2000;
+	public long PrepareTime = 4000;
 	public boolean PlaySoundGameStart = true;
 	
 	//Gameplay Data
@@ -274,7 +277,7 @@ public abstract class Game implements Listener
 		Manager = manager;
 
 		//Player List
-		UtilTabTitle.broadcastHeaderAndFooter(C.cGold + C.Bold + gameType.GetName(), "Visit " + C.cGreen + "theendlessweb.com" + ChatColor.RESET + " for News, Forums and Shop");
+		UtilTabTitle.broadcastHeaderAndFooter("§6§lMicro Games", "Visit " + C.cGreen + "theendlessweb.com" + ChatColor.RESET + " for News, Forums and Shop");
 		
 		//Game
 		_gameType = gameType;
@@ -518,8 +521,9 @@ public abstract class Game implements Listener
 				public void run()
 				{
 					UtilServer.broadcast(F.main("Micro Games", C.cRed + C.Bold + "Micro Games do not end! You can exit and return to the hub by running" + C.cGreen + C.Bold + " /lobby"));
+					_sentTimeout = false;
 				}
-			}, 100);
+			}, 150);
 		}
 
 	}
@@ -1249,6 +1253,13 @@ public abstract class Game implements Listener
 
 	public void HandleTimeout()
 	{
+		if(!_sentTimeout){
+			sendTimeoutMessage();
+		}
+	}
+
+	private void sendTimeoutMessage(){
+		_sentTimeout = true;
 		UtilServer.broadcast(C.cRed + C.Bold + "WARNING: GAME TIMER ENDS IN 10 SECONDS!");
 		for (Player player : UtilServer.getPlayers()){
 			player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1f, 1f);
@@ -1258,10 +1269,7 @@ public abstract class Game implements Listener
 			public void run()
 			{
 				SetState(GameState.End);
-			}
-		}, 200);
-
-
+			}}, 200);
 	}
 
 	public void AddGemBooster(Player player)
