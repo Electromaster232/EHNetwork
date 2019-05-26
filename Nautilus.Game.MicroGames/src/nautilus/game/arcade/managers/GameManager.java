@@ -160,6 +160,9 @@ public class GameManager implements Listener
 			}
 	
 			if(UtilServer.getPlayers().length >= 2){
+				if(Manager.GetRotationPause()){
+					return;
+				}
 				TeamDefaultJoin(game);
 				game.SetState(GameState.Prepare);
 			}

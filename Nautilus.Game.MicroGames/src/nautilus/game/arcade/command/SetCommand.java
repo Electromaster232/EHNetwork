@@ -18,7 +18,7 @@ public class SetCommand extends CommandBase<ArcadeManager>
 { 
 	public SetCommand(ArcadeManager plugin)
 	{
-		super(plugin, Rank.ADMIN, new Rank[] {Rank.MAPLEAD, Rank.JNR_DEV}, "set");
+		super(plugin, Rank.ADMIN, new Rank[] {}, "set");
 	}
  
 	@Override 

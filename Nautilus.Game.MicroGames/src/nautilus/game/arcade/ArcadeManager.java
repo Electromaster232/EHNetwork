@@ -206,6 +206,8 @@ public class ArcadeManager extends MiniPlugin implements IRelation
 	// Server Games
 	private GameServerConfig _serverConfig;
 
+	private boolean _pauseRotation;
+
 	// Games
 	private Game _game;
 	
@@ -519,6 +521,12 @@ public class ArcadeManager extends MiniPlugin implements IRelation
 	public Fire GetFire()
 	{
 		return _fire;
+	}
+
+	public boolean GetRotationPause(){ return _pauseRotation; }
+
+	public void SetRotationPause(boolean value){
+		_pauseRotation = value;
 	}
 	
 	public ProjectileManager GetProjectile()
