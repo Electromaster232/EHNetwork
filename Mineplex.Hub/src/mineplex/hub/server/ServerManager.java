@@ -710,6 +710,8 @@ public class ServerManager extends MiniPlugin
 		return _serverNpcShopMap.get("SkyWars");
 	}
 
+	public ServerNpcShop getMicroShop(){ return _serverNpcShopMap.get("MicroGames");}
+
 	public ServerNpcShop getPlayerGamesShop()
 	{
 		return _serverNpcShopMap.get("Mineplex Player Servers");
