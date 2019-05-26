@@ -18,6 +18,7 @@
       <module fileurl="file://$PROJECT_DIR$/Mineplex.ServerMonitor/Mineplex.ServerMonitor.iml" filepath="$PROJECT_DIR$/Mineplex.ServerMonitor/Mineplex.ServerMonitor.iml" group="Core" />
       <module fileurl="file://$PROJECT_DIR$/Mineplex.StaffServer/Mineplex.StaffServer.iml" filepath="$PROJECT_DIR$/Mineplex.StaffServer/Mineplex.StaffServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/Nautilus.Game.Arcade/Nautilus.Game.Arcade.iml" filepath="$PROJECT_DIR$/Nautilus.Game.Arcade/Nautilus.Game.Arcade.iml" group="Game" />
+      <module fileurl="file://$PROJECT_DIR$/Nautilus.Game.MicroGames/Nautilus.Game.MicroGames.iml" filepath="$PROJECT_DIR$/Nautilus.Game.MicroGames/Nautilus.Game.MicroGames.iml" group="Game" />
     </modules>
   </component>
 </project>

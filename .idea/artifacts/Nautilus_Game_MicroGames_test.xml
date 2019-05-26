@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact name="Nautilus.Game.MicroGames:test">
+    <output-path>$PROJECT_DIR$/Testing/MicroGames/plugins</output-path>
+    <root id="root">
+      <element id="artifact" artifact-name="Nautilus.Game.MicroGames:jar" />
+    </root>
+  </artifact>
+</component>
