@@ -51,6 +51,7 @@ import mineplex.core.status.ServerStatusManager;
 import mineplex.core.updater.UpdateType;
 import mineplex.core.updater.event.UpdateEvent;
 import mineplex.hub.HubManager;
+import mineplex.hub.commands.ServerNPCCommand;
 import mineplex.hub.modules.StackerManager;
 import mineplex.hub.queue.QueueManager;
 import mineplex.hub.queue.ui.QueueShop;
@@ -105,6 +106,8 @@ public class ServerManager extends MiniPlugin
 		_hubManager = hubManager;
 		_stackerManager = stackerManager;
 		_queueManager = queueManager;
+
+		addCommand(new ServerNPCCommand(this));
 		
 		plugin.getServer().getMessenger().registerOutgoingPluginChannel(plugin, "BungeeCord");
 		
@@ -484,25 +487,7 @@ public class ServerManager extends MiniPlugin
 		});
 	}
 
-	public void Help(Player caller, String message)
-	{
-		UtilPlayer.message(caller, F.main(_moduleName, "Commands List:"));
-		UtilPlayer.message(caller, F.help("/servernpc create <name>", "<name> is name of npc.", Rank.OWNER));
-		UtilPlayer.message(caller, F.help("/servernpc delete <name>", "<name> is name of npc.", Rank.OWNER));
-		UtilPlayer.message(caller, F.help("/servernpc addserver <servernpc> | <name>", "Adds server.", Rank.OWNER));
-		UtilPlayer.message(caller, F.help("/servernpc removeserver <name>", "Removes server.", Rank.OWNER));
-		UtilPlayer.message(caller, F.help("/servernpc listnpcs", "Lists all server npcs.", Rank.OWNER));
-		UtilPlayer.message(caller, F.help("/servernpc listservers <servernpc>", "Lists all servers.", Rank.OWNER));
-		UtilPlayer.message(caller, F.help("/servernpc listoffline", "Shows all servers offline.", Rank.OWNER));
-		
-		if (message != null)
-			UtilPlayer.message(caller, F.main(_moduleName, ChatColor.RED + message));
-	}
-	
-	public void Help(Player caller)
-	{
-		Help(caller, null);
-	}
+
 
 	public PartyManager getPartyManager()
 	{
@@ -727,7 +712,7 @@ public class ServerManager extends MiniPlugin
 
 	public ServerNpcShop getPlayerGamesShop()
 	{
-		return _serverNpcShopMap.get("EHNetwork Player Servers");
+		return _serverNpcShopMap.get("Mineplex Player Servers");
 	}
 	
 	private Vector ParseVector(String vectorString)
