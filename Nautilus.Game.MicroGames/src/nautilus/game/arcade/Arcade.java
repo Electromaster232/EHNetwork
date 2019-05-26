@@ -1,6 +1,8 @@
 package nautilus.game.arcade;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -197,19 +199,15 @@ public class Arcade extends JavaPlugin
 			config.HotbarInventory = _serverConfiguration.getServerGroup().getHotbarInventory();
 			config.HotbarHubClock = _serverConfiguration.getServerGroup().getHotbarHubClock();
 			config.PlayerKickIdle = _serverConfiguration.getServerGroup().getPlayerKickIdle();
-			
-			for (String gameName : _serverConfiguration.getServerGroup().getGames().split(","))
-			{
-				try
-				{
-					GameType type = GameType.valueOf(gameName);
-					config.GameList.add(type);
-				}
-				catch (Exception e)
-				{
-	
-				}
-			}
+
+			GameType[] _gameList = new GameType[] {GameType.BaconBrawl, GameType.Barbarians,
+					GameType.DeathTag, GameType.DragonEscape, GameType.DragonEscapeTeams, GameType.DragonRiders, GameType.Dragons,
+					GameType.HoleInTheWall, GameType.Horse, GameType.Micro, GameType.MilkCow, GameType.Paintball, GameType.Runner, GameType.SearchAndDestroy,
+					GameType.Sheep, GameType.Smash, GameType.SmashTeams,
+					GameType.Snake, GameType.SneakyAssassins, GameType.SnowFight, GameType.Spleef, GameType.SpleefTeams, GameType.SquidShooter,
+					GameType.Stacker, GameType.SurvivalGames, GameType.WitherAssault, GameType.ZombieSurvival, GameType.PlayerPop};
+
+			config.GameList.addAll(Arrays.asList(_gameList));
 		}
 		catch (Exception ex)
 		{

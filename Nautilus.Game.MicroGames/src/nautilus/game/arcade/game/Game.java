@@ -130,7 +130,7 @@ public abstract class Game implements Listener
 	protected String[] _help;
 
 	//Gameplay Flags
-	public long GameTimeout = 1200000;
+	public long GameTimeout = 300000;
 
 	public boolean Damage = true;
 	public boolean DamagePvP = true;
@@ -241,7 +241,7 @@ public abstract class Game implements Listener
 	public boolean GemBoosterEnabled = true;
 	public boolean GemDoubleEnabled = true;
 	
-	public long PrepareTime = 1000;
+	public long PrepareTime = 2000;
 	public boolean PlaySoundGameStart = true;
 	
 	//Gameplay Data
@@ -512,14 +512,14 @@ public abstract class Game implements Listener
 
 		System.out.println(GetName() + " state set to " + state.toString());
 
-		if(_gameState == GameState.Live){
+		if(_gameState == GameState.Prepare){
 			UtilServer.getServer().getScheduler().runTaskLater(Manager.getPlugin(), new Runnable()
 			{
 				public void run()
 				{
-					UtilServer.broadcast(F.main("Micro Games", C.cRed + C.Bold + "Micro Games do not end! You can exit and return to the hub by running" + C.cGreen + C.Bold + "/lobby"));
+					UtilServer.broadcast(F.main("Micro Games", C.cRed + C.Bold + "Micro Games do not end! You can exit and return to the hub by running" + C.cGreen + C.Bold + " /lobby"));
 				}
-			}, 4000);
+			}, 100);
 		}
 
 	}
@@ -1098,10 +1098,10 @@ public abstract class Game implements Listener
 			UtilPlayer.message(player, ArcadeFormat.Line);
 		}
 
-		UtilTextMiddle.display(winnerText, subColor + "won the game", 20, 120, 20);
+		//UtilTextMiddle.display(winnerText, subColor + "won the game", 20, 120, 20);
 
-		if (AnnounceSilence)
-			Manager.GetChat().Silence(5000, false);
+		//if (AnnounceSilence)
+		//	Manager.GetChat().Silence(5000, false);
 	}
 
 	public void AnnounceEnd(List<Player> places)
@@ -1156,10 +1156,10 @@ public abstract class Game implements Listener
 			UtilPlayer.message(player, ArcadeFormat.Line);
 		}
 
-		UtilTextMiddle.display(winnerText, subColor + "won the game", 20, 120, 20);
+		//UtilTextMiddle.display(winnerText, subColor + "won the game", 20, 120, 20);
 
-		if (AnnounceSilence)
-			Manager.GetChat().Silence(5000, false);
+		//if (AnnounceSilence)
+		//	Manager.GetChat().Silence(5000, false);
 	}
 
 
@@ -1249,7 +1249,19 @@ public abstract class Game implements Listener
 
 	public void HandleTimeout()
 	{
-		SetState(GameState.End);
+		UtilServer.broadcast(C.cRed + C.Bold + "WARNING: GAME TIMER ENDS IN 10 SECONDS!");
+		for (Player player : UtilServer.getPlayers()){
+			player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1f, 1f);
+		}
+		UtilServer.getServer().getScheduler().runTaskLater(Manager.getPlugin(), new Runnable()
+		{
+			public void run()
+			{
+				SetState(GameState.End);
+			}
+		}, 200);
+
+
 	}
 
 	public void AddGemBooster(Player player)
