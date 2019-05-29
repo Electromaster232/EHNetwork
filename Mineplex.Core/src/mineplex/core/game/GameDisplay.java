@@ -65,6 +65,8 @@ public enum GameDisplay
 	SkywarsTeams("Skywars Teams", "Skywars",Material.FEATHER, (byte)5, GameCategory.TEAM_VARIANT, 53),
 	PlayerPop("Pop the Player", Material.FEATHER, (byte)0, GameCategory.ARCADE, 54),
 
+	ColorSwap("Color Swap", Material.FEATHER, (byte)0, GameCategory.ARCADE, 55),
+
 	Event("Mineplex Event", Material.CAKE, (byte)0, GameCategory.EVENT, 999);
 
 	String _name;

@@ -1,4 +1,4 @@
-package nautilus.game.arcade.game.games.event.kits;
+package nautilus.game.arcade.game.games.colorswap.kits;
 
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -10,12 +10,13 @@ import nautilus.game.arcade.game.games.event.EventGame;
 import nautilus.game.arcade.kit.Kit;
 import nautilus.game.arcade.kit.KitAvailability;
 import nautilus.game.arcade.kit.Perk;
+import nautilus.game.arcade.kit.perks.PerkKnockback;
 
 public class KitPlayer extends Kit
 {
 	public KitPlayer(ArcadeManager manager)
 	{
-		super(manager, "Party Animal", KitAvailability.Free, 0,
+		super(manager, "Player", KitAvailability.Free, 0,
 
 				new String[] 
 						{
@@ -24,6 +25,7 @@ public class KitPlayer extends Kit
 
 						new Perk[] 
 								{
+										new PerkKnockback(1),
 								}, 
 								EntityType.PIG,
 								new ItemStack(Material.PORK));
@@ -33,6 +35,6 @@ public class KitPlayer extends Kit
 	@Override
 	public void GiveItems(Player player) 
 	{
-		((EventGame)Manager.GetGame()).giveItems(player);
+
 	}
 }

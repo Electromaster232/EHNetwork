@@ -12,6 +12,7 @@ import nautilus.game.arcade.game.games.castlesiege.CastleSiege;
 import nautilus.game.arcade.game.games.champions.ChampionsDominate;
 import nautilus.game.arcade.game.games.champions.ChampionsTDM;
 import nautilus.game.arcade.game.games.christmas.Christmas;
+import nautilus.game.arcade.game.games.colorswap.ColorSwap;
 import nautilus.game.arcade.game.games.deathtag.DeathTag;
 import nautilus.game.arcade.game.games.dragonescape.DragonEscape;
 import nautilus.game.arcade.game.games.dragonescape.DragonEscapeTeams;
@@ -122,6 +123,7 @@ public enum GameType
 	Cards(Cards.class, GameDisplay.Cards),
 	Skywars(SoloSkywars.class, GameDisplay.Skywars),
 	SkywarsTeams(TeamSkywars.class, GameDisplay.SkywarsTeams, new GameType[]{GameType.Skywars}, false),
+	ColorSwap(ColorSwap.class, GameDisplay.ColorSwap),
 	
 	Event(EventGame.class, GameDisplay.Event, new GameType[]{
 		GameType.BaconBrawl, GameType.Barbarians, GameType.Bridge, GameType.Build, GameType.Build,

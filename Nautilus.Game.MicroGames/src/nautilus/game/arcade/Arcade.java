@@ -201,11 +201,11 @@ public class Arcade extends JavaPlugin
 			config.PlayerKickIdle = _serverConfiguration.getServerGroup().getPlayerKickIdle();
 
 			GameType[] _gameList = new GameType[] {GameType.BaconBrawl, GameType.Barbarians,
-					GameType.DeathTag, GameType.DragonEscape, GameType.DragonEscapeTeams, GameType.DragonRiders, GameType.Dragons,
-					GameType.HoleInTheWall, GameType.Horse, GameType.Micro, GameType.MilkCow, GameType.Paintball, GameType.Runner, GameType.SearchAndDestroy,
+					GameType.DeathTag, GameType.DragonEscape, GameType.DragonRiders, GameType.Dragons,
+					GameType.HoleInTheWall, GameType.Horse, GameType.Micro, GameType.MilkCow, GameType.Paintball, GameType.Runner,
 					GameType.Smash, GameType.SmashTeams,
 					GameType.Snake, GameType.SneakyAssassins, GameType.SnowFight, GameType.Spleef, GameType.SpleefTeams, GameType.SquidShooter,
-					GameType.Stacker, GameType.WitherAssault, GameType.ZombieSurvival, GameType.PlayerPop};
+					GameType.Stacker, GameType.ZombieSurvival, GameType.PlayerPop, GameType.ColorSwap};
 
 			config.GameList.addAll(Arrays.asList(_gameList));
 		}
