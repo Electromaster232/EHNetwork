@@ -88,6 +88,7 @@ import mineplex.hub.commands.GadgetToggle;
 import mineplex.hub.commands.GameModeCommand;
 import mineplex.hub.commands.NewsCommand;
 import mineplex.hub.modules.ForcefieldManager;
+import mineplex.hub.modules.ForumManager;
 import mineplex.hub.modules.HubVisibilityManager;
 import mineplex.hub.modules.JumpManager;
 import mineplex.hub.modules.NewsManager;
@@ -117,6 +118,7 @@ public class HubManager extends MiniClientPlugin<HubClient>
 	private StatsManager _statsManager; 
 	private GadgetManager _gadgetManager;
 	private MountManager _mountManager;
+	private ForumManager _forumManager;
 	private HubVisibilityManager _visibilityManager; 
 	private TutorialManager _tutorialManager;  
 	private TextManager _textCreator;
@@ -189,6 +191,8 @@ public class HubManager extends MiniClientPlugin<HubClient>
 		addCommand(new ForcefieldRadius(_forcefieldManager));
 
 		addCommand(new ClientCommand(this));
+
+		_forumManager = new ForumManager(this);
 		
 		_statsManager = statsManager;
 		_achievementManager = achievementManager;
