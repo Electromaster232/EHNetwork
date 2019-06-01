@@ -84,6 +84,7 @@ import mineplex.core.updater.UpdateType;
 import mineplex.core.updater.event.UpdateEvent;
 import mineplex.hub.commands.ClientCommand;
 import mineplex.hub.commands.ForcefieldRadius;
+import mineplex.hub.commands.ForumCommand;
 import mineplex.hub.commands.GadgetToggle;
 import mineplex.hub.commands.GameModeCommand;
 import mineplex.hub.commands.NewsCommand;
@@ -348,6 +349,7 @@ public class HubManager extends MiniClientPlugin<HubClient>
 		addCommand(new GadgetToggle(this));
 		addCommand(new NewsCommand(this));
 		addCommand(new GameModeCommand(this));
+		addCommand(new ForumCommand(this));
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -899,6 +901,8 @@ public class HubManager extends MiniClientPlugin<HubClient>
 	{
 		return _disguiseManager;
 	}
+
+	public ForumManager GetForum(){ return _forumManager; }
 
 	public GadgetManager GetGadget()
 	{

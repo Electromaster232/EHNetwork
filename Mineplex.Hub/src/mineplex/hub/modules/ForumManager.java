@@ -2,7 +2,6 @@ package mineplex.hub.modules;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
@@ -30,6 +29,16 @@ public class ForumManager extends MiniPlugin
 	public String[] getPost(String category, String postID){
 		String response = sendGET(_baseURL + "?action=getPost&category=" + category + "&postid=" + postID);
 		return response.split("%");
+	}
+
+	public boolean addPost(String category, String author, String subject, String content){
+		String res = sendPOST(_baseURL + "?action=addPost", "category=" + category + "&author=" + author + "&subject=" + subject + "&content=" + content);
+		if(res != "succ."){
+			return false;
+		}
+		else{
+			return true;
+		}
 	}
 
 
@@ -71,39 +80,49 @@ public class ForumManager extends MiniPlugin
 
 	}
 
-	private static String sendPOST(String POST_URL, String POST_PARAMS) throws IOException
+	private static String sendPOST(String POST_URL, String POST_PARAMS)
 	{
-		URL obj = new URL(POST_URL);
-		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
-		con.setRequestMethod("POST");
-		con.setRequestProperty("User-Agent", "EHNetwork/1.0");
+		try
+		{
+			URL obj = new URL(POST_URL);
+			HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+			con.setRequestMethod("POST");
+			con.setRequestProperty("User-Agent", "EHNetwork/1.0");
 
-		// For POST only - START
-		con.setDoOutput(true);
-		OutputStream os = con.getOutputStream();
-		os.write(POST_PARAMS.getBytes());
-		os.flush();
-		os.close();
-		// For POST only - END
+			// For POST only - START
+			con.setDoOutput(true);
+			OutputStream os = con.getOutputStream();
+			os.write(POST_PARAMS.getBytes());
+			os.flush();
+			os.close();
+			// For POST only - END
 
-		int responseCode = con.getResponseCode();
-		System.out.println("POST Response Code :: " + responseCode);
+			int responseCode = con.getResponseCode();
+			System.out.println("POST Response Code :: " + responseCode);
 
-		if (responseCode == HttpsURLConnection.HTTP_OK) { //success
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					con.getInputStream()));
-			String inputLine;
-			StringBuffer response = new StringBuffer();
+			if (responseCode == HttpsURLConnection.HTTP_OK)
+			{ //success
+				BufferedReader in = new BufferedReader(new InputStreamReader(
+						con.getInputStream()));
+				String inputLine;
+				StringBuffer response = new StringBuffer();
 
-			while ((inputLine = in.readLine()) != null) {
-				response.append(inputLine);
+				while ((inputLine = in.readLine()) != null)
+				{
+					response.append(inputLine);
+				}
+				in.close();
+
+				// print result
+				System.out.println(response.toString());
+				return response.toString();
 			}
-			in.close();
-
-			// print result
-			return response.toString();
-		} else {
-			return null;
+			else
+			{
+				return null;
+			}
+		}catch (Exception e){
+			throw new RuntimeException(e);
 		}
 	}
 
