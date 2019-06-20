@@ -96,11 +96,22 @@ public class Murder extends SoloGame
 		Random randomizer = new Random();
 		murderer = getArcadeManager().GetGame().GetPlayers(false).get(randomizer.nextInt(getArcadeManager().GetGame().GetPlayers(false).size()));
 		detective = getArcadeManager().GetGame().GetPlayers(false).get(randomizer.nextInt(getArcadeManager().GetGame().GetPlayers(false).size()));
+		if (murderer == detective){
+			detective = getArcadeManager().GetGame().GetPlayers(false).get(randomizer.nextInt(getArcadeManager().GetGame().GetPlayers(false).size()));
+		}
 		MurdererShot = false;
 		getArcadeManager().GetGame().SetKit(murderer, KitMurderer, false);
 		UtilTextMiddle.display(C.cRed + "YOU ARE THE MURDERER", "Kill everyone!", murderer);
 		getArcadeManager().GetGame().SetKit(detective, KitDetective, false);
 		UtilTextMiddle.display(C.cBlue + "YOU ARE THE DETECTIVE", "Find and kill the murderer!", detective);
+		for(Player player : getArcadeManager().GetGame().GetPlayers(true)){
+			if (player == murderer || player == detective){
+				continue;
+			}
+			else{
+				UtilTextMiddle.display(C.cGreen + "YOU ARE INNOCENT", "Survive as long as possible!", player);
+			}
+		}
 	}
 
 	@Override
@@ -154,7 +165,7 @@ public class Murder extends SoloGame
 			return;
 		}
 
-		if (GetPlayers(true).size() <= 1)
+		if (GetPlayers(true).size() <= 1 && MurdererShot == false)
 		{
 			//Set Places
 			for(Player player : getArcadeManager().GetGame().GetPlayers(true)){
