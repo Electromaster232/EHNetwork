@@ -31,6 +31,7 @@ import nautilus.game.arcade.game.games.micro.Micro;
 import nautilus.game.arcade.game.games.milkcow.MilkCow;
 import nautilus.game.arcade.game.games.minestrike.MineStrike;
 import nautilus.game.arcade.game.games.mineware.MineWare;
+import nautilus.game.arcade.game.games.murder.Murder;
 import nautilus.game.arcade.game.games.oldmineware.OldMineWare;
 import nautilus.game.arcade.game.games.paintball.Paintball;
 import nautilus.game.arcade.game.games.quiver.Quiver;
@@ -119,6 +120,7 @@ public enum GameType
 	Wizards(Wizards.class, GameDisplay.Wizards, "http://chivebox.com/file/c/ResWizards.zip", true),
 	ZombieSurvival(ZombieSurvival.class, GameDisplay.ZombieSurvival),
 	Build(Build.class, GameDisplay.Build),
+	Murder(Murder.class, GameDisplay.Murder),
 	Cards(Cards.class, GameDisplay.Cards),
 	Skywars(SoloSkywars.class, GameDisplay.Skywars),
 	SkywarsTeams(TeamSkywars.class, GameDisplay.SkywarsTeams, new GameType[]{GameType.Skywars}, false),

@@ -67,6 +67,8 @@ public enum GameDisplay
 
 	ColorSwap("Color Swap", Material.FEATHER, (byte)0, GameCategory.ARCADE, 55),
 
+	Murder("Murder Mystery", Material.FEATHER, (byte)0, GameCategory.ARCADE, 56),
+
 	Event("Mineplex Event", Material.CAKE, (byte)0, GameCategory.EVENT, 999);
 
 	String _name;
