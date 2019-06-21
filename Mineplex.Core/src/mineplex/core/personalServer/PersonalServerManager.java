@@ -34,9 +34,9 @@ public class PersonalServerManager extends MiniPlugin
 	
 	private boolean _us;
 	
-	private int _interfaceSlot = 6;
+	private int _interfaceSlot = 11;
 	private ItemStack _interfaceItem;
-	private boolean _giveInterfaceItem = true;
+	private boolean _giveInterfaceItem = false;
 
 	public PersonalServerManager(JavaPlugin plugin, CoreClientManager clientManager)
 	{

@@ -242,6 +242,7 @@ public class ServerManager extends MiniPlugin
 	{
 		event.getPlayer().getInventory().addItem(ItemStackFactory.Instance.CreateStack(Material.COMPASS.getId(), (byte)0, 1, ChatColor.GREEN + "Game Menu"));
 		event.getPlayer().getInventory().addItem(ItemStackFactory.Instance.CreateStack(Material.WATCH.getId(), (byte)0, 1, ChatColor.GREEN + "Lobby Menu"));
+		event.getPlayer().getInventory().setItem(6, ItemStackFactory.Instance.CreateStack(Material.FEATHER.getId(), (byte)0, getGroupTagPlayerCount("MICRO") + 1, ChatColor.YELLOW + "Play Micro Games"));
 
 		if (_clientManager.Get(event.getPlayer()).GetRank() == Rank.ALL)
 		{
@@ -265,6 +266,9 @@ public class ServerManager extends MiniPlugin
 		else if (event.getItem() != null && event.getItem().getType() == Material.WATCH)
 		{
 			_lobbyShop.attemptShopOpen(event.getPlayer());
+		}
+		else if (event.getItem() != null && event.getItem().getType() == Material.FEATHER){
+			getMicroShop().attemptShopOpen(event.getPlayer());
 		}
 	}
 

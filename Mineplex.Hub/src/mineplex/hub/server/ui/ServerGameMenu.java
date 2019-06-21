@@ -23,6 +23,7 @@ import mineplex.hub.server.ui.button.SelectDMTButton;
 import mineplex.hub.server.ui.button.SelectDOMButton;
 import mineplex.hub.server.ui.button.SelectMINButton;
 import mineplex.hub.server.ui.button.SelectMSButton;
+import mineplex.hub.server.ui.button.SelectMicroButton;
 import mineplex.hub.server.ui.button.SelectPLAYERButton;
 import mineplex.hub.server.ui.button.SelectSGButton;
 import mineplex.hub.server.ui.button.SelectSKYButton;
@@ -74,7 +75,7 @@ public class ServerGameMenu extends ShopPageBase<ServerManager, QuickShop>
 					ChatColor.RESET + "Join " + ChatColor.GREEN + getPlugin().getGroupTagPlayerCount("HG") + ChatColor.RESET + " other players!",
 				}));
 
-		setItem(4, ItemStackFactory.Instance.CreateStack(Material.FEATHER.getId(), (byte) 0, 1, ChatColor.RESET + C.Bold + ChatColor.YELLOW + "Skywars " + C.cGray + "Solo Survival", new String[]
+		setItem(4, ItemStackFactory.Instance.CreateStack(Material.BEDROCK.getId(), (byte) 0, 1, ChatColor.RESET + C.Bold + ChatColor.YELLOW + "Skywars " + C.cGray + "Solo Survival", new String[]
 				{
 						ChatColor.RESET + "",
 						ChatColor.RESET + "16 contenders fight for the right to rule the skies!",
@@ -147,6 +148,16 @@ public class ServerGameMenu extends ShopPageBase<ServerManager, QuickShop>
 					ChatColor.RESET + "",
 					ChatColor.RESET + "Join " + ChatColor.GREEN + getPlugin().getGroupTagPlayerCount("DMT") + ChatColor.RESET + " other players!",
 				}));
+
+		setItem(31, ItemStackFactory.Instance.CreateStack(Material.FEATHER.getId(), (byte)0, getPlugin().getGroupTagPlayerCount("MICRO") + 1, ChatColor.RESET + C.Bold + ChatColor.YELLOW + "Micro Games " + C.cGray + "Quick Action", new String[]
+				{
+						ChatColor.RESET + "",
+						ChatColor.RESET + "Fast-paced gameplay with 23 other players.",
+						ChatColor.RESET + "Each game lasts less than 5 minutes each,",
+						ChatColor.RESET + "and there is no waiting lobby in between games!",
+						ChatColor.RESET + "",
+						ChatColor.RESET + "Join " + ChatColor.GREEN + getPlugin().getGroupTagPlayerCount("MICRO") + ChatColor.RESET + " other players!",
+				}));
 		
 		setItem(36, ItemStackFactory.Instance.CreateStack(Material.BEACON.getId(), (byte)0, 1, ChatColor.RESET + C.Bold + ChatColor.YELLOW + "Dominate " + C.cGray + "Team Game", new String[]
 				{
@@ -200,6 +211,7 @@ public class ServerGameMenu extends ShopPageBase<ServerManager, QuickShop>
 		getButtonMap().put(22, new SelectSSMButton(this));
 		getButtonMap().put(24, new SelectMSButton(this));
 		getButtonMap().put(26, new SelectDMTButton(this));
+		getButtonMap().put(31, new SelectMicroButton(this));
 		getButtonMap().put(36, new SelectDOMButton(this));
 		getButtonMap().put(38, new SelectTDMButton(this));
 		getButtonMap().put(40, new SelectBLDButton(this));
@@ -517,6 +529,8 @@ public class ServerGameMenu extends ShopPageBase<ServerManager, QuickShop>
 	{
 		getPlugin().getTeamDeathmatchShop().attemptShopOpen(player);
 	}
+
+	public void OpenMicro(Player player){getPlugin().getMicroShop().attemptShopOpen(player);}
 
 	public void openMS(Player player)
 	{
