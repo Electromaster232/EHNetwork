@@ -3,8 +3,8 @@
 	<!-- Configure the database connection here -->
 	<jdbc>
 		<driver>com.mysql.jdbc.Driver</driver>
-		<url>jdbc:mysql://149.56.38.19:3306</url>
-		<user>djelectr_minep</user>
+		<url>jdbc:mysql://38.108.20.53:3306</url>
+		<user>mineplex</user>
 		<password>r@P#eiXSQP(R</password>
 	</jdbc>
 

@@ -67,10 +67,10 @@ public class ServerStatusManager extends MiniPlugin
 	{
 	    try 
 	    {
-			getPlugin().getConfig().addDefault("serverstatus.connectionurl", "149.56.38.19:3306:3306");
+			getPlugin().getConfig().addDefault("serverstatus.connectionurl", "38.108.20.53:3306:3306");
 			getPlugin().getConfig().set("serverstatus.connectionurl", getPlugin().getConfig().getString("serverstatus.connectionurl"));
 			
-			getPlugin().getConfig().addDefault("serverstatus.username", "djelectr_minep");
+			getPlugin().getConfig().addDefault("serverstatus.username", "mineplex");
 			getPlugin().getConfig().set("serverstatus.username", getPlugin().getConfig().getString("serverstatus.username"));
 			
 			getPlugin().getConfig().addDefault("serverstatus.password", "r@P#eiXSQP(R");

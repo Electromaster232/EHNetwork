@@ -11,6 +11,7 @@
     <orderEntry type="library" name="commons-dbcp2" level="project" />
     <orderEntry type="library" name="commons-pool2" level="project" />
     <orderEntry type="library" name="commons-logging" level="project" />
+    <orderEntry type="library" name="worldguard" level="project" />
+    <orderEntry type="library" name="worldedit-bukkit-6.1" level="project" />
   </component>
 </module>
-

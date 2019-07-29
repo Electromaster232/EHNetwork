@@ -209,7 +209,7 @@ public class GameManager implements Listener
 		{
 			if (UtilTime.elapsed(game.GetStateTime(), 0))
 			{
-				game.SetState(GameState.Prepare);
+				game.SetState(GameState.Dead);
 			}
 		}
 	}

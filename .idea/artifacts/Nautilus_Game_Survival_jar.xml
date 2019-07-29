@@ -1,0 +1,26 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Nautilus.Game.Survival:jar">
+    <output-path>$PROJECT_DIR$/bin</output-path>
+    <root id="archive" name="Survival.jar">
+      <element id="module-output" name="Nautilus.Game.Survival" />
+      <element id="module-output" name="Mineplex.Core" />
+      <element id="module-output" name="Mineplex.Core.Common" />
+      <element id="module-output" name="Mineplex.ServerData" />
+      <element id="module-output" name="Mineplex.Database" />
+      <element id="module-output" name="Mineplex.Minecraft.Game.ClassCombat" />
+      <element id="module-output" name="Mineplex.Minecraft.Game.Core" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-pool2-2.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/jooq-3.5.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-codec-1.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/httpclient-4.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/gson-2.2.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-logging-1.1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/httpcore-4.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-dbcp2-2.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/jedis-2.4.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/org-apache-commons-lang.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PROJECT_DIR$/Nautilus.Game.Survival/plugin.yml" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/worldguard-6.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

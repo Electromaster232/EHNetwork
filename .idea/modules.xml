@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/Mineplex.Core/Mineplex.Core.iml" filepath="$PROJECT_DIR$/Mineplex.Core/Mineplex.Core.iml" group="Core" />
       <module fileurl="file://$PROJECT_DIR$/Mineplex.Core.Common/Mineplex.Core.Common.iml" filepath="$PROJECT_DIR$/Mineplex.Core.Common/Mineplex.Core.Common.iml" group="Core" />
       <module fileurl="file://$PROJECT_DIR$/Mineplex.Database/Mineplex.Database.iml" filepath="$PROJECT_DIR$/Mineplex.Database/Mineplex.Database.iml" group="Core" />
+      <module fileurl="file://$PROJECT_DIR$/Mineplex.EnjinTranslator/Mineplex.EnjinTranslator.iml" filepath="$PROJECT_DIR$/Mineplex.EnjinTranslator/Mineplex.EnjinTranslator.iml" group="Core" />
       <module fileurl="file://$PROJECT_DIR$/Mineplex.Game.Clans/Mineplex.Game.Clans.iml" filepath="$PROJECT_DIR$/Mineplex.Game.Clans/Mineplex.Game.Clans.iml" group="Game" />
       <module fileurl="file://$PROJECT_DIR$/Mineplex.Hub/Mineplex.Hub.iml" filepath="$PROJECT_DIR$/Mineplex.Hub/Mineplex.Hub.iml" />
       <module fileurl="file://$PROJECT_DIR$/Mineplex.MapParser/Mineplex.MapParser.iml" filepath="$PROJECT_DIR$/Mineplex.MapParser/Mineplex.MapParser.iml" />
@@ -19,6 +20,7 @@
       <module fileurl="file://$PROJECT_DIR$/Mineplex.StaffServer/Mineplex.StaffServer.iml" filepath="$PROJECT_DIR$/Mineplex.StaffServer/Mineplex.StaffServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/Nautilus.Game.Arcade/Nautilus.Game.Arcade.iml" filepath="$PROJECT_DIR$/Nautilus.Game.Arcade/Nautilus.Game.Arcade.iml" group="Game" />
       <module fileurl="file://$PROJECT_DIR$/Nautilus.Game.MicroGames/Nautilus.Game.MicroGames.iml" filepath="$PROJECT_DIR$/Nautilus.Game.MicroGames/Nautilus.Game.MicroGames.iml" group="Game" />
+      <module fileurl="file://$PROJECT_DIR$/Nautilus.Game.Survival/Nautilus.Game.Survival.iml" filepath="$PROJECT_DIR$/Nautilus.Game.Survival/Nautilus.Game.Survival.iml" group="Game" />
     </modules>
   </component>
 </project>

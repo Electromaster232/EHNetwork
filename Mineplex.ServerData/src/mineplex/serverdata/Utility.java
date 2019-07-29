@@ -138,19 +138,14 @@ public class Utility
 	{
 	    String key = getConnKey(connData);
 	    JedisPool pool = _pools.get(key);
-	    if (pool == null)
-	    {
-	        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-	        jedisPoolConfig.setMaxWaitMillis(1000);
-	        jedisPoolConfig.setMinIdle(5);
-	        jedisPoolConfig.setTestOnBorrow(true);
-
-	        jedisPoolConfig.setMaxTotal(20);
-	        jedisPoolConfig.setBlockWhenExhausted(true);
-
-	        pool = new JedisPool(jedisPoolConfig, connData.getHost(), connData.getPort());
-	        _pools.put(key, pool);
-	    }
+	    JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+	    jedisPoolConfig.setMaxWaitMillis(1000);
+	    jedisPoolConfig.setMinIdle(5);
+	    jedisPoolConfig.setTestOnBorrow(true);
+	    jedisPoolConfig.setMaxTotal(20);
+	    jedisPoolConfig.setBlockWhenExhausted(true);
+	    pool = new JedisPool(jedisPoolConfig, "127.0.0.1", 6379);
+	    _pools.put(key, pool);
 
 	    return pool;
 	}

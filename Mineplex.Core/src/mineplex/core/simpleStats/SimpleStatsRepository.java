@@ -12,8 +12,8 @@ public class SimpleStatsRepository
 {
 	private static Object _connectionLock = new Object();
 	
-	private String _connectionString = "jdbc:mysql://149.56.38.19:3306/Mineplex?autoReconnect=true&failOverReadOnly=false&maxReconnects=10";
-	private String _userName = "djelectr_minep";
+	private String _connectionString = "jdbc:mysql://38.108.20.53:3306/Mineplex?autoReconnect=true&failOverReadOnly=false&maxReconnects=10";
+	private String _userName = "mineplex";
 	private String _password = "r@P#eiXSQP(R"; //try to obfuscate this in the future!
 
 	private static String CREATE_STATS_TABLE = "CREATE TABLE IF NOT EXISTS simpleStats (id INT NOT NULL AUTO_INCREMENT, statName VARCHAR(64), statValue VARCHAR(64), PRIMARY KEY (id));";

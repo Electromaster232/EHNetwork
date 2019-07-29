@@ -14,8 +14,8 @@ import mineplex.playerCache.PlayerInfo;
 public class PlayerStatsRepository
 {
 	private Connection _connection = null;
-	private String _connectionString = "jdbc:mysql://149.56.38.19:3306/PlayerStats?autoReconnect=true&failOverReadOnly=false&maxReconnects=10&allowMultiQueries=true";
-	private String _userName = "djelectr_minep";
+	private String _connectionString = "jdbc:mysql://38.108.20.53:3306/Mineplex?autoReconnect=true&failOverReadOnly=false&maxReconnects=10&allowMultiQueries=true";
+	private String _userName = "mineplex";
 	private String _password = "r@P#eiXSQP(R";
 	
 	private static String INSERT_PLAYERINFO = "INSERT INTO playerInfo (uuid, name, version) VALUES (?, ?, ?);";
