@@ -93,6 +93,7 @@ import mineplex.minecraft.game.core.fire.Fire;
 import nautilus.game.survival.commands.BuildAllowCommand;
 import nautilus.game.survival.commands.BuildRemoveCommand;
 import nautilus.game.survival.commands.BuildRequestCommand;
+import nautilus.game.survival.commands.CosmeticsCommand;
 import nautilus.game.survival.commands.DoubleJumpCommand;
 import nautilus.game.survival.commands.FlyCommand;
 import nautilus.game.survival.commands.GodCommand;
@@ -351,6 +352,7 @@ public class SurvivalManager extends MiniPlugin implements IRelation
 		addCommand(new FlyCommand(this));
 		addCommand(new OofCommand(this));
 		addCommand(new GodCommand(this));
+		addCommand(new CosmeticsCommand(this));
 		addCommand(new DoubleJumpCommand(this));
 		// Build Commands
 		addCommand(new BuildRequestCommand(this));
@@ -552,6 +554,12 @@ public class SurvivalManager extends MiniPlugin implements IRelation
 	public void MessageJoin(PlayerJoinEvent event)
 	{
 		String name = event.getPlayer().getName();
+
+		if(!UtilPlayer.is1_8(event.getPlayer())){
+			UtilPlayer.kick(event.getPlayer(), "Version", "Please rejoin using version 1.8 or greater!");
+		}
+		event.getPlayer().setGameMode(GameMode.SURVIVAL);
+		_cosmeticManager.disableItemsForPlayer(event.getPlayer());
 
 		event.setJoinMessage(F.sys("Join", name));
 	}

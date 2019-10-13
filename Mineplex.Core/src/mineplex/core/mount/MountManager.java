@@ -114,6 +114,16 @@ public class MountManager extends MiniPlugin
 			for (Player player : UtilServer.getPlayers())
 				mount.Disable(player);
 	}
+
+	public void DisableAll(Player player){
+		for (Mount<?> mount : _types)
+				mount.Disable(player);
+	}
+
+	public void EnableAll(Player player){
+		for (Mount<?> mount : _types)
+			mount.Enable(player);
+	}
 	
 	@EventHandler
 	public void quit(PlayerQuitEvent event)

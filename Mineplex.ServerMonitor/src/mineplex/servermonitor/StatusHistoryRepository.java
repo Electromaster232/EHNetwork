@@ -16,7 +16,7 @@ import mineplex.servermonitor.data.BungeeStatusData;
 
 public class StatusHistoryRepository
 {
-	private String _connectionString = "jdbc:mysql://38.108.20.53:3306/ServerStats";
+	private String _connectionString = "jdbc:mysql://192.168.1.139:3306/ServerStats";
 	private String _userName = "mineplex";
 	private String _password = "r@P#eiXSQP(R";
 	

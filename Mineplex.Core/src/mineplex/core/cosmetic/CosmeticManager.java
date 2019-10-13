@@ -175,6 +175,18 @@ public class CosmeticManager extends MiniPlugin
 		_gadgetManager.DisableAll();
 		_mountManager.DisableAll();
 		_petManager.DisableAll();
+
+	}
+
+	public void disableItemsForPlayer(Player player){
+		_gadgetManager.DisableAll(player);
+		_mountManager.DisableAll(player);
+
+	}
+
+	public void enableItemsForPlayer(Player player){
+		_gadgetManager.EnableAll(player);
+		_mountManager.EnableAll(player);
 	}
 
 	public void setHideParticles(boolean b)

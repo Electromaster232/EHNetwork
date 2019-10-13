@@ -275,6 +275,17 @@ public class GadgetManager extends MiniPlugin
 		}
 	}
 
+	public void EnableAll(Player player){
+
+		for (GadgetType gadgetType : _gadgets.keySet())
+		{
+			for (Gadget gadget : _gadgets.get(gadgetType))
+			{
+				gadget.Enable(player);
+			}
+		}
+	}
+
 	public PetManager getPetManager()
 	{
 		return _petManager;

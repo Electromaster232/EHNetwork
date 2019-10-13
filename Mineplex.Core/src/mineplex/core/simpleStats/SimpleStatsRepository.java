@@ -12,7 +12,7 @@ public class SimpleStatsRepository
 {
 	private static Object _connectionLock = new Object();
 	
-	private String _connectionString = "jdbc:mysql://38.108.20.53:3306/Mineplex?autoReconnect=true&failOverReadOnly=false&maxReconnects=10";
+	private String _connectionString = "jdbc:mysql://192.168.1.139:3306/Mineplex?autoReconnect=true&failOverReadOnly=false&maxReconnects=10";
 	private String _userName = "mineplex";
 	private String _password = "r@P#eiXSQP(R"; //try to obfuscate this in the future!
 

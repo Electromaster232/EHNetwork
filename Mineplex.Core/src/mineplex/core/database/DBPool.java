@@ -7,10 +7,10 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 public final class DBPool
 {
-	public static final DataSource ACCOUNT = openDataSource("jdbc:mysql://38.108.20.53:3306/Account", "mineplex", "r@P#eiXSQP(R");
-	public static final DataSource QUEUE = openDataSource("jdbc:mysql://38.108.20.53:3306/djelectro_Queue", "djelectro_minep", "r@P#eiXSQP(R");
-	public static final DataSource MINEPLEX = openDataSource("jdbc:mysql://38.108.20.53:3306/Mineplex", "mineplex", "r@P#eiXSQP(R");
-	public static final DataSource STATS_MINEPLEX = openDataSource("jdbc:mysql://38.108.20.53:3306/Mineplex", "mineplex", "r@P#eiXSQP(R");
+	public static final DataSource ACCOUNT = openDataSource("jdbc:mysql://192.168.1.139:3306/Account", "mineplex", "r@P#eiXSQP(R");
+	public static final DataSource QUEUE = openDataSource("jdbc:mysql://192.168.1.139:3306/djelectro_Queue", "djelectro_minep", "r@P#eiXSQP(R");
+	public static final DataSource MINEPLEX = openDataSource("jdbc:mysql://192.168.1.139:3306/Mineplex", "mineplex", "r@P#eiXSQP(R");
+	public static final DataSource STATS_MINEPLEX = openDataSource("jdbc:mysql://192.168.1.139:3306/Mineplex", "mineplex", "r@P#eiXSQP(R");
 
 	private static DataSource openDataSource(String url, String username, String password)
 	{

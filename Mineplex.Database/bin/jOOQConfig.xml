@@ -3,7 +3,7 @@
 	<!-- Configure the database connection here -->
 	<jdbc>
 		<driver>com.mysql.jdbc.Driver</driver>
-		<url>jdbc:mysql://38.108.20.53:3306</url>
+		<url>jdbc:mysql://192.168.1.139:3306</url>
 		<user>mineplex</user>
 		<password>r@P#eiXSQP(R</password>
 	</jdbc>

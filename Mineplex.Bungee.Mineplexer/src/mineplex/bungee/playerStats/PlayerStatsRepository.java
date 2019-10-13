@@ -14,7 +14,7 @@ import mineplex.playerCache.PlayerInfo;
 public class PlayerStatsRepository
 {
 	private Connection _connection = null;
-	private String _connectionString = "jdbc:mysql://38.108.20.53:3306/Mineplex?autoReconnect=true&failOverReadOnly=false&maxReconnects=10&allowMultiQueries=true";
+	private String _connectionString = "jdbc:mysql://192.168.1.139:3306/Mineplex?autoReconnect=true&failOverReadOnly=false&maxReconnects=10&allowMultiQueries=true";
 	private String _userName = "mineplex";
 	private String _password = "r@P#eiXSQP(R";
 	
