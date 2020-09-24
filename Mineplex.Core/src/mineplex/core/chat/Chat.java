@@ -55,7 +55,7 @@ public class Chat extends MiniPlugin
 	private AchievementManager _achievements;
 	
 	private String[] _hackusations = {"i_am_a_hackusation", "hax0rtest"};
-	private String _filterUrl = "https://mplex.endlcdn.site/accounts/filter.php";
+	private String _filterUrl = "http://mplex.endlcdn.site/accounts/filter.php";
 	private String _appId = "34018d65-466d-4a91-8e92-29ca49f022c4";
 	private String _apiKey = "oUywMpwZcIzZO5AWnfDx";
 	private String _serverName;
