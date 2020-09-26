@@ -2,9 +2,9 @@
   <artifact type="jar" name="Mineplex.MapParser:jar">
     <output-path>$PROJECT_DIR$/bin</output-path>
     <root id="archive" name="MapParser.jar">
-      <element id="module-output" name="Mineplex.MapParser" />
-      <element id="file-copy" path="$PROJECT_DIR$/Mineplex.MapParser/plugin.yml" />
-      <element id="module-output" name="Mineplex.Core.Common" />
+      <element id="module-output" name="EHNetwork.MapParser" />
+      <element id="file-copy" path="$PROJECT_DIR$/EHNetwork.MapParser/plugin.yml" />
+      <element id="module-output" name="EHNetwork.Core.Common" />
     </root>
   </artifact>
 </component>

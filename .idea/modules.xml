@@ -3,24 +3,23 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Classpath.Dummy/Classpath.Dummy.iml" filepath="$PROJECT_DIR$/Classpath.Dummy/Classpath.Dummy.iml" group="Core" />
+      <module fileurl="file://$PROJECT_DIR$/EHNetwork.Bungee.Networker/EHNetwork.Bungee.Networker.iml" filepath="$PROJECT_DIR$/EHNetwork.Bungee.Networker/EHNetwork.Bungee.Networker.iml" group="Bungee" />
+      <module fileurl="file://$PROJECT_DIR$/EHNetwork.Core/EHNetwork.Core.iml" filepath="$PROJECT_DIR$/EHNetwork.Core/EHNetwork.Core.iml" group="Core" />
+      <module fileurl="file://$PROJECT_DIR$/EHNetwork.Core.Common/EHNetwork.Core.Common.iml" filepath="$PROJECT_DIR$/EHNetwork.Core.Common/EHNetwork.Core.Common.iml" group="Core" />
+      <module fileurl="file://$PROJECT_DIR$/EHNetwork.Database/EHNetwork.Database.iml" filepath="$PROJECT_DIR$/EHNetwork.Database/EHNetwork.Database.iml" group="Core" />
+      <module fileurl="file://$PROJECT_DIR$/EHNetwork.Game.Arcade/EHNetwork.Game.Arcade.iml" filepath="$PROJECT_DIR$/EHNetwork.Game.Arcade/EHNetwork.Game.Arcade.iml" group="Game" />
+      <module fileurl="file://$PROJECT_DIR$/EHNetwork.Game.MicroGames/EHNetwork.Game.MicroGames.iml" filepath="$PROJECT_DIR$/EHNetwork.Game.MicroGames/EHNetwork.Game.MicroGames.iml" group="Game" />
+      <module fileurl="file://$PROJECT_DIR$/EHNetwork.Game.SkyClans/EHNetwork.Game.SkyClans.iml" filepath="$PROJECT_DIR$/EHNetwork.Game.SkyClans/EHNetwork.Game.SkyClans.iml" group="Game" />
+      <module fileurl="file://$PROJECT_DIR$/EHNetwork.Game.Survival/EHNetwork.Game.Survival.iml" filepath="$PROJECT_DIR$/EHNetwork.Game.Survival/EHNetwork.Game.Survival.iml" group="Game" />
+      <module fileurl="file://$PROJECT_DIR$/EHNetwork.Hub/EHNetwork.Hub.iml" filepath="$PROJECT_DIR$/EHNetwork.Hub/EHNetwork.Hub.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EHNetwork.MapParser/EHNetwork.MapParser.iml" filepath="$PROJECT_DIR$/EHNetwork.MapParser/EHNetwork.MapParser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EHNetwork.Minecraft.Game.ClassCombat/EHNetwork.Minecraft.Game.ClassCombat.iml" filepath="$PROJECT_DIR$/EHNetwork.Minecraft.Game.ClassCombat/EHNetwork.Minecraft.Game.ClassCombat.iml" group="Game" />
+      <module fileurl="file://$PROJECT_DIR$/EHNetwork.Minecraft.Game.Core/EHNetwork.Minecraft.Game.Core.iml" filepath="$PROJECT_DIR$/EHNetwork.Minecraft.Game.Core/EHNetwork.Minecraft.Game.Core.iml" group="Game" />
+      <module fileurl="file://$PROJECT_DIR$/EHNetwork.PlayerCache/EHNetwork.PlayerCache.iml" filepath="$PROJECT_DIR$/EHNetwork.PlayerCache/EHNetwork.PlayerCache.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EHNetwork.ServerData/EHNetwork.ServerData.iml" filepath="$PROJECT_DIR$/EHNetwork.ServerData/EHNetwork.ServerData.iml" group="Core" />
+      <module fileurl="file://$PROJECT_DIR$/EHNetwork.ServerMonitor/EHNetwork.ServerMonitor.iml" filepath="$PROJECT_DIR$/EHNetwork.ServerMonitor/EHNetwork.ServerMonitor.iml" group="Core" />
+      <module fileurl="file://$PROJECT_DIR$/EHNetwork.StaffServer/EHNetwork.StaffServer.iml" filepath="$PROJECT_DIR$/EHNetwork.StaffServer/EHNetwork.StaffServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/JedisTest/JedisTest.iml" filepath="$PROJECT_DIR$/JedisTest/JedisTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Mineplex.Bungee.Mineplexer/Mineplex.Bungee.Mineplexer.iml" filepath="$PROJECT_DIR$/Mineplex.Bungee.Mineplexer/Mineplex.Bungee.Mineplexer.iml" group="Bungee" />
-      <module fileurl="file://$PROJECT_DIR$/Mineplex.Core/Mineplex.Core.iml" filepath="$PROJECT_DIR$/Mineplex.Core/Mineplex.Core.iml" group="Core" />
-      <module fileurl="file://$PROJECT_DIR$/Mineplex.Core.Common/Mineplex.Core.Common.iml" filepath="$PROJECT_DIR$/Mineplex.Core.Common/Mineplex.Core.Common.iml" group="Core" />
-      <module fileurl="file://$PROJECT_DIR$/Mineplex.Database/Mineplex.Database.iml" filepath="$PROJECT_DIR$/Mineplex.Database/Mineplex.Database.iml" group="Core" />
-      <module fileurl="file://$PROJECT_DIR$/Mineplex.EnjinTranslator/Mineplex.EnjinTranslator.iml" filepath="$PROJECT_DIR$/Mineplex.EnjinTranslator/Mineplex.EnjinTranslator.iml" group="Core" />
-      <module fileurl="file://$PROJECT_DIR$/Mineplex.Game.Clans/Mineplex.Game.Clans.iml" filepath="$PROJECT_DIR$/Mineplex.Game.Clans/Mineplex.Game.Clans.iml" group="Game" />
-      <module fileurl="file://$PROJECT_DIR$/Mineplex.Hub/Mineplex.Hub.iml" filepath="$PROJECT_DIR$/Mineplex.Hub/Mineplex.Hub.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Mineplex.MapParser/Mineplex.MapParser.iml" filepath="$PROJECT_DIR$/Mineplex.MapParser/Mineplex.MapParser.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Mineplex.Minecraft.Game.ClassCombat/Mineplex.Minecraft.Game.ClassCombat.iml" filepath="$PROJECT_DIR$/Mineplex.Minecraft.Game.ClassCombat/Mineplex.Minecraft.Game.ClassCombat.iml" group="Game" />
-      <module fileurl="file://$PROJECT_DIR$/Mineplex.Minecraft.Game.Core/Mineplex.Minecraft.Game.Core.iml" filepath="$PROJECT_DIR$/Mineplex.Minecraft.Game.Core/Mineplex.Minecraft.Game.Core.iml" group="Game" />
-      <module fileurl="file://$PROJECT_DIR$/Mineplex.PlayerCache/Mineplex.PlayerCache.iml" filepath="$PROJECT_DIR$/Mineplex.PlayerCache/Mineplex.PlayerCache.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Mineplex.ServerData/Mineplex.ServerData.iml" filepath="$PROJECT_DIR$/Mineplex.ServerData/Mineplex.ServerData.iml" group="Core" />
-      <module fileurl="file://$PROJECT_DIR$/Mineplex.ServerMonitor/Mineplex.ServerMonitor.iml" filepath="$PROJECT_DIR$/Mineplex.ServerMonitor/Mineplex.ServerMonitor.iml" group="Core" />
-      <module fileurl="file://$PROJECT_DIR$/Mineplex.StaffServer/Mineplex.StaffServer.iml" filepath="$PROJECT_DIR$/Mineplex.StaffServer/Mineplex.StaffServer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Nautilus.Game.Arcade/Nautilus.Game.Arcade.iml" filepath="$PROJECT_DIR$/Nautilus.Game.Arcade/Nautilus.Game.Arcade.iml" group="Game" />
-      <module fileurl="file://$PROJECT_DIR$/Nautilus.Game.MicroGames/Nautilus.Game.MicroGames.iml" filepath="$PROJECT_DIR$/Nautilus.Game.MicroGames/Nautilus.Game.MicroGames.iml" group="Game" />
-      <module fileurl="file://$PROJECT_DIR$/Nautilus.Game.Survival/Nautilus.Game.Survival.iml" filepath="$PROJECT_DIR$/Nautilus.Game.Survival/Nautilus.Game.Survival.iml" group="Game" />
     </modules>
   </component>
 </project>

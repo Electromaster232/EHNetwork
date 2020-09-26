@@ -1,0 +1,3 @@
+name: StaffServer
+main: ehnetwork.staffServer.StaffServer
+version: 1.0

@@ -1,0 +1,4 @@
+name: Survival
+main: ehnetwork.game.survival.Survival
+version: 0.1
+depend: [WorldGuard]

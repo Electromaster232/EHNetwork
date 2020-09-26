@@ -1,0 +1,94 @@
+package ehnetwork.minecraft.game.classcombat.item;
+
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+import ehnetwork.core.common.util.UtilGear;
+import ehnetwork.minecraft.game.core.damage.CustomDamageEvent;
+
+public class Item implements IItem, Listener
+{
+	protected ItemFactory Factory;
+
+	private Material _type;
+	private String _name;
+	private String[] _desc;
+	private int _amount;
+	private boolean _free;
+	private int _gemCost;
+	private boolean _canDamage;
+	
+	private int _tokenCost;
+
+	public Item(ItemFactory factory, String name, String[] desc, Material type, int amount, boolean canDamage, int gemCost, int tokenCost)
+	{
+		Factory = factory;
+		_name = name;
+		_desc = desc;
+		_type = type;
+		_amount = amount;
+		_gemCost = gemCost;
+		_tokenCost = tokenCost;
+		_canDamage = canDamage;
+	}
+
+	@Override
+	public Material GetType()
+	{
+		return _type;
+	}
+
+	@Override
+	public int GetAmount()
+	{
+		return _amount;
+	}
+
+	@Override
+	public int GetGemCost()
+	{
+		return _gemCost;
+	}
+
+	@Override
+	public String GetName()
+	{
+		return _name;
+	}
+	
+	@EventHandler
+	public void Damage(CustomDamageEvent event)
+	{
+		Player damager = event.GetDamagerPlayer(false);
+		if (damager == null)	return;
+		
+		if (!UtilGear.isMat(damager.getItemInHand(), GetType()))
+			return;
+		
+		if (!_canDamage)
+			event.SetCancelled("Item Damage Cancel");
+	}
+
+	@Override
+	public String[] GetDesc() 
+	{
+		return _desc;
+	}
+	
+	public boolean isFree()
+	{
+		return _free;
+	}
+	
+	public void setFree(boolean free)
+	{
+		_free = free;
+	}
+	
+	public int getTokenCost()
+	{
+		return _tokenCost;
+	}
+}

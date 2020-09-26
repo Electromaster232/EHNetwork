@@ -1,0 +1,3 @@
+name: Arcade
+main: ehnetwork.game.arcade.Arcade
+version: 1.0

@@ -1,0 +1,4 @@
+name: EHNetworker
+main: ehnetwork.bungee.EHNetworker
+version: 2
+author: DJElectro

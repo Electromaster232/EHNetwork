@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Bungee" type="Application" factoryName="Application" singleton="true">
     <option name="MAIN_CLASS_NAME" value="net.md_5.bungee.Bootstrap" />
-    <module name="Mineplex.Bungee.Mineplexer" />
+    <module name="EHNetwork.Bungee.Networker" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Testing/Bungee" />
     <RunnerSettings RunnerId="Cover" />
     <RunnerSettings RunnerId="Debug">
