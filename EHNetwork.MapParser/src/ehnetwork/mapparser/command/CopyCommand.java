@@ -3,6 +3,7 @@ package ehnetwork.mapparser.command;
 import java.io.File;
 import java.io.IOException;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import net.minecraft.util.org.apache.commons.io.FileUtils;
@@ -73,7 +74,7 @@ public class CopyCommand extends BaseCommand
 				other.teleport(getPlugin().getSpawnLocation());
 				message(other, "Unloading world for copy...");
 			}
-			MapUtil.UnloadWorld(getPlugin(), world, true);
+			Bukkit.getServer().unloadWorld( world, true);
 		}
 
 		File source = new File(worldName);

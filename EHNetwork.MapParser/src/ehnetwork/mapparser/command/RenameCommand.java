@@ -2,6 +2,7 @@ package ehnetwork.mapparser.command;
 
 import java.io.File;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -49,7 +50,7 @@ public class RenameCommand extends BaseCommand
 			other.teleport(getPlugin().getSpawnLocation());
 			message(other, "Unloading world for rename...");
 		}
-		MapUtil.UnloadWorld(getPlugin(), world, true);
+		Bukkit.getServer().unloadWorld( world, true);
 		message(player, "World unloaded!");
 
 

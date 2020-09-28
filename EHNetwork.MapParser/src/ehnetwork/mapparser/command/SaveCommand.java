@@ -2,6 +2,7 @@ package ehnetwork.mapparser.command;
 
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -63,7 +64,7 @@ public class SaveCommand extends BaseCommand
 				other.teleport(getPlugin().getSpawnLocation());
 
 			//Unload World
-			MapUtil.UnloadWorld(getPlugin(), world, true);
+			Bukkit.getServer().unloadWorld( world, true);
 		}
 		else
 		{

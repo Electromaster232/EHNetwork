@@ -7,6 +7,9 @@ public enum GameType
 	Unknown("Unknown"),
 	Lobby("Lobby"),
 	Event("Mineplex Event"),
+	AmongUs("Among Us"),
+	Murder("Murder Mystery"),
+	ColorSwap("Color Swap"),
 	
 	BaconBrawl("Bacon Brawl"),
 	Barbarians("A Barbarians Life"),

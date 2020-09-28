@@ -2,6 +2,7 @@ package ehnetwork.mapparser.command;
 
 import java.io.File;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import net.minecraft.util.org.apache.commons.io.FileUtils;
@@ -66,7 +67,7 @@ public class DeleteCommand extends BaseCommand
 
 			//Unload World
 			//Things break if this isn't set to true for saving the world
-			MapUtil.UnloadWorld(getPlugin(), world, true);
+			Bukkit.getServer().unloadWorld( world, true);
 		}
 
 		//Delete

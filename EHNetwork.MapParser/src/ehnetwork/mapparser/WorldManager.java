@@ -25,7 +25,7 @@ public class WorldManager
 	public World prepMapParse(World world)
 	{
 		//Unload World
-		MapUtil.UnloadWorld(Host, world, true);
+		Bukkit.getServer().unloadWorld(world, true);
 		
 		//Delete Non-Map Files
 		String[] folders = new File(world.getName()).list();
@@ -70,7 +70,7 @@ public class WorldManager
 
 	public void finalizeParsedWorld(World world)
 	{
-		MapUtil.UnloadWorld(Host, world, true);
+		Bukkit.getServer().unloadWorld(world, true);
 		
 		ArrayList<String> fileList = new ArrayList<String>();
 		ArrayList<String> dirList = new ArrayList<String>();

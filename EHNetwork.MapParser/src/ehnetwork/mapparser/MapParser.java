@@ -318,7 +318,7 @@ public class MapParser extends JavaPlugin implements Listener
 			if (world.getPlayers().isEmpty()) 
 			{
 				Announce("Saving & Closing World: " + F.elem(world.getName()));
-				MapUtil.UnloadWorld(this, world, true);
+				Bukkit.getServer().unloadWorld(world, true);
 
 				_mapsBeingZipped.add(world.getName());
 				System.out.println("Starting backup of " + world);
