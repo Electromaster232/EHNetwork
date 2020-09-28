@@ -224,6 +224,11 @@ public class Murder extends SoloGame
 		Player damager = (Player) event.getDamager();
 		Player entity = (Player) event.getEntity();
 
+		if(damager != murderer && damager != detective)
+		{
+			event.setCancelled(true);
+			return;
+		}
 		/*
 		if (damager != detective || damager != murderer){
 			System.out.println("W R O N G");

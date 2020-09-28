@@ -228,7 +228,7 @@ public class Punish extends MiniPlugin
 		
 		for (PunishmentToken punishment : token.Punishments)
 		{
-			client.AddPunishment(Category.valueOf(punishment.Category), new Punishment(punishment.PunishmentId, PunishmentSentence.valueOf(punishment.Sentence), Category.valueOf(punishment.Category), punishment.Reason, punishment.Admin, punishment.Duration, punishment.Severity, punishment.Time, punishment.Active, punishment.Removed, punishment.RemoveAdmin, punishment.RemoveReason));
+			client.AddPunishment(Category.valueOf(punishment.Category), new Punishment(punishment.PunishmentId, PunishmentSentence.valueOf(punishment.Sentence), Category.valueOf(punishment.Category), punishment.Reason, punishment.Admin, punishment.Duration, punishment.Severity, timeDifference, punishment.Active, punishment.Removed, punishment.RemoveAdmin, punishment.RemoveReason));
 		}
 		
 		_punishClients.put(token.Name.toLowerCase(), client);

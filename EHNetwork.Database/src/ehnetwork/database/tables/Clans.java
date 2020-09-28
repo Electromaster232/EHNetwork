@@ -86,9 +86,9 @@ public class Clans extends org.jooq.impl.TableImpl<ClansRecord> implements java.
 	public final org.jooq.TableField<ClansRecord, java.lang.Integer> kills = createField("kills", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>Account.clans.murder</code>.
+	 * The column <code>Account.clans.amongus</code>.
 	 */
-	public final org.jooq.TableField<ClansRecord, java.lang.Integer> murder = createField("murder", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<ClansRecord, java.lang.Integer> murder = createField("amongus", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>Account.clans.deaths</code>.

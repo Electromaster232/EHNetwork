@@ -161,14 +161,14 @@ public class ClansRecord extends org.jooq.impl.UpdatableRecordImpl<ClansRecord> 
 	}
 
 	/**
-	 * Setter for <code>Account.clans.murder</code>.
+	 * Setter for <code>Account.clans.amongus</code>.
 	 */
 	public void setMurder(java.lang.Integer value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>Account.clans.murder</code>.
+	 * Getter for <code>Account.clans.amongus</code>.
 	 */
 	public java.lang.Integer getMurder() {
 		return (java.lang.Integer) getValue(10);

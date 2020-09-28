@@ -2,7 +2,7 @@
   <configuration default="false" name="Hub" type="Application" factoryName="Application" singleton="true">
     <option name="MAIN_CLASS_NAME" value="org.bukkit.craftbukkit.Main" />
     <module name="Classpath.Dummy" />
-    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing/Hub" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Testing/Hub" />
     <RunnerSettings RunnerId="Cover" />
     <RunnerSettings RunnerId="Debug">
       <option name="DEBUG_PORT" value="" />
@@ -16,6 +16,7 @@
     <method v="2">
       <option name="Make" enabled="true" />
       <option name="BuildArtifacts" enabled="true">
+        <artifact name="Mineplex.Hub:jar" />
         <artifact name="Mineplex.Hub:test" />
       </option>
     </method>

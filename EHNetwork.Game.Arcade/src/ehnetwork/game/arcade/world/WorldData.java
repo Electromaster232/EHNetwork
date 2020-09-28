@@ -545,6 +545,11 @@ public class WorldData
 		return CustomLocs;
 	}
 
+	public HashMap<String, ArrayList<Location>> GetAllDataLocs()
+	{
+		return DataLocs;
+	}
+
 	public Location GetRandomXZ() 
 	{
 		Location loc = new Location(World, 0, 250, 0);
