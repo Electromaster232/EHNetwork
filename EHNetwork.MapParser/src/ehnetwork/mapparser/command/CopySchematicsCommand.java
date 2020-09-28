@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.bukkit.entity.Player;
-import net.minecraft.util.org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FileUtils;
 
 import ehnetwork.mapparser.MapParser;
 

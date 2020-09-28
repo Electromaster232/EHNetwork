@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import net.minecraft.util.org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FileUtils;
 
 import ehnetwork.core.common.util.F;
 import ehnetwork.core.common.util.MapUtil;

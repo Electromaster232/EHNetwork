@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
-import net.minecraft.util.org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FileUtils;
 
 import ehnetwork.core.common.util.MapUtil;
 import ehnetwork.core.common.util.ZipUtil;
