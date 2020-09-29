@@ -12,6 +12,7 @@ public enum GameDisplay
 	ChampionsDominate("Champions Domination", "Champions", Material.BEACON, (byte)0, GameCategory.CHAMPIONS, 6),
 	//ChampionsMOBA(ChampionsMOBA.class, "Champions MOBA", "Champions", Material.SKULL_ITEM, (byte)0, GameCategory.CHAMPIONS, 7),
 	ChampionsTDM("Champions TDM", "Champions", Material.GOLD_SWORD, (byte)0, GameCategory.CHAMPIONS, 5),
+	AmongUs("Among Us", Material.DIAMOND_HELMET, (byte)0, GameCategory.ARCADE, 69),
 	Christmas("Christmas Chaos", Material.SNOW_BALL, (byte)0, GameCategory.CLASSICS, 8),
 	DeathTag("Death Tag", Material.SKULL_ITEM, (byte)0, GameCategory.ARCADE, 9),
 	DragonEscape("Dragon Escape", Material.DRAGON_EGG, (byte)0, GameCategory.ARCADE, 10),

@@ -189,7 +189,8 @@ public class ArcadeManager extends MiniPlugin implements IRelation
 
 	private TaskManager _taskManager;
     private PacketHandler _packetHandler;
-	
+
+    private Teleport _teleport;
 	
 	private IPacketHandler _resourcePacketHandler;
 	private String _resourcePackUrl;
@@ -243,6 +244,7 @@ public class ArcadeManager extends MiniPlugin implements IRelation
 		_chat = chat;
 		_creature = creature;
 
+		_teleport = new Teleport(plugin);
 		_damageManager = damageManager;
 		_damageManager.UseSimpleWeaponDamage = true;
 		_damageManager.setConditionManager(_conditionManager);
@@ -585,6 +587,10 @@ public class ArcadeManager extends MiniPlugin implements IRelation
 	public EventModule GetEventModule()
 	{
 		return _eventManager;
+	}
+
+	public Teleport GetTeleport() {
+		return _teleport;
 	}
 	
 	public PreferencesManager getPreferences()

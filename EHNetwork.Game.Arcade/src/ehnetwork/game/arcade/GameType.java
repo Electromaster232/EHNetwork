@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import ehnetwork.core.game.GameCategory;
 import ehnetwork.core.game.GameDisplay;
 import ehnetwork.game.arcade.game.Game;
+import ehnetwork.game.arcade.game.games.amongus.AmongUs;
 import ehnetwork.game.arcade.game.games.event.EventGame;
 import ehnetwork.game.arcade.game.games.lobbers.BombLobbers;
 import ehnetwork.game.arcade.game.games.sheep.SheepGame;
@@ -57,6 +58,7 @@ public enum GameType
 	Sheep(SheepGame.class, GameDisplay.Sheep),
 	PlayerPop(ehnetwork.game.arcade.game.games.playerpop.PlayerPop.class, GameDisplay.PlayerPop),
 	Smash(SoloSuperSmash.class, GameDisplay.Smash),
+	AmongUs(AmongUs.class, GameDisplay.AmongUs),
 	SmashDomination(SuperSmashDominate.class, GameDisplay.SmashDomination),
 	SmashTeams(TeamSuperSmash.class, GameDisplay.SmashTeams, new GameType[]{GameType.Smash}, false),
 	Snake(ehnetwork.game.arcade.game.games.snake.Snake.class, GameDisplay.Snake),

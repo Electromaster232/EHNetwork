@@ -4,6 +4,7 @@ package ehnetwork.game.arcade.game.games.amongus;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -19,9 +20,13 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 
 import net.minecraft.server.v1_7_R4.ChatSerializer;
 import net.minecraft.server.v1_7_R4.EntityArrow;
@@ -38,6 +43,8 @@ import ehnetwork.core.common.util.UtilPlayer;
 import ehnetwork.core.common.util.UtilServer;
 import ehnetwork.core.common.util.UtilTextMiddle;
 import ehnetwork.core.disguise.disguises.DisguisePlayer;
+import ehnetwork.core.teleport.Teleport;
+import ehnetwork.core.teleport.Teleporter;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
 import ehnetwork.game.arcade.ArcadeFormat;
@@ -53,21 +60,23 @@ import ehnetwork.minecraft.game.core.condition.Condition;
 
 public class AmongUs extends SoloGame
 {
-	// TODO: Write vote process function
 	// TODO: Write vote timer + timeout skip
 	// TODO: Write voter ejection
-	
 	private boolean MurdererShot;
 	private boolean _freezePlayers = false;
 	private Player imposter1;
 	private Player imposter2;
 	private Kit KitMurderer;
+	private ArrayList<Player> ventedPlayers = new ArrayList<>();
 	private Kit KitDetective;
+	private int playersVoted = 0;
 	private NautHashMap<Location, Location> trapdoorLocations = new NautHashMap<>();
 	private NautHashMap<Entity, String> deadBodyEntities = new NautHashMap<>();
+	private NautHashMap<Player, Player> voteFor = new NautHashMap<>();
+	private int skipVotes = 0;
 	public AmongUs(ArcadeManager manager)
 	{
-		super(manager, GameType.Murder,
+		super(manager, GameType.AmongUs,
 				new Kit[]
 						{
 								new KitPlayer(manager),
@@ -89,11 +98,12 @@ public class AmongUs extends SoloGame
 		this.HungerSet = 20;
 		this.DeathMessages = false;
 		this.FirstKill = false;
-		//this.StrictAntiHack = true;
+		this.StrictAntiHack = false;
 		this.DamageTeamOther = true;
 		this.Damage = true;
 		this.DamagePvP = true;
 		this.DamageTeamSelf = true;
+		this.VersionRequire1_8 = true;
 		// whoopsie this did not work lmao this.WorldWaterDamage = 5;
 
 	}
@@ -120,12 +130,19 @@ public class AmongUs extends SoloGame
 	{
 
 
-		for (ArrayList<Location> locs : WorldData.GetAllDataLocs().values())
-		{
-			trapdoorLocations.put(locs.get(0), locs.get(1));
-			trapdoorLocations.put(locs.get(1), locs.get(0));
-		}
-
+			for (ArrayList<Location> locs : WorldData.GetAllDataLocs().values())
+			{
+				try
+				{
+					Location loc1 = new Location(WorldData.World, locs.get(0).getBlockX(), locs.get(0).getBlockY(), locs.get(0).getBlockZ());
+					Location loc2 = new Location(WorldData.World, locs.get(1).getBlockX(), locs.get(1).getBlockY(), locs.get(1).getBlockZ());
+					trapdoorLocations.put(loc1, loc2);
+					trapdoorLocations.put(loc2, loc1);
+				}catch (IndexOutOfBoundsException e){
+					continue;
+				}
+			}
+			System.out.println(trapdoorLocations.keySet());
 
 
 	}
@@ -189,6 +206,8 @@ public class AmongUs extends SoloGame
 		//Check if what was r-clicked was actually a dead body
 		//We do this by checking if it is in the list of dead body entities
 		//Which is a list of the arrow entities created when someone is killed
+		if(Manager.isSpectator(event.getPlayer()))
+			return;
 		if(!deadBodyEntities.keySet().contains(event.getRightClicked()))
 			return;
 		if(_freezePlayers)
@@ -196,8 +215,8 @@ public class AmongUs extends SoloGame
 
 		String playerName = deadBodyEntities.get(event.getRightClicked());
 
-		UtilTextMiddle.display("Dead Body Reported!", "Reported by " + event.getPlayer());
-		for (Player r : getArcadeManager().GetGame().GetPlayers(true))
+		UtilTextMiddle.display("Dead Body Reported!", "Reported by " + event.getPlayer().getName());
+		for (Player r : getArcadeManager().GetGame().GetPlayers(false))
 			r.teleport(Manager.GetGame().GetTeam(r).GetSpawn());
 		_freezePlayers = true;
 
@@ -213,6 +232,8 @@ public class AmongUs extends SoloGame
 	}
 
 	private void OpenVoting(){
+		voteFor.clear();
+		skipVotes = 0;
 		UtilServer.broadcast(F.main("Game", "Voting has begun!"));
 		for(Player r : getArcadeManager().GetGame().GetPlayers(true))
 		{
@@ -227,7 +248,7 @@ public class AmongUs extends SoloGame
 				// Object for click event
 				JsonObject clickObject = new JsonObject();
 				clickObject.addProperty("action", "run_command");
-				clickObject.addProperty("value", "/vote " + x.getName());
+				clickObject.addProperty("value", "/gamevote " + x.getName());
 
 				// Object for hover event
 
@@ -245,7 +266,7 @@ public class AmongUs extends SoloGame
 			// Object for click event
 			JsonObject clickObject = new JsonObject();
 			clickObject.addProperty("action", "run_command");
-			clickObject.addProperty("value", "/vote skip");
+			clickObject.addProperty("value", "/gamevote skip");
 
 			// Object for hover event
 
@@ -257,6 +278,14 @@ public class AmongUs extends SoloGame
 
 		}
 		// Now we start a timer to close voting. Everyone who didnt vote will be counted as skipped.
+		UtilServer.getServer().getScheduler().runTaskLater(Manager.getPlugin(), new Runnable()
+		{
+			public void run()
+			{
+				if(playersVoted < Manager.GetGame().GetPlayers(true).size()){
+					CloseVotes();
+				}
+			}}, 300);
 	}
 
 	@EventHandler
@@ -268,48 +297,115 @@ public class AmongUs extends SoloGame
 		if (UtilMath.offset2d(event.getFrom(), event.getTo()) == 0)
 			return;
 
-		if (!IsAlive(event.getPlayer()))
-			return;
+		//if (!IsAlive(event.getPlayer()))
+		//	return;
 
 		event.setTo(event.getFrom());
 	}
 
 	@EventHandler
-	public void ImposterInVent(PlayerMoveEvent event){
+	public void ProcessVotes(PlayerCommandPreprocessEvent event){
+		if(!event.getMessage().startsWith("/gamevote"))
+			return;
+		event.setCancelled(true);
+		if(voteFor.keySet().contains(event.getPlayer())){
+			event.getPlayer().sendMessage(F.main("Voting", "You already voted this round!"));
+			return;
+		}
+		if(event.getMessage().equals("/gamevote skip")){
+			event.getPlayer().sendMessage(F.main("Voting", "Your vote to skip was submitted successfully"));
+			skipVotes++;
+			playersVoted++;
+			if(playersVoted == Manager.GetGame().GetPlayers(true).size()){
+				CloseVotes();
+			}
+			return;
+		}
+		voteFor.put(event.getPlayer(), Manager.GetClients().Get(event.getMessage().replace("/gamevote ", "")).GetPlayer());
+		event.getPlayer().sendMessage(F.main("Voting", "Your vote was submitted successfully"));
+		playersVoted++;
+
+		// After every vote we want to check if all alive players have voted
+		if(playersVoted == Manager.GetGame().GetPlayers(true).size()){
+			CloseVotes();
+		}
+	}
+
+
+	private void CloseVotes(){
+		UtilServer.broadcast(F.main("Voting", "Voting has closed!"));
+		Manager.GetChat().Silence(-1, true);
+		UtilServer.broadcast(F.main("Voting", "The player with the most votes was..."));
+		Player highestPlayer = null;
+		int highestVotes = 0;
+		for (Player r : Manager.GetGame().GetPlayers(true)){
+			int playervotes = 0;
+			for (Player x : voteFor.values()){
+				if(x == r){
+					playervotes++;
+				}
+			}
+			if(playervotes > highestVotes)
+				highestPlayer = r;
+		}
+		if (skipVotes > highestVotes){
+			UtilServer.broadcast("SKIP! No player will be ejected.");
+		}
+		else
+		{
+			UtilServer.broadcast(C.cYellow + C.Bold + highestPlayer.getName());
+			highestPlayer.damage(21);
+		}
+		_freezePlayers = false;
+
+	}
+
+	@EventHandler
+	public void ImposterInVent(PlayerToggleSneakEvent event){
 		if(getArcadeManager().isSpectator(event.getPlayer()))
 			return;
-		if(event.getPlayer() != imposter1 || event.getPlayer() != imposter2)
+		if(!(event.getPlayer() == imposter1 || event.getPlayer() == imposter2) )
 			return;
-
+		if(ventedPlayers.contains(event.getPlayer()))
+			return;
 		// Check if they're standing on "set 1" of vents
 		// Have to assign a dummy location to ventToGo and check if its the same later, since you can't check
 		// initialization without a try
 		Location ventToGo = new Location(event.getPlayer().getWorld(), 0,0,0);
 		for (Location r : trapdoorLocations.keySet()){
-			if(r == event.getPlayer().getLocation().subtract(0, 1, 0))
-				ventToGo = trapdoorLocations.get(r);
-			else if(r == event.getPlayer().getLocation().add(0, 1, 0))
+			Location loc1 = new Location(event.getPlayer().getWorld(), event.getPlayer().getLocation().getBlockX(), 0, event.getPlayer().getLocation().getBlockZ());
+			if(r.getBlockX() == loc1.getBlockX() && r.getBlockZ() == loc1.getBlockZ())
 				ventToGo = trapdoorLocations.get(r);
 		}
 
 		// If there isn't a valid match, they must not be standing on a vent.
 		if(ventToGo.equals(new Location(event.getPlayer().getWorld(), 0, 0, 0))){
+			//System.out.println("Not standing on vent!");
 			return;
 		}
 
 		// Make the player invisible, we dont want people seeing them or other imposters in the vents
 		// But if they're already invisible, that means they're inside a vent, so we want to remove that condition
 		if(!getArcadeManager().GetCondition().HasCondition(event.getPlayer(), Condition.ConditionType.CLOAK, "Vanish")){
-			event.getPlayer().sendMessage(F.main("Condition", "You are now invisible"));
+			//event.getPlayer().sendMessage(F.main("Condition", "You are now invisible"));
 			getArcadeManager().GetCondition().Factory().Cloak("Vanish", event.getPlayer(), event.getPlayer(), 7777, false, false);
 		}
 		else{
 			getArcadeManager().GetCondition().EndCondition(event.getPlayer(), Condition.ConditionType.CLOAK, "Vanish");
-			event.getPlayer().sendMessage(F.main("Condition", "You are no longer invisible"));
+			//event.getPlayer().sendMessage(F.main("Condition", "You are no longer invisible"));
 		}
 
-		event.getPlayer().teleport(ventToGo);
+		event.getPlayer().teleport(ventToGo, new PlayerTeleportEvent(event.getPlayer(), event.getPlayer().getLocation(), ventToGo).getCause());
 		event.getPlayer().sendMessage(F.main("Game", "You entered a vent"));
+		ventedPlayers.add(event.getPlayer());
+		final Player p1 = event.getPlayer();
+		UtilServer.getServer().getScheduler().runTaskLater(Manager.getPlugin(), new Runnable() { public void run() { ventedPlayers.remove(p1.getPlayer()); }}, 100);
+	}
+
+	@EventHandler
+	public void cancelVentDamage(EntityDamageByBlockEvent event){
+		if(ventedPlayers.contains(event.getEntity()))
+			event.setCancelled(true);
 	}
 
 	@Override
