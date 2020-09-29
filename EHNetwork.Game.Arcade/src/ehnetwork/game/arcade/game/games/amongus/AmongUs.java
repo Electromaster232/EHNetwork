@@ -3,6 +3,7 @@ package ehnetwork.game.arcade.game.games.amongus;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -27,10 +28,14 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import net.minecraft.server.v1_7_R4.ChatSerializer;
 import net.minecraft.server.v1_7_R4.EntityArrow;
 import net.minecraft.server.v1_7_R4.PacketPlayOutChat;
+import net.minecraft.server.v1_7_R4.PacketPlayOutScoreboardTeam;
+import net.minecraft.server.v1_7_R4.ScoreboardTeam;
 import net.minecraft.util.com.google.gson.JsonObject;
 import net.minecraft.util.com.mojang.authlib.GameProfile;
 
@@ -55,6 +60,7 @@ import ehnetwork.game.arcade.game.SoloGame;
 import ehnetwork.game.arcade.game.games.amongus.kits.KitDetective;
 import ehnetwork.game.arcade.game.games.amongus.kits.KitMurderer;
 import ehnetwork.game.arcade.game.games.amongus.kits.KitPlayer;
+import ehnetwork.game.arcade.game.games.survivalgames.kit.KitAssassin;
 import ehnetwork.game.arcade.kit.Kit;
 import ehnetwork.minecraft.game.core.condition.Condition;
 
@@ -63,12 +69,16 @@ public class AmongUs extends SoloGame
 	// TODO: Write vote timer + timeout skip
 	// TODO: Write voter ejection
 	private boolean MurdererShot;
+	private boolean _forceShow = false;
 	private boolean _freezePlayers = false;
 	private Player imposter1;
 	private Player imposter2;
 	private Kit KitMurderer;
 	private ArrayList<Player> ventedPlayers = new ArrayList<>();
 	private Kit KitDetective;
+	private HashMap<Player, HashSet<String>> _hiddenNames = new HashMap<Player, HashSet<String>>();
+	private Field _packetTeam;
+	private Field _nameTagVisibility;
 	private int playersVoted = 0;
 	private NautHashMap<Location, Location> trapdoorLocations = new NautHashMap<>();
 	private NautHashMap<Entity, String> deadBodyEntities = new NautHashMap<>();
@@ -105,6 +115,15 @@ public class AmongUs extends SoloGame
 		this.DamageTeamSelf = true;
 		this.VersionRequire1_8 = true;
 		// whoopsie this did not work lmao this.WorldWaterDamage = 5;
+		try
+		{
+			_packetTeam = Class.forName("org.bukkit.craftbukkit.v1_7_R4.scoreboard.CraftTeam").getDeclaredField("team");
+			_packetTeam.setAccessible(true);
+			_nameTagVisibility = PacketPlayOutScoreboardTeam.class.getDeclaredField("_nameTagVisibility");
+			_nameTagVisibility.setAccessible(true);
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 
 	}
 
@@ -175,6 +194,106 @@ public class AmongUs extends SoloGame
 
 		// Silence Chat
 		getArcadeManager().GetChat().Silence(-1, true);
+		Scoreboard board = GetScoreboard().GetScoreboard();
+		for(Player player : Manager.GetGame().GetPlayers(true)){
+			Team team = board.registerNewTeam(player.getName());
+
+			team.setPrefix(board.getPlayerTeam(player).getPrefix());
+
+			team.addPlayer(player);
+
+			_hiddenNames.put(player, new HashSet<String>());
+		}
+
+	}
+
+	@EventHandler
+	public void UpdateNametagVisibility(UpdateEvent event)
+	{
+		if (event.getType() != UpdateType.TICK)
+			return;
+
+		if (!IsLive())
+			return;
+
+		ArrayList<Player> alivePlayers = new ArrayList<Player>(_hiddenNames.keySet());
+		HashMap<Player, HashMap<Player, Boolean>> checkedPlayers = new HashMap<Player, HashMap<Player, Boolean>>();
+
+		for (Player target : alivePlayers)
+		{
+
+			PacketPlayOutScoreboardTeam packet = null;
+
+			try
+			{
+				ScoreboardTeam nmsTeam = (ScoreboardTeam) _packetTeam.get(target.getScoreboard().getTeam(target.getName()));
+
+				packet = new PacketPlayOutScoreboardTeam(nmsTeam, 2);
+			}
+			catch (Exception ex)
+			{
+				ex.printStackTrace();
+			}
+
+			for (Player player : alivePlayers)
+			{
+				if (target != player)
+				{
+					boolean hideName = false;
+
+					if (!checkedPlayers.containsKey(target) || !checkedPlayers.get(target).containsKey(player))
+					{
+						hideName = !_forceShow;
+
+						Player[] players = new Player[]
+								{
+										target, player
+								};
+
+							for (int i = 0; i <= 1; i++)
+							{
+								Player p1 = players[i];
+								Player p2 = players[1 - i];
+
+								if (!checkedPlayers.containsKey(p1))
+								{
+									checkedPlayers.put(p1, new HashMap<Player, Boolean>());
+								}
+
+								checkedPlayers.get(p1).put(p2, hideName);
+							}
+					}
+					else
+					{
+						hideName = checkedPlayers.get(target).get(player);
+					}
+
+					// If hiddenNames conta
+					if (hideName != _hiddenNames.get(player).contains(target.getName()))
+					{
+						if (!hideName)
+						{
+							_hiddenNames.get(player).remove(target.getName());
+						}
+						else
+						{
+							_hiddenNames.get(player).add(target.getName());
+						}
+
+						try
+						{
+							_nameTagVisibility.set(packet, hideName ? "never" : "always");
+						}
+						catch (Exception ex)
+						{
+							ex.printStackTrace();
+						}
+
+						UtilPlayer.sendPacket(player, packet);
+					}
+				}
+			}
+		}
 	}
 
 	@Override
@@ -219,6 +338,7 @@ public class AmongUs extends SoloGame
 		for (Player r : getArcadeManager().GetGame().GetPlayers(false))
 			r.teleport(Manager.GetGame().GetTeam(r).GetSpawn());
 		_freezePlayers = true;
+		_forceShow = true;
 
 		UtilServer.broadcast(F.main("Game", C.cGreen + C.Bold + "The body of " + C.cRed + playerName + C.cGreen + C.Bold + " was found dead!"));
 		UtilServer.broadcast(F.main("Game", C.cGreen + C.Bold + "DISCUSS!"));
@@ -357,6 +477,7 @@ public class AmongUs extends SoloGame
 			highestPlayer.damage(21);
 		}
 		_freezePlayers = false;
+		_forceShow = false;
 
 	}
 
