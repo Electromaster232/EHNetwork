@@ -427,7 +427,8 @@ public class AmongUs extends SoloGame
 		}
 		player.teleport(voidLoc);
 		//_freezePlayers = true;
-		Location blockToBreak = voidLoc.subtract(0, 1,0 );
+		final Location blockToBreak = voidLoc.subtract(0, 1,0 );
+		final Material blockMat = blockToBreak.getBlock().getType();
 		blockToBreak.getBlock().breakNaturally();
 		UtilServer.getServer().getScheduler().runTaskLater(Manager.getPlugin(), new Runnable()
 		{
@@ -447,7 +448,7 @@ public class AmongUs extends SoloGame
 						getArcadeManager().GetCondition().EndCondition(r, Condition.ConditionType.CLOAK, "Vanish");
 				}
 				_forceShow = false;
-
+				blockToBreak.getBlock().setType(blockMat);
 			}}, 60);
 	}
 
