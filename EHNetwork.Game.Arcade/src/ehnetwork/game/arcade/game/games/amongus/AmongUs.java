@@ -74,6 +74,7 @@ public class AmongUs extends SoloGame
 	private Player imposter1;
 	private Player imposter2;
 	private Kit KitMurderer;
+	private int remainingImposters = 2;
 	private ArrayList<Player> ventedPlayers = new ArrayList<>();
 	private Kit KitDetective;
 	private HashMap<Player, HashSet<String>> _hiddenNames = new HashMap<Player, HashSet<String>>();
@@ -194,6 +195,8 @@ public class AmongUs extends SoloGame
 
 		// Silence Chat
 		getArcadeManager().GetChat().Silence(-1, true);
+
+		// Create individual player teams
 		Scoreboard board = GetScoreboard().GetScoreboard();
 		for(Player player : Manager.GetGame().GetPlayers(true)){
 			Team team = board.registerNewTeam(player.getName());
@@ -317,6 +320,9 @@ public class AmongUs extends SoloGame
 			num = num + 1;
 		}
 		Scoreboard.Write(C.cGreen + num.toString());
+		Scoreboard.WriteBlank();
+		Scoreboard.Write(C.cBlue + "Your tasks:");
+		Scoreboard.WriteBlank();
 		Scoreboard.Draw();
 	}
 
@@ -343,6 +349,7 @@ public class AmongUs extends SoloGame
 		UtilServer.broadcast(F.main("Game", C.cGreen + C.Bold + "The body of " + C.cRed + playerName + C.cGreen + C.Bold + " was found dead!"));
 		UtilServer.broadcast(F.main("Game", C.cGreen + C.Bold + "DISCUSS!"));
 		getArcadeManager().GetChat().SilenceEnd();
+		event.getRightClicked().remove();
 		UtilServer.getServer().getScheduler().runTaskLater(Manager.getPlugin(), new Runnable()
 		{
 			public void run()
@@ -408,6 +415,42 @@ public class AmongUs extends SoloGame
 			}}, 300);
 	}
 
+	private void ejectPlayer(final Player player){
+		Location voidLoc = WorldData.GetDataLocs("LIGHT_GRAY").get(0);
+		Location playerLoc = WorldData.GetDataLocs("RED").get(0);
+		_freezePlayers = false;
+		for(Player p : GetPlayers(false)){
+			if(!Manager.isSpectator(p)){
+				getArcadeManager().GetCondition().Factory().Cloak("Vanish", p, p, 7777, false, false);
+			}
+			p.teleport(playerLoc);
+		}
+		player.teleport(voidLoc);
+		//_freezePlayers = true;
+		Location blockToBreak = voidLoc.subtract(0, 1,0 );
+		blockToBreak.getBlock().breakNaturally();
+		UtilServer.getServer().getScheduler().runTaskLater(Manager.getPlugin(), new Runnable()
+		{
+			public void run()
+			{
+				player.damage(21);
+				if(player == imposter1 || player == imposter2){
+					remainingImposters--;
+					UtilTextMiddle.display(player + " was an imposter!", remainingImposters + " imposters remain!");
+				}
+				else
+					UtilTextMiddle.display(C.cGreen + player + " was NOT an imposter!", remainingImposters + " imposters remain!");
+				for (Player r : getArcadeManager().GetGame().GetPlayers(false))
+				{
+					r.teleport(Manager.GetGame().GetTeam(r).GetSpawn());
+					if(!Manager.isSpectator(r))
+						getArcadeManager().GetCondition().EndCondition(r, Condition.ConditionType.CLOAK, "Vanish");
+				}
+				_forceShow = false;
+
+			}}, 60);
+	}
+
 	@EventHandler
 	public void MoveCancel(PlayerMoveEvent event)
 	{
@@ -417,8 +460,9 @@ public class AmongUs extends SoloGame
 		if (UtilMath.offset2d(event.getFrom(), event.getTo()) == 0)
 			return;
 
-		//if (!IsAlive(event.getPlayer()))
-		//	return;
+		if (!IsAlive(event.getPlayer()))
+			return;
+
 
 		event.setTo(event.getFrom());
 	}
@@ -468,16 +512,19 @@ public class AmongUs extends SoloGame
 			if(playervotes > highestVotes)
 				highestPlayer = r;
 		}
-		if (skipVotes > highestVotes){
+		if (skipVotes >= highestVotes){
 			UtilServer.broadcast("SKIP! No player will be ejected.");
 		}
 		else
 		{
 			UtilServer.broadcast(C.cYellow + C.Bold + highestPlayer.getName());
-			highestPlayer.damage(21);
+			//highestPlayer.damage(21);
+			ejectPlayer(highestPlayer);
 		}
-		_freezePlayers = false;
-		_forceShow = false;
+
+		// ejectPlayer will return before the scheduled bukkit tasks completes, therefore we must move these next 2 operations to the scheduled task
+		//_freezePlayers = false;
+		//_forceShow = false;
 
 	}
 
