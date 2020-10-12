@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="Nautilus.Game.PvP">
+    <property environment="env"/>
+    <property name="REPO_DIR" value="../../"/>
+    <property name="ECLIPSE_HOME" value="../../../../../Program Files/eclipse"/>
+    <property name="Nautilus.Core.CraftBukkit.location" value="../Nautilus.Core.CraftBukkit"/>
+    <property name="Core.location" value="../Core"/>
+    <property name="Nautilus.Core.location" value="../Nautilus.Core"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
+    <path id="Nautilus.Core.CraftBukkit.classpath">
+        <pathelement location="${Nautilus.Core.CraftBukkit.location}/bin"/>
+        <pathelement location="${REPO_DIR}/Plugins/Libraries/jline-2.6.jar"/>
+        <pathelement location="${REPO_DIR}/Plugins/Libraries/craftbukkit.jar"/>
+    </path>
+    <path id="Core.classpath">
+        <pathelement location="${Core.location}/bin"/>
+        <pathelement location="${REPO_DIR}/Plugins/Libraries/bukkit.jar"/>
+        <path refid="Nautilus.Core.CraftBukkit.classpath"/>
+        <pathelement location="${REPO_DIR}/Plugins/Libraries/craftbukkit.jar"/>
+    </path>
+    <path id="Nautilus.Core.classpath">
+        <pathelement location="${Nautilus.Core.location}/bin"/>
+        <pathelement location="${REPO_DIR}/Plugins/Libraries/httpcore-4.2.jar"/>
+        <pathelement location="${REPO_DIR}/Plugins/Libraries/httpclient-4.2.jar"/>
+        <path refid="Core.classpath"/>
+        <pathelement location="${REPO_DIR}/Plugins/Libraries/craftbukkit.jar"/>
+    </path>
+    <path id="Nautilus.Game.PvP.classpath">
+        <pathelement location="bin"/>
+        <path refid="Core.classpath"/>
+        <path refid="Nautilus.Core.classpath"/>
+        <pathelement location="${REPO_DIR}/Plugins/Libraries/craftbukkit.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall">
+        <ant antfile="Nautilus.Core.CraftBukkit.xml" dir="${Nautilus.Core.CraftBukkit.location}" inheritAll="false" target="clean"/>
+        <ant antfile="Core.xml" dir="${Core.location}" inheritAll="false" target="clean"/>
+        <ant antfile="Nautilus.Core.xml" dir="${Nautilus.Core.location}" inheritAll="false" target="clean"/>
+    </target>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects">
+        <ant antfile="Nautilus.Core.CraftBukkit.xml" dir="${Nautilus.Core.CraftBukkit.location}" inheritAll="false" target="build-project">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="Core.xml" dir="${Core.location}" inheritAll="false" target="build-project">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="Nautilus.Core.xml" dir="${Nautilus.Core.location}" inheritAll="false" target="build-project">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+    </target>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="Nautilus.Game.PvP.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+</project>

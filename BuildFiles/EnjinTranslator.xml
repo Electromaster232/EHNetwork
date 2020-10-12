@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   <project name="loc" default="EnjinTranslator" basedir=".">
+	<target name ="EnjinTranslator" description="EnjinTranslator">
+		<jar jarfile="../bin/EnjinTranslator.jar">
+			<fileset dir="../Mineplex.Core/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Core.Common/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.Database/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			
+			<fileset dir="../Mineplex.EnjinTranslator/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			<fileset dir="../Mineplex.EnjinTranslator">
+				<include name="*.yml"/>
+			</fileset>
+			<fileset dir="../Mineplex.ServerData/bin">
+				<include name="**/*.class"/>
+			</fileset>
+			
+			<zipfileset src="../Libraries/jooq-3.5.2.jar" /> 
+			<zipfileset src="../Libraries/httpclient-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpcore-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpclient-cache-4.2.jar" /> 
+			<zipfileset src="../Libraries/httpmime-4.2.jar" /> 
+			<zipfileset src="../Libraries/gson-2.2.1.jar" /> 
+			<zipfileset src="../Libraries/commons-logging-1.1.1.jar" /> 	
+			<zipfileset src="../Libraries/commons-codec-1.6.jar" />
+			<zipfileset src="../Libraries/commons-dbcp2-2.0.1.jar" />
+			<zipfileset src="../Libraries/jedis-2.4.2.jar" /> 
+			<zipfileset src="../Libraries/commons-pool2-2.2.jar" /> 
+		</jar>
+		<copy file="../bin/EnjinTranslator.jar" todir="../../Testing/EnjinTranslator/plugins"/>
+	</target>
+    </project>

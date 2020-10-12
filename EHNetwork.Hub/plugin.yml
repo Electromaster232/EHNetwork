@@ -1,0 +1,4 @@
+name: Hub
+main: ehnetwork.hub.Hub
+version: 1.1
+depend: [iDisguise]

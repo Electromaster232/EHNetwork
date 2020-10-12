@@ -1,0 +1,305 @@
+[17:30:01] [Server thread/INFO]: Starting minecraft server version 1.7.10
+[17:30:01] [Server thread/INFO]: Loading properties
+[17:30:01] [Server thread/INFO]: Default game type: SURVIVAL
+[17:30:01] [Server thread/INFO]: This server is running CraftBukkit version git-Spigot-1.7.9-R0.2-205-gb748d57 (MC: 1.7.10) (Implementing API version 1.7.10-R0.1-SNAPSHOT)
+[17:30:01] [Server thread/INFO]: Debug logging is disabled
+[17:30:01] [Server thread/INFO]: Using 4 threads for Netty based IO
+[17:30:01] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[17:30:01] [Server thread/INFO]: Generating keypair
+[17:30:01] [Server thread/INFO]: Starting Minecraft server on *:25565
+[17:30:02] [Server thread/INFO]: Set PluginClassLoader as parallel capable
+[17:30:02] [Server thread/INFO]: [Hub] Loading Hub v0.1
+[17:30:02] [Server thread/INFO]: **** Beginning UUID conversion, this may take A LONG time ****
+[17:30:02] [Server thread/INFO]: Preparing level "world"
+[17:30:02] [Server thread/INFO]: -------- World Settings For [world] --------
+[17:30:02] [Server thread/INFO]: Experience Merge Radius: 3.0
+[17:30:02] [Server thread/INFO]: Chunks to Grow per Tick: 650
+[17:30:02] [Server thread/INFO]: Clear tick list: false
+[17:30:02] [Server thread/INFO]: View Distance: 10
+[17:30:02] [Server thread/INFO]: Zombie Aggressive Towards Villager: true
+[17:30:02] [Server thread/INFO]: Max Entity Collisions: 8
+[17:30:02] [Server thread/INFO]: Custom Map Seeds:  Village: 10387312 Feature: 14357617
+[17:30:02] [Server thread/INFO]: Item Merge Radius: 2.5
+[17:30:02] [Server thread/INFO]: Item Despawn Rate: 6000
+[17:30:02] [Server thread/INFO]: Arrow Despawn Rate: 1200
+[17:30:02] [Server thread/INFO]: Allow Zombie Pigmen to spawn from portal blocks: true
+[17:30:02] [Server thread/INFO]: Nerfing mobs spawned from spawners: false
+[17:30:02] [Server thread/INFO]: Mob Spawn Range: 4
+[17:30:02] [Server thread/INFO]: Anti X-Ray: true
+[17:30:02] [Server thread/INFO]: 	Engine Mode: 1
+[17:30:02] [Server thread/INFO]: 	Hidden Blocks: [14, 15, 16, 21, 48, 49, 54, 56, 73, 74, 82, 129, 130]
+[17:30:02] [Server thread/INFO]: 	Replace Blocks: [1, 5]
+[17:30:02] [Server thread/INFO]: Cactus Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Cane Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Melon Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Mushroom Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Pumpkin Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Sapling Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Wheat Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Sending up to 5 chunks per packet
+[17:30:02] [Server thread/INFO]: Alternative Hopper Ticking: false
+[17:30:02] [Server thread/INFO]: Hopper Transfer: 8 Hopper Check: 8 Hopper Amount: 1
+[17:30:02] [Server thread/INFO]: Structure Info Saving: true
+[17:30:02] [Server thread/INFO]: Entity Activation Range: An 32 / Mo 32 / Mi 16
+[17:30:02] [Server thread/INFO]: Random Lighting Updates: false
+[17:30:02] [Server thread/INFO]: Entity Tracking Range: Pl 48 / An 48 / Mo 48 / Mi 32 / Other 64
+[17:30:02] [Server thread/INFO]: Max TNT Explosions: 100
+[17:30:02] [Server thread/INFO]: -------- World Settings For [world_nether] --------
+[17:30:02] [Server thread/INFO]: Experience Merge Radius: 3.0
+[17:30:02] [Server thread/INFO]: Chunks to Grow per Tick: 650
+[17:30:02] [Server thread/INFO]: Clear tick list: false
+[17:30:02] [Server thread/INFO]: View Distance: 10
+[17:30:02] [Server thread/INFO]: Zombie Aggressive Towards Villager: true
+[17:30:02] [Server thread/INFO]: Max Entity Collisions: 8
+[17:30:02] [Server thread/INFO]: Custom Map Seeds:  Village: 10387312 Feature: 14357617
+[17:30:02] [Server thread/INFO]: Item Merge Radius: 2.5
+[17:30:02] [Server thread/INFO]: Item Despawn Rate: 6000
+[17:30:02] [Server thread/INFO]: Arrow Despawn Rate: 1200
+[17:30:02] [Server thread/INFO]: Allow Zombie Pigmen to spawn from portal blocks: true
+[17:30:02] [Server thread/INFO]: Nerfing mobs spawned from spawners: false
+[17:30:02] [Server thread/INFO]: Mob Spawn Range: 4
+[17:30:02] [Server thread/INFO]: Anti X-Ray: true
+[17:30:02] [Server thread/INFO]: 	Engine Mode: 1
+[17:30:02] [Server thread/INFO]: 	Hidden Blocks: [14, 15, 16, 21, 48, 49, 54, 56, 73, 74, 82, 129, 130]
+[17:30:02] [Server thread/INFO]: 	Replace Blocks: [1, 5]
+[17:30:02] [Server thread/INFO]: Cactus Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Cane Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Melon Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Mushroom Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Pumpkin Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Sapling Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Wheat Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Sending up to 5 chunks per packet
+[17:30:02] [Server thread/INFO]: Alternative Hopper Ticking: false
+[17:30:02] [Server thread/INFO]: Hopper Transfer: 8 Hopper Check: 8 Hopper Amount: 1
+[17:30:02] [Server thread/INFO]: Structure Info Saving: true
+[17:30:02] [Server thread/INFO]: Entity Activation Range: An 32 / Mo 32 / Mi 16
+[17:30:02] [Server thread/INFO]: Random Lighting Updates: false
+[17:30:02] [Server thread/INFO]: Entity Tracking Range: Pl 48 / An 48 / Mo 48 / Mi 32 / Other 64
+[17:30:02] [Server thread/INFO]: Max TNT Explosions: 100
+[17:30:02] [Server thread/INFO]: -------- World Settings For [world_the_end] --------
+[17:30:02] [Server thread/INFO]: Experience Merge Radius: 3.0
+[17:30:02] [Server thread/INFO]: Chunks to Grow per Tick: 650
+[17:30:02] [Server thread/INFO]: Clear tick list: false
+[17:30:02] [Server thread/INFO]: View Distance: 10
+[17:30:02] [Server thread/INFO]: Zombie Aggressive Towards Villager: true
+[17:30:02] [Server thread/INFO]: Max Entity Collisions: 8
+[17:30:02] [Server thread/INFO]: Custom Map Seeds:  Village: 10387312 Feature: 14357617
+[17:30:02] [Server thread/INFO]: Item Merge Radius: 2.5
+[17:30:02] [Server thread/INFO]: Item Despawn Rate: 6000
+[17:30:02] [Server thread/INFO]: Arrow Despawn Rate: 1200
+[17:30:02] [Server thread/INFO]: Allow Zombie Pigmen to spawn from portal blocks: true
+[17:30:02] [Server thread/INFO]: Nerfing mobs spawned from spawners: false
+[17:30:02] [Server thread/INFO]: Mob Spawn Range: 4
+[17:30:02] [Server thread/INFO]: Anti X-Ray: true
+[17:30:02] [Server thread/INFO]: 	Engine Mode: 1
+[17:30:02] [Server thread/INFO]: 	Hidden Blocks: [14, 15, 16, 21, 48, 49, 54, 56, 73, 74, 82, 129, 130]
+[17:30:02] [Server thread/INFO]: 	Replace Blocks: [1, 5]
+[17:30:02] [Server thread/INFO]: Cactus Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Cane Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Melon Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Mushroom Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Pumpkin Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Sapling Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Wheat Growth Modifier: 100%
+[17:30:02] [Server thread/INFO]: Sending up to 5 chunks per packet
+[17:30:02] [Server thread/INFO]: Alternative Hopper Ticking: false
+[17:30:02] [Server thread/INFO]: Hopper Transfer: 8 Hopper Check: 8 Hopper Amount: 1
+[17:30:02] [Server thread/INFO]: Structure Info Saving: true
+[17:30:02] [Server thread/INFO]: Entity Activation Range: An 32 / Mo 32 / Mi 16
+[17:30:02] [Server thread/INFO]: Random Lighting Updates: false
+[17:30:02] [Server thread/INFO]: Entity Tracking Range: Pl 48 / An 48 / Mo 48 / Mi 32 / Other 64
+[17:30:02] [Server thread/INFO]: Max TNT Explosions: 100
+[17:30:02] [Server thread/INFO]: Preparing start region for level 0 (Seed: 3097063087337441816)
+[17:30:02] [Server thread/INFO]: Preparing start region for level 1 (Seed: 3097063087337441816)
+[17:30:03] [Server thread/INFO]: Preparing start region for level 2 (Seed: 3097063087337441816)
+[17:30:03] [Server thread/INFO]: [Hub] Enabling Hub v0.1
+[17:30:03] [Server thread/INFO]: §9Client Manager> §7Initializing...
+[17:30:03] [Server thread/INFO]: §9Client Manager> §7Enabled in 0.0 Seconds.
+[17:30:03] [Server thread/INFO]: [ServerManager] redis-config.dat not found at redis-config.dat
+[17:30:03] [Server thread/INFO]: §9ItemStack Factory> §7Initializing...
+[17:30:03] [Server thread/INFO]: §9ItemStack Factory> §7Enabled in 0.0 Seconds.
+[17:30:03] [Server thread/INFO]: §9Recharge> §7Initializing...
+[17:30:03] [Server thread/INFO]: §9Recharge> §7Enabled in 0.0 Seconds.
+[17:30:03] [Server thread/INFO]: §9Visibility Manager> §7Initializing...
+[17:30:03] [Server thread/INFO]: §9Visibility Manager> §7Enabled in 0.0 Seconds.
+[17:30:03] [Server thread/INFO]: §9Give Factory> §7Initializing...
+[17:30:03] [Server thread/INFO]: §9Give Factory> §7Enabled in 0.0 Seconds.
+[17:30:03] [Server thread/INFO]: §9Punish> §7Initializing...
+[17:30:03] [Server thread/INFO]: §9Punish> §7Enabled in 0.0 Seconds.
+[17:30:05] [Server thread/ERROR]: Error occurred while enabling Hub v0.1 (Is it up to date?)
+redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+	at redis.clients.util.Pool.getResource(Pool.java:42) ~[?:?]
+	at mineplex.serverdata.commands.ServerCommandManager.initialize(ServerCommandManager.java:48) ~[?:?]
+	at mineplex.serverdata.commands.ServerCommandManager.<init>(ServerCommandManager.java:39) ~[?:?]
+	at mineplex.serverdata.commands.ServerCommandManager.getInstance(ServerCommandManager.java:172) ~[?:?]
+	at mineplex.core.punish.Punish.<init>(Punish.java:47) ~[?:?]
+	at mineplex.hub.Hub.onEnable(Hub.java:89) ~[?:?]
+	at org.bukkit.plugin.java.JavaPlugin.setEnabled(JavaPlugin.java:316) ~[craftbukkit.jar:git-Spigot-1.7.9-R0.2-205-gb748d57]
+	at org.bukkit.plugin.java.JavaPluginLoader.enablePlugin(JavaPluginLoader.java:332) [craftbukkit.jar:git-Spigot-1.7.9-R0.2-205-gb748d57]
+	at org.bukkit.plugin.SimplePluginManager.enablePlugin(SimplePluginManager.java:417) [craftbukkit.jar:git-Spigot-1.7.9-R0.2-205-gb748d57]
+	at org.bukkit.craftbukkit.v1_7_R4.CraftServer.loadPlugin(CraftServer.java:476) [craftbukkit.jar:git-Spigot-1.7.9-R0.2-205-gb748d57]
+	at org.bukkit.craftbukkit.v1_7_R4.CraftServer.enablePlugins(CraftServer.java:394) [craftbukkit.jar:git-Spigot-1.7.9-R0.2-205-gb748d57]
+	at net.minecraft.server.v1_7_R4.MinecraftServer.n(MinecraftServer.java:360) [craftbukkit.jar:git-Spigot-1.7.9-R0.2-205-gb748d57]
+	at net.minecraft.server.v1_7_R4.MinecraftServer.g(MinecraftServer.java:334) [craftbukkit.jar:git-Spigot-1.7.9-R0.2-205-gb748d57]
+	at net.minecraft.server.v1_7_R4.MinecraftServer.a(MinecraftServer.java:290) [craftbukkit.jar:git-Spigot-1.7.9-R0.2-205-gb748d57]
+	at net.minecraft.server.v1_7_R4.DedicatedServer.init(DedicatedServer.java:197) [craftbukkit.jar:git-Spigot-1.7.9-R0.2-205-gb748d57]
+	at net.minecraft.server.v1_7_R4.MinecraftServer.run(MinecraftServer.java:458) [craftbukkit.jar:git-Spigot-1.7.9-R0.2-205-gb748d57]
+	at net.minecraft.server.v1_7_R4.ThreadServerApplication.run(SourceFile:628) [craftbukkit.jar:git-Spigot-1.7.9-R0.2-205-gb748d57]
+Caused by: redis.clients.jedis.exceptions.JedisConnectionException: java.net.SocketTimeoutException: connect timed out
+	at redis.clients.jedis.Connection.connect(Connection.java:142) ~[?:?]
+	at redis.clients.jedis.BinaryClient.connect(BinaryClient.java:75) ~[?:?]
+	at redis.clients.jedis.BinaryJedis.connect(BinaryJedis.java:1724) ~[?:?]
+	at redis.clients.jedis.JedisFactory.makeObject(JedisFactory.java:65) ~[?:?]
+	at org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:836) ~[commons-pool2-2.2.jar:2.2]
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:434) ~[commons-pool2-2.2.jar:2.2]
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:361) ~[commons-pool2-2.2.jar:2.2]
+	at redis.clients.util.Pool.getResource(Pool.java:40) ~[?:?]
+	... 16 more
+Caused by: java.net.SocketTimeoutException: connect timed out
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method) ~[?:1.8.0_265]
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85) ~[?:1.8.0_265]
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350) ~[?:1.8.0_265]
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206) ~[?:1.8.0_265]
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188) ~[?:1.8.0_265]
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172) ~[?:1.8.0_265]
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392) ~[?:1.8.0_265]
+	at java.net.Socket.connect(Socket.java:607) ~[?:1.8.0_265]
+	at redis.clients.jedis.Connection.connect(Connection.java:137) ~[?:?]
+	at redis.clients.jedis.BinaryClient.connect(BinaryClient.java:75) ~[?:?]
+	at redis.clients.jedis.BinaryJedis.connect(BinaryJedis.java:1724) ~[?:?]
+	at redis.clients.jedis.JedisFactory.makeObject(JedisFactory.java:65) ~[?:?]
+	at org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:836) ~[commons-pool2-2.2.jar:2.2]
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:434) ~[commons-pool2-2.2.jar:2.2]
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:361) ~[commons-pool2-2.2.jar:2.2]
+	at redis.clients.util.Pool.getResource(Pool.java:40) ~[?:?]
+	... 16 more
+[17:30:05] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[17:30:05] [Server thread/INFO]: Done (3.540s)! For help, type "help" or "?"
+[17:30:13] [User Authenticator #1/INFO]: ]==[TIMING]==[Electromaster_ GetClient. took 153ms
+[17:30:13] [User Authenticator #1/WARN]: org.bukkit.craftbukkit.libs.com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 4
+[17:30:13] [User Authenticator #1/WARN]: 	at org.bukkit.craftbukkit.libs.com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:180)
+[17:30:13] [User Authenticator #1/WARN]: 	at org.bukkit.craftbukkit.libs.com.google.gson.Gson.fromJson(Gson.java:755)
+[17:30:13] [User Authenticator #1/WARN]: 	at org.bukkit.craftbukkit.libs.com.google.gson.Gson.fromJson(Gson.java:721)
+[17:30:13] [User Authenticator #1/WARN]: 	at org.bukkit.craftbukkit.libs.com.google.gson.Gson.fromJson(Gson.java:670)
+[17:30:13] [User Authenticator #1/WARN]: 	at org.bukkit.craftbukkit.libs.com.google.gson.Gson.fromJson(Gson.java:642)
+[17:30:13] [User Authenticator #1/WARN]: 	at mineplex.core.account.CoreClientManager.LoadClient(CoreClientManager.java:273)
+[17:30:13] [User Authenticator #1/WARN]: 	at mineplex.core.account.CoreClientManager.AsyncLogin(CoreClientManager.java:160)
+[17:30:13] [User Authenticator #1/WARN]: 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+[17:30:13] [User Authenticator #1/WARN]: 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+[17:30:13] [User Authenticator #1/WARN]: 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+[17:30:13] [User Authenticator #1/WARN]: 	at java.lang.reflect.Method.invoke(Method.java:498)
+[17:30:13] [User Authenticator #1/WARN]: 	at org.bukkit.plugin.java.JavaPluginLoader$1.execute(JavaPluginLoader.java:298)
+[17:30:13] [User Authenticator #1/WARN]: 	at org.bukkit.plugin.RegisteredListener.callEvent(RegisteredListener.java:62)
+[17:30:13] [User Authenticator #1/WARN]: 	at org.bukkit.plugin.SimplePluginManager.fireEvent(SimplePluginManager.java:514)
+[17:30:13] [User Authenticator #1/WARN]: 	at org.bukkit.plugin.SimplePluginManager.callEvent(SimplePluginManager.java:496)
+[17:30:13] [User Authenticator #1/WARN]: 	at net.minecraft.server.v1_7_R4.ThreadPlayerLookupUUID.fireLoginEvents(ThreadPlayerLookupUUID.java:79)
+[17:30:13] [User Authenticator #1/WARN]: 	at net.minecraft.server.v1_7_R4.ThreadPlayerLookupUUID.run(ThreadPlayerLookupUUID.java:40)
+[17:30:13] [User Authenticator #1/WARN]: Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 4
+[17:30:13] [User Authenticator #1/WARN]: 	at org.bukkit.craftbukkit.libs.com.google.gson.stream.JsonReader.expect(JsonReader.java:339)
+[17:30:13] [User Authenticator #1/WARN]: 	at org.bukkit.craftbukkit.libs.com.google.gson.stream.JsonReader.beginObject(JsonReader.java:322)
+[17:30:13] [User Authenticator #1/WARN]: 	at org.bukkit.craftbukkit.libs.com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:168)
+[17:30:13] [User Authenticator #1/WARN]: 	... 16 more
+[17:30:13] [User Authenticator #1/INFO]: Disconnecting net.minecraft.util.com.mojang.authlib.GameProfile@42c0e10d[id=e5f12fd5-e90f-4625-bad3-f644d0a90d79,name=Electromaster_,properties={textures=[net.minecraft.util.com.mojang.authlib.properties.Property@733176de]},legacy=false] (/127.0.0.1:62177): Error retrieving information from web, please retry in a minute.
+[17:30:13] [Server thread/INFO]: net.minecraft.util.com.mojang.authlib.GameProfile@42c0e10d[id=e5f12fd5-e90f-4625-bad3-f644d0a90d79,name=Electromaster_,properties={textures=[net.minecraft.util.com.mojang.authlib.properties.Property@733176de]},legacy=false] (/127.0.0.1:62177) lost connection: Error retrieving information from web, please retry in a minute.
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: java.sql.SQLException: Cannot create PoolableConnectionFactory (Could not create connection to database server. Attempted reconnect 3 times. Giving up.)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at org.apache.commons.dbcp2.BasicDataSource.createPoolableConnectionFactory(BasicDataSource.java:2152)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at org.apache.commons.dbcp2.BasicDataSource.createDataSource(BasicDataSource.java:1903)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at org.apache.commons.dbcp2.BasicDataSource.getConnection(BasicDataSource.java:1413)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at mineplex.core.database.RepositoryBase.getConnection(RepositoryBase.java:74)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at mineplex.core.account.repository.AccountRepository.login(AccountRepository.java:62)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at mineplex.core.account.CoreClientManager$2.run(CoreClientManager.java:264)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at org.bukkit.craftbukkit.v1_7_R4.scheduler.CraftTask.run(CraftTask.java:71)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at org.bukkit.craftbukkit.v1_7_R4.scheduler.CraftAsyncTask.run(CraftAsyncTask.java:53)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.lang.Thread.run(Thread.java:748)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.Util.handleNewInstance(Util.java:407)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.Util.getInstance(Util.java:382)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1013)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:987)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:982)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:927)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.ConnectionImpl.connectWithRetries(ConnectionImpl.java:2239)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2168)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:794)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.JDBC4Connection.<init>(JDBC4Connection.java:47)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.Util.handleNewInstance(Util.java:407)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:378)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:305)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at org.apache.commons.dbcp2.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:39)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at org.apache.commons.dbcp2.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:205)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at org.apache.commons.dbcp2.BasicDataSource.validateConnectionFactory(BasicDataSource.java:2162)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at org.apache.commons.dbcp2.BasicDataSource.createPoolableConnectionFactory(BasicDataSource.java:2148)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	... 10 more
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.Util.handleNewInstance(Util.java:407)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1116)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:343)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2334)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.ConnectionImpl.connectWithRetries(ConnectionImpl.java:2186)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	... 24 more
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: Caused by: java.net.ConnectException: Connection timed out: connect
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.net.Socket.connect(Socket.java:607)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.net.Socket.connect(Socket.java:556)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.net.Socket.<init>(Socket.java:452)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.net.Socket.<init>(Socket.java:262)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:254)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:292)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	... 26 more
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: java.lang.NullPointerException
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at mineplex.core.account.repository.AccountRepository.login(AccountRepository.java:63)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at mineplex.core.account.CoreClientManager$2.run(CoreClientManager.java:264)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at org.bukkit.craftbukkit.v1_7_R4.scheduler.CraftTask.run(CraftTask.java:71)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at org.bukkit.craftbukkit.v1_7_R4.scheduler.CraftAsyncTask.run(CraftAsyncTask.java:53)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+[17:31:20] [Craft Scheduler Thread - 0/WARN]: 	at java.lang.Thread.run(Thread.java:748)
+[17:34:27] [User Authenticator #2/INFO]: ]==[TIMING]==[Electromaster_ GetClient. took 52ms
+[17:34:27] [User Authenticator #2/WARN]: org.bukkit.craftbukkit.libs.com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 4
+[17:34:27] [User Authenticator #2/WARN]: 	at org.bukkit.craftbukkit.libs.com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:180)
+[17:34:27] [User Authenticator #2/WARN]: 	at org.bukkit.craftbukkit.libs.com.google.gson.Gson.fromJson(Gson.java:755)
+[17:34:27] [User Authenticator #2/WARN]: 	at org.bukkit.craftbukkit.libs.com.google.gson.Gson.fromJson(Gson.java:721)
+[17:34:27] [User Authenticator #2/WARN]: 	at org.bukkit.craftbukkit.libs.com.google.gson.Gson.fromJson(Gson.java:670)
+[17:34:27] [User Authenticator #2/WARN]: 	at org.bukkit.craftbukkit.libs.com.google.gson.Gson.fromJson(Gson.java:642)
+[17:34:27] [User Authenticator #2/WARN]: 	at mineplex.core.account.CoreClientManager.LoadClient(CoreClientManager.java:273)
+[17:34:27] [User Authenticator #2/WARN]: 	at mineplex.core.account.CoreClientManager.AsyncLogin(CoreClientManager.java:160)
+[17:34:27] [User Authenticator #2/WARN]: 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+[17:34:27] [User Authenticator #2/WARN]: 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+[17:34:27] [User Authenticator #2/WARN]: 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+[17:34:27] [User Authenticator #2/WARN]: 	at java.lang.reflect.Method.invoke(Method.java:498)
+[17:34:27] [User Authenticator #2/WARN]: 	at org.bukkit.plugin.java.JavaPluginLoader$1.execute(JavaPluginLoader.java:298)
+[17:34:27] [User Authenticator #2/WARN]: 	at org.bukkit.plugin.RegisteredListener.callEvent(RegisteredListener.java:62)
+[17:34:27] [User Authenticator #2/WARN]: 	at org.bukkit.plugin.SimplePluginManager.fireEvent(SimplePluginManager.java:514)
+[17:34:27] [User Authenticator #2/WARN]: 	at org.bukkit.plugin.SimplePluginManager.callEvent(SimplePluginManager.java:496)
+[17:34:27] [User Authenticator #2/WARN]: 	at net.minecraft.server.v1_7_R4.ThreadPlayerLookupUUID.fireLoginEvents(ThreadPlayerLookupUUID.java:79)
+[17:34:27] [User Authenticator #2/WARN]: 	at net.minecraft.server.v1_7_R4.ThreadPlayerLookupUUID.run(ThreadPlayerLookupUUID.java:40)
+[17:34:27] [User Authenticator #2/WARN]: Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 4
+[17:34:27] [User Authenticator #2/WARN]: 	at org.bukkit.craftbukkit.libs.com.google.gson.stream.JsonReader.expect(JsonReader.java:339)
+[17:34:27] [User Authenticator #2/WARN]: 	at org.bukkit.craftbukkit.libs.com.google.gson.stream.JsonReader.beginObject(JsonReader.java:322)
+[17:34:27] [User Authenticator #2/WARN]: 	at org.bukkit.craftbukkit.libs.com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:168)
+[17:34:27] [User Authenticator #2/WARN]: 	... 16 more
+[17:34:27] [User Authenticator #2/INFO]: Disconnecting net.minecraft.util.com.mojang.authlib.GameProfile@35cffeb4[id=e5f12fd5-e90f-4625-bad3-f644d0a90d79,name=Electromaster_,properties={textures=[net.minecraft.util.com.mojang.authlib.properties.Property@1401ce5]},legacy=false] (/127.0.0.1:62244): Error retrieving information from web, please retry in a minute.
+[17:34:28] [Server thread/INFO]: net.minecraft.util.com.mojang.authlib.GameProfile@35cffeb4[id=e5f12fd5-e90f-4625-bad3-f644d0a90d79,name=Electromaster_,properties={textures=[net.minecraft.util.com.mojang.authlib.properties.Property@1401ce5]},legacy=false] (/127.0.0.1:62244) lost connection: Error retrieving information from web, please retry in a minute.

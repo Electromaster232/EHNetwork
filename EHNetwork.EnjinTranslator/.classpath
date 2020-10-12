@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="var" path="/home/gtsatsis/Desktop/All-Mineplex-2015-Private-IDEA-Ready/IDEA-Ready/Libraries/craftbukkit.jar" sourcepath="/REPO_DIR/GitHubLibraries/CraftBukkit/src"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Mineplex.Core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Mineplex.Core.Common"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Mineplex.Database"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
