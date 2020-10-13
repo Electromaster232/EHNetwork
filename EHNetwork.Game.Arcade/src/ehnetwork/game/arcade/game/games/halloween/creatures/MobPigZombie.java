@@ -1,10 +1,11 @@
 package ehnetwork.game.arcade.game.games.halloween.creatures;
 
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.entity.EntityTargetEvent;
 
-import ehnetwork.core.disguise.disguises.DisguisePigZombie;
+import de.robingrether.idisguise.disguise.Disguise;
 import ehnetwork.core.updater.event.UpdateEvent;
 import ehnetwork.game.arcade.game.games.halloween.Halloween;
 import ehnetwork.minecraft.game.core.damage.CustomDamageEvent;
@@ -19,8 +20,8 @@ public class MobPigZombie extends CreatureBase<Zombie> implements InterfaceMove
 	@Override
 	public void SpawnCustom(Zombie ent) 
 	{
-		DisguisePigZombie disguise = new DisguisePigZombie(ent);
-		Host.Manager.GetDisguise().disguise(disguise);
+		Disguise d1 = Host.Manager.GetDisguise().createDisguise(EntityType.PIG_ZOMBIE);
+		Host.Manager.GetDisguise().getApi().disguise(ent, d1);
 		
 		Host.Manager.GetCondition().Factory().Speed("Speed", ent, ent, 99999, 1, false, false, false);
 		

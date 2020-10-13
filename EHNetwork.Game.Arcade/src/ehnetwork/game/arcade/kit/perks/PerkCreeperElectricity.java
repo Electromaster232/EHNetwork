@@ -8,13 +8,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
+import de.robingrether.idisguise.disguise.CreeperDisguise;
+import de.robingrether.idisguise.disguise.Disguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.F;
 import ehnetwork.core.common.util.UtilEnt;
 import ehnetwork.core.common.util.UtilPlayer;
 import ehnetwork.core.common.util.UtilTime;
-import ehnetwork.core.disguise.disguises.DisguiseBase;
-import ehnetwork.core.disguise.disguises.DisguiseCreeper;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
 import ehnetwork.game.arcade.kit.Perk;
@@ -127,34 +127,34 @@ public class PerkCreeperElectricity extends Perk
 				damagee.getName(), GetName());
 	}
 	
-	public DisguiseCreeper GetDisguise(Player player)
+	public CreeperDisguise GetDisguise(Player player)
 	{
-		DisguiseBase disguise = Manager.GetDisguise().getDisguise(player);
+		Disguise disguise = Manager.GetDisguise().getDisguise(player);
 		if (disguise == null)
 			return null;
 
-		if (!(disguise instanceof DisguiseCreeper))
+		if (!(disguise instanceof CreeperDisguise))
 			return null;
 
-		return (DisguiseCreeper)disguise;
+		return (CreeperDisguise) disguise;
 	}
 	
 	public void SetPowered(Player player, boolean powered)
 	{
-		DisguiseCreeper creeper = GetDisguise(player);
+		CreeperDisguise creeper = GetDisguise(player);
 		if (creeper == null)	return;
 		
-		creeper.SetPowered(powered);
+		creeper.setPowered(powered);
 		
-		Manager.GetDisguise().updateDisguise(creeper);
+		Manager.GetDisguise().applyDisguise(creeper, player);
 	}
 	
 	public boolean IsPowered(Player player)
 	{
-		DisguiseCreeper creeper = GetDisguise(player);
+		CreeperDisguise creeper = GetDisguise(player);
 		if (creeper == null)	return false;
-		
-		return creeper.IsPowered();
+
+		return creeper.isPowered();
 	}
 
 	@EventHandler

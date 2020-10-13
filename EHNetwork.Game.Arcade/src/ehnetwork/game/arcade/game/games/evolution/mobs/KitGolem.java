@@ -5,10 +5,11 @@ import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.F;
 import ehnetwork.core.common.util.UtilPlayer;
-import ehnetwork.core.disguise.disguises.DisguiseIronGolem;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.game.arcade.ArcadeManager;
 import ehnetwork.game.arcade.kit.Kit;
@@ -49,9 +50,10 @@ public class KitGolem extends Kit
 		player.getWorld().playSound(player.getLocation(), Sound.IRONGOLEM_DEATH, 4f, 1f);
 		
 		//Disguise
-		DisguiseIronGolem disguise = new DisguiseIronGolem(player);
-		disguise.setName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+		Disguise d1 = Manager.GetDisguise().createDisguise(EntityType.IRON_GOLEM);
+		MobDisguise disguise = (MobDisguise) d1;
+		disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
 		disguise.setCustomNameVisible(true);
-		Manager.GetDisguise().disguise(disguise);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 	}
 }

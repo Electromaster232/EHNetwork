@@ -1,17 +1,17 @@
 package ehnetwork.game.arcade.game.games.smash.kits;
 
 import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.achievement.Achievement;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.UtilInv;
-import ehnetwork.core.disguise.disguises.DisguiseSheep;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.game.arcade.ArcadeManager;
 import ehnetwork.game.arcade.game.Game.GameState;
@@ -123,16 +123,13 @@ public class KitSheep extends SmashKit
 		giveCoreItems(player);
 		
 		//Disguise
-		DisguiseSheep disguise = new DisguiseSheep(player);
-
-		if (Manager.GetGame().GetTeam(player) != null)		
-			disguise.setName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
-		else			
-			disguise.setName(player.getName());
-		
-		disguise.setColor(DyeColor.WHITE);
-		
+		Disguise d1 = Manager.GetDisguise().createDisguise(EntityType.SHEEP);
+		MobDisguise disguise = (MobDisguise) d1;
+		if (Manager.GetGame().GetTeam(player) != null)
+			disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+		else
+			disguise.setCustomName(player.getName());
 		disguise.setCustomNameVisible(true);
-		Manager.GetDisguise().disguise(disguise);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 	}
 }

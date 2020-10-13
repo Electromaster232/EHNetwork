@@ -8,23 +8,24 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftFallingSand;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import net.minecraft.server.v1_8_R3.DataWatcher;
+import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutAttachEntity;
+import net.minecraft.server.v1_8_R3.PacketPlayOutEntity.PacketPlayOutRelEntityMove;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityTeleport;
-import net.minecraft.server.v1_8_R3.PacketPlayOutRelEntityMove;
 import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntity;
 import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
 
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.F;
 import ehnetwork.core.common.util.MapUtil;
@@ -33,8 +34,6 @@ import ehnetwork.core.common.util.UtilEnt;
 import ehnetwork.core.common.util.UtilInv;
 import ehnetwork.core.common.util.UtilPlayer;
 import ehnetwork.core.common.util.UtilServer;
-import ehnetwork.core.disguise.disguises.DisguiseCat;
-import ehnetwork.core.disguise.disguises.DisguiseChicken;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.core.recharge.Recharge;
 import ehnetwork.game.arcade.game.games.hideseek.HideSeek;
@@ -51,6 +50,7 @@ public class BlockForm extends Form
     private int _selfEntityId1;
     private int _selfEntityId2;
     private Vector _lastSaw;
+    private int _fakeSilverfishId;
     private Vector _sawDiff = new Vector();
     private boolean _is18;
 
@@ -61,6 +61,7 @@ public class BlockForm extends Form
         _is18 = UtilPlayer.is1_8(player);
         _mat = mat;
         _loc = player.getLocation();
+        _fakeSilverfishId = UtilEnt.getNewEntityId();
         _selfEntityId1 = UtilEnt.getNewEntityId();
         _selfEntityId2 = UtilEnt.getNewEntityId();
         System.out.println("Block Form: " + _mat + " " + _mat.getId());
@@ -79,14 +80,19 @@ public class BlockForm extends Form
         }
 
         EntityPlayer player = ((CraftPlayer) Player).getHandle();
-        player.getDataWatcher().watch(0, Byte.valueOf((byte) 32));
+        player.getDataWatcher().watch(0, (byte) 32, Entity.META_ENTITYDATA, (byte) 32);
 
         // Player > Chicken
-        DisguiseChicken disguise = new DisguiseChicken(Player);
-        disguise.setBaby();
-        disguise.setInvisible(true);
-        disguise.setSoundDisguise(new DisguiseCat(Player));
-        Host.Manager.GetDisguise().disguise(disguise);
+        //DisguiseChicken disguise = new DisguiseChicken(Player);
+        //disguise.setBaby();
+        //disguise.setInvisible(true);
+        //disguise.setSoundDisguise(new DisguiseCat(Player));
+        //Host.Manager.GetDisguise().disguise(disguise);
+
+        Disguise d1 = Host.Manager.GetDisguise().createDisguise(EntityType.CHICKEN);
+        MobDisguise d2 = (MobDisguise) d1;
+        d2.setVisibility(Disguise.Visibility.ONLY_LIST);
+        Host.Manager.GetDisguise().applyDisguise(d2, Player);
 
         // Apply Falling Block
         FallingBlockCheck();
@@ -104,8 +110,8 @@ public class BlockForm extends Form
             packet1.d = (int) Math.floor(_lastSaw.getY() * 32);
             packet1.e = (int) Math.floor(_lastSaw.getZ() * 32);
             DataWatcher watcher = new DataWatcher(null);
-            watcher.a(0, (byte) 32);
-            watcher.a(1, 0);
+            watcher.a(0, (byte) 32, Entity.META_ENTITYDATA, (byte) 32);
+            watcher.a(1, 0, Entity.META_AIR, 0);
             packet1.l = watcher;
             packets[0] = packet1;
 
@@ -171,13 +177,14 @@ public class BlockForm extends Form
                 }));
         }
 
-        ((CraftEntity) Player).getHandle().getDataWatcher().watch(0, Byte.valueOf((byte) 0));
+        ((CraftEntity) Player).getHandle().getDataWatcher().watch(0, (byte) 0, Entity.META_ENTITYDATA, (byte) 0);
     }
 
     public void SolidifyUpdate()
     {
         if (!Player.isSprinting())
-            ((CraftEntity) Player).getHandle().getDataWatcher().watch(0, Byte.valueOf((byte) 32));
+            ((CraftEntity) Player).getHandle().getDataWatcher().watch(0, (byte) 32, Entity.META_ENTITYDATA,
+                    (byte) 32);
 
         // Not a Block
         if (_block == null)
@@ -233,19 +240,19 @@ public class BlockForm extends Form
 
                     _sawDiff.add(blockLoc.clone().subtract(_lastSaw));
 
-                    Packet packet = this.getPacket(_sawDiff, blockLoc);
+                    Packet[] packet = this.getPacket(_sawDiff, blockLoc);
 
                     _lastSaw = Player.getLocation().toVector().subtract(new Vector(0, _is18 ? 0.15625 : 0, 0));
                     _sawDiff = _lastSaw.clone().subtract(blockLoc);
 
                     if (packet != null)
                     {
-                        if (packet instanceof PacketPlayOutEntityTeleport)
+                        if (packet[0] instanceof   PacketPlayOutEntityTeleport)
                         {
                             _sawDiff = new Vector();
                         }
 
-                        ((CraftPlayer) Player).getHandle().playerConnection.sendPacket(packet);
+                        ((CraftPlayer) Player).getHandle().playerConnection.sendPacket(packet[0]);
                     }
                 }
             }
@@ -308,67 +315,35 @@ public class BlockForm extends Form
         Player.sendBlockChange(Player.getLocation(), 36, (byte) 0);
 
     }
-
     public void FallingBlockCheck()
     {
-
-        EntityPlayer player = ((CraftPlayer) Player).getHandle();
-
         // Block Form (Hide Falling)
         if (_block == null)
         {
-            // Recreate Falling
-            if (Player.getPassenger() == null || !Player.getPassenger().isValid())
-            {
-                if (Recharge.Instance.use(Player, "PassengerChange", 100, false, false))
-                {
-                    _entityId = UtilEnt.getNewEntityId(false);
-                    // Falling Block
-                    FallingBlock block = Player.getWorld().spawnFallingBlock(Player.getEyeLocation(), _mat, (byte) 0);
-
-                    // No Arrow Collision
-                    ((CraftFallingSand) block).getHandle().spectating = true;
-
-                    Player.setPassenger(block);
-                }
-            }
-            else
-            {
-                // Ensure Falling doesnt Despawn
-                ((CraftFallingSand) Player.getPassenger()).getHandle().ticksLived = 1;
-                Player.getPassenger().setTicksLived(1);
-            }
-
             // Tell falling block to move around
-            
+
             if (_lastSaw != null)
             {
-                this._sawDiff.add(Player.getLocation().subtract(0, _is18 ? 0.15625 : 0, 0).toVector().subtract(_lastSaw));
+                this._sawDiff.add(Player.getLocation().subtract(0, 0.15625, 0).toVector().subtract(_lastSaw));
             }
 
-            _lastSaw = Player.getLocation().subtract(0, _is18 ? 0.15625 : 0, 0).toVector();
+            _lastSaw = Player.getLocation().subtract(0, 0.15625, 0).toVector();
 
-            Packet packet = this.getPacket(_sawDiff, _lastSaw);
+            Packet[] packet = this.getPacket(_sawDiff, _lastSaw);
 
             if (packet != null)
             {
-                if (packet instanceof PacketPlayOutRelEntityMove)
-                {
-                    PacketPlayOutRelEntityMove relPacket = (PacketPlayOutRelEntityMove) packet;
-                    _sawDiff.subtract(new Vector(relPacket.b / 32D, relPacket.c / 32D, relPacket.d / 32D));
-                }
-                else
-                {
+
                     _sawDiff = new Vector();
-                }
 
-                player.playerConnection.sendPacket(packet);
+
+                UtilPlayer.sendPacket(Player, packet[0]);
             }
-
         }
     }
 
-    private Packet getPacket(Vector blocksFromNewPosition, Vector newPosition)
+
+    private Packet[] getPacket(Vector blocksFromNewPosition, Vector newPosition)
     {
         int x = (int) Math.floor(blocksFromNewPosition.getX() * 32);
         int y = (int) Math.floor(blocksFromNewPosition.getY() * 32);
@@ -376,30 +351,38 @@ public class BlockForm extends Form
 
         if (x != 0 || y != 0 || z != 0)
         {
+            Packet[] packets = new Packet[2];
+
             if (x >= -128 && x <= 127 && y >= -128 && y <= 127 && z >= -128 && z <= 127)
             {
                 PacketPlayOutRelEntityMove relMove = new PacketPlayOutRelEntityMove();
-                relMove.a = this._selfEntityId1;
+                relMove.a = this._fakeSilverfishId;
                 relMove.b = (byte) x;
                 relMove.c = (byte) y;
                 relMove.d = (byte) z;
 
-                return relMove;
+                packets[0] = relMove;
             }
-            else
+
             {
                 PacketPlayOutEntityTeleport teleportPacket = new PacketPlayOutEntityTeleport();
-                teleportPacket.a = _selfEntityId1;
+                teleportPacket.a = _fakeSilverfishId;
                 teleportPacket.b = (int) Math.floor(32 * newPosition.getX());
                 teleportPacket.c = (int) Math.floor(32 * newPosition.getY());
                 teleportPacket.d = (int) Math.floor(32 * newPosition.getZ());
 
-                return teleportPacket;
+                if (packets[0] == null)
+                    packets[0] = teleportPacket;
+
+                packets[1] = teleportPacket;
             }
+
+            return packets;
         }
 
         return null;
     }
+
 
     public Block GetBlock()
     {

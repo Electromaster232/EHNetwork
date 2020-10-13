@@ -6,8 +6,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.common.util.C;
-import ehnetwork.core.disguise.disguises.DisguiseCow;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.game.arcade.ArcadeManager;
 import ehnetwork.game.arcade.kit.AbbreviatedKit;
@@ -74,10 +75,11 @@ public class KitCow extends AbbreviatedKit
 						}));
 
 		//Disguise
-		DisguiseCow disguise = new DisguiseCow(player);
-		disguise.setName(C.cRed + player.getName());//+ " the Furious Cow");
+		Disguise d1 = Manager.GetDisguise().createDisguise(EntityType.COW);
+		MobDisguise disguise = (MobDisguise) d1;
+		disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
 		disguise.setCustomNameVisible(true);
-		Manager.GetDisguise().disguise(disguise);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 	}
 	
 	@EventHandler

@@ -8,9 +8,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemStack;
 
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.UtilInv;
-import ehnetwork.core.disguise.disguises.DisguiseBlaze;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
@@ -109,15 +110,16 @@ public class KitBlaze extends SmashKit
 		giveCoreItems(player);
 
 		//Disguise
-		DisguiseBlaze disguise = new DisguiseBlaze(player);
-		
-		if (Manager.GetGame().GetTeam(player) != null)		
-			disguise.setName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
-		else			
-			disguise.setName(player.getName());
-		
+		Disguise d1 = Manager.GetDisguise().createDisguise(EntityType.BLAZE);
+		MobDisguise disguise = (MobDisguise) d1;
+		if (Manager.GetGame().GetTeam(player) != null)
+			disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+		else
+			disguise.setCustomName(player.getName());
 		disguise.setCustomNameVisible(true);
-		Manager.GetDisguise().disguise(disguise);
+		Manager.GetDisguise().applyDisguise(disguise, player);
+
+
 	}
 
 

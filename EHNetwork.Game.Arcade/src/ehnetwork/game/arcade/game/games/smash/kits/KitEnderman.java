@@ -13,9 +13,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.UtilInv;
-import ehnetwork.core.disguise.disguises.DisguiseEnderman;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
@@ -34,7 +35,7 @@ import ehnetwork.game.arcade.kit.perks.event.PerkBlockThrowEvent;
 
 public class KitEnderman extends SmashKit
 {
-	public HashMap<Player, DisguiseEnderman> _disguises = new HashMap<Player, DisguiseEnderman>();
+	public HashMap<Player, Disguise> _disguises = new HashMap<Player, Disguise>();
 
 	public KitEnderman(ArcadeManager manager)
 	{
@@ -116,16 +117,14 @@ public class KitEnderman extends SmashKit
 		giveCoreItems(player);
 		
 		//Disguise
-		DisguiseEnderman disguise = new DisguiseEnderman(player);
-
-		if (Manager.GetGame().GetTeam(player) != null)		
-			disguise.setName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
-		else			
-			disguise.setName(player.getName());
-		
+		Disguise d1 = Manager.GetDisguise().createDisguise(EntityType.BLAZE);
+		MobDisguise disguise = (MobDisguise) d1;
+		if (Manager.GetGame().GetTeam(player) != null)
+			disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+		else
+			disguise.setCustomName(player.getName());
 		disguise.setCustomNameVisible(true);
-		disguise.a(false);
-		Manager.GetDisguise().disguise(disguise);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 
 		_disguises.put(player, disguise);
 	}
@@ -148,15 +147,15 @@ public class KitEnderman extends SmashKit
 		SetBlock(_disguises.get(event.getEntity()), 0, (byte)0);
 	}
 
-	public void SetBlock(DisguiseEnderman disguise, int id, byte data)
+	public void SetBlock(Disguise disguise, int id, byte data)
 	{
 		if (disguise == null)
 			return;
 
-		disguise.SetCarriedId(id);
-		disguise.SetCarriedData(data);
+		//disguise.SetCarriedId(id);
+		//disguise.SetCarriedData(data);
 
-		Manager.GetDisguise().updateDisguise(disguise);
+		//Manager.GetDisguise().updateDisguise(disguise);
 	}
 	
 	@EventHandler
@@ -165,11 +164,11 @@ public class KitEnderman extends SmashKit
 		if (event.getType() != UpdateType.FAST)
 			return;
 
-		for (Iterator<Entry<Player, DisguiseEnderman>> iterator = _disguises.entrySet().iterator(); iterator.hasNext();)
+		for (Iterator<Entry<Player, Disguise>> iterator = _disguises.entrySet().iterator(); iterator.hasNext();)
 		{
-			Entry<Player, DisguiseEnderman> current = iterator.next();
+			Entry<Player, Disguise> current = iterator.next();
 			
-			if (!Manager.GetDisguise().isDisguised(current.getKey()))
+			if (Manager.GetDisguise().getDisguise((current.getKey())) != null)
 			{
 				iterator.remove();
 			}

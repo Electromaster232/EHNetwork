@@ -7,6 +7,7 @@ import java.util.Iterator;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,6 +17,8 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.common.util.UtilAction;
 import ehnetwork.core.common.util.UtilBlock;
 import ehnetwork.core.common.util.UtilEnt;
@@ -25,8 +28,6 @@ import ehnetwork.core.common.util.UtilParticle.ParticleType;
 import ehnetwork.core.common.util.UtilParticle.ViewDist;
 import ehnetwork.core.common.util.UtilServer;
 import ehnetwork.core.common.util.UtilTime;
-import ehnetwork.core.disguise.disguises.DisguiseBat;
-import ehnetwork.core.disguise.disguises.DisguiseWitch;
 import ehnetwork.core.recharge.Recharge;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
@@ -52,15 +53,14 @@ public class PerkBatForm extends SmashPerk
 		Manager.GetDisguise().undisguise(player);
 
 		//Disguise
-		DisguiseBat disguise = new DisguiseBat(player);
-
-		if (Manager.GetGame().GetTeam(player) != null)		
-			disguise.setName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
-		else			
-			disguise.setName(player.getName());
-
+		Disguise d1 = Manager.GetDisguise().createDisguise(EntityType.BAT);
+		MobDisguise disguise = (MobDisguise) d1;
+		if (Manager.GetGame().GetTeam(player) != null)
+			disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+		else
+			disguise.setCustomName(player.getName());
 		disguise.setCustomNameVisible(true);
-		Manager.GetDisguise().disguise(disguise);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 	}
 
 	@Override
@@ -69,15 +69,14 @@ public class PerkBatForm extends SmashPerk
 		Manager.GetDisguise().undisguise(player);
 
 		//Disguise
-		DisguiseWitch disguise = new DisguiseWitch(player);
-
-		if (Manager.GetGame().GetTeam(player) != null)		
-			disguise.setName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
-		else			
-			disguise.setName(player.getName());
-
+		Disguise d1 = Manager.GetDisguise().createDisguise(EntityType.WITCH);
+		MobDisguise disguise = (MobDisguise) d1;
+		if (Manager.GetGame().GetTeam(player) != null)
+			disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+		else
+			disguise.setCustomName(player.getName());
 		disguise.setCustomNameVisible(true);
-		Manager.GetDisguise().disguise(disguise);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)

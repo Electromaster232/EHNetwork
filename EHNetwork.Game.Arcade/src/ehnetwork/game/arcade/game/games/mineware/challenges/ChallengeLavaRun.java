@@ -10,12 +10,14 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.common.util.UtilMath;
 import ehnetwork.core.common.util.UtilServer;
-import ehnetwork.core.disguise.disguises.DisguiseMagmaCube;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
 import ehnetwork.game.arcade.game.games.mineware.Challenge;
@@ -160,9 +162,11 @@ public class ChallengeLavaRun extends Challenge
 
 		for (Player player : getChallengers())
 		{
-			DisguiseMagmaCube disguise = new DisguiseMagmaCube(player);
-			disguise.SetSize(2);
-			Host.getArcadeManager().GetDisguise().disguise(disguise);
+			Disguise d1 = Host.Manager.GetDisguise().createDisguise(EntityType.MAGMA_CUBE);
+			MobDisguise disguise = (MobDisguise) d1;
+			disguise.setCustomName(Host.Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+			disguise.setCustomNameVisible(true);
+			Host.Manager.GetDisguise().applyDisguise(disguise, player);
 		}
 	}
 

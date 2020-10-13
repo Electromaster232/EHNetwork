@@ -9,17 +9,18 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Creature;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import de.robingrether.idisguise.disguise.Disguise;
 import ehnetwork.core.common.util.UtilAction;
 import ehnetwork.core.common.util.UtilAlg;
 import ehnetwork.core.common.util.UtilEnt;
 import ehnetwork.core.common.util.UtilFirework;
 import ehnetwork.core.common.util.UtilMath;
-import ehnetwork.core.disguise.disguises.DisguiseSpider;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
 import ehnetwork.game.arcade.game.games.christmas.Christmas;
@@ -124,8 +125,8 @@ public class Part2 extends Part
 		Host.CreatureAllowOverride = true;
 		Skeleton ent = loc.getWorld().spawn(loc, Skeleton.class);
 		Host.CreatureAllowOverride = false;
-		DisguiseSpider disguise = new DisguiseSpider(ent);
-		Host.Manager.GetDisguise().disguise(disguise);
+		Disguise d1 = Host.Manager.GetDisguise().createDisguise(EntityType.SPIDER);
+		Host.Manager.GetDisguise().getApi().disguise(ent, d1);
 		
 		ent.setHealth(10);
 

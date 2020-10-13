@@ -2,11 +2,12 @@ package ehnetwork.game.arcade.game.games.halloween.creatures;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.inventory.ItemStack;
 
-import ehnetwork.core.disguise.disguises.DisguiseSkeleton;
+import de.robingrether.idisguise.disguise.Disguise;
 import ehnetwork.core.updater.event.UpdateEvent;
 import ehnetwork.game.arcade.game.games.halloween.Halloween;
 import ehnetwork.minecraft.game.core.damage.CustomDamageEvent;
@@ -21,8 +22,8 @@ public class MobSkeletonWarrior extends CreatureBase<Zombie> implements Interfac
 	@Override
 	public void SpawnCustom(Zombie ent) 
 	{
-		DisguiseSkeleton spider = new DisguiseSkeleton(ent);
-		Host.Manager.GetDisguise().disguise(spider);
+		Disguise d1 = Host.Manager.GetDisguise().createDisguise(EntityType.ZOMBIE);
+		Host.Manager.GetDisguise().getApi().disguise(ent, d1);
 		ent.setCustomName("Skeleton Warrior");
 		ent.getEquipment().setItemInHand(new ItemStack(Material.WOOD_HOE));
 		

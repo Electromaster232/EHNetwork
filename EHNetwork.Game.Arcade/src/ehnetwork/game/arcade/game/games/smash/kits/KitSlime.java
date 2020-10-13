@@ -10,6 +10,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
 
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.UtilInv;
 import ehnetwork.core.common.util.UtilMath;
@@ -17,8 +19,6 @@ import ehnetwork.core.common.util.UtilParticle;
 import ehnetwork.core.common.util.UtilParticle.ParticleType;
 import ehnetwork.core.common.util.UtilParticle.ViewDist;
 import ehnetwork.core.common.util.UtilServer;
-import ehnetwork.core.disguise.disguises.DisguiseBase;
-import ehnetwork.core.disguise.disguises.DisguiseSlime;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.core.updater.event.UpdateEvent;
 import ehnetwork.game.arcade.ArcadeManager;
@@ -114,30 +114,27 @@ public class KitSlime extends SmashKit
 		giveCoreItems(player);
 		
 		//Disguise
-		DisguiseSlime disguise = new DisguiseSlime(player);
-
-		if (Manager.GetGame().GetTeam(player) != null)		
-			disguise.setName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
-		else			
-			disguise.setName(player.getName());
-		
+		Disguise d1 = Manager.GetDisguise().createDisguise(EntityType.SLIME);
+		MobDisguise disguise = (MobDisguise) d1;
+		if (Manager.GetGame().GetTeam(player) != null)
+			disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+		else
+			disguise.setCustomName(player.getName());
 		disguise.setCustomNameVisible(true);
-		Manager.GetDisguise().disguise(disguise);
-		
-		disguise.SetSize(3);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 	}
 	
 	@Override
 	public void activateSuperCustom(Player player)
 	{
-		DisguiseBase disguise = Manager.GetDisguise().getDisguise(player);
-		if (disguise != null && disguise instanceof DisguiseSlime)
-		{
-			DisguiseSlime slime = (DisguiseSlime)disguise;
-
-			slime.SetSize(14);
-			Manager.GetDisguise().updateDisguise(slime);
-		}
+		Disguise d1 = Manager.GetDisguise().createDisguise(EntityType.SLIME);
+		MobDisguise disguise = (MobDisguise) d1;
+		if (Manager.GetGame().GetTeam(player) != null)
+			disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+		else
+			disguise.setCustomName(player.getName());
+		disguise.setCustomNameVisible(true);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 		
 		player.setExp(0.99f);
 		

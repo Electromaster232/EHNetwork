@@ -15,6 +15,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import de.robingrether.idisguise.disguise.SheepDisguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.F;
 import ehnetwork.core.common.util.UtilBlock;
@@ -26,8 +27,6 @@ import ehnetwork.core.common.util.UtilParticle.ParticleType;
 import ehnetwork.core.common.util.UtilParticle.ViewDist;
 import ehnetwork.core.common.util.UtilPlayer;
 import ehnetwork.core.common.util.UtilServer;
-import ehnetwork.core.disguise.disguises.DisguiseBase;
-import ehnetwork.core.disguise.disguises.DisguiseSheep;
 import ehnetwork.core.recharge.Recharge;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
@@ -100,19 +99,18 @@ public class PerkLazer extends Perk
 				player.getWorld().playSound(player.getLocation(), Sound.FIZZ, 0.25f + player.getExp(), 0.75f + player.getExp());
 				
 				//Wool
-				DisguiseBase disguise = Manager.GetDisguise().getDisguise(player);
-				if (disguise != null && disguise instanceof DisguiseSheep)
+				SheepDisguise disguise = (SheepDisguise) Manager.GetDisguise().getDisguise(player);
+				if (disguise != null)
 				{
-					DisguiseSheep sheep = (DisguiseSheep)disguise;
 					if (Math.random() > 0.5)
-						sheep.setColor(DyeColor.YELLOW);
+						disguise.setColor(DyeColor.YELLOW);
 					else
-						sheep.setColor(DyeColor.BLACK);
+						disguise.setColor(DyeColor.BLACK);
 					
-					sheep.setSheared(false);
+					//disguise.(false);
 					
-					sheep.UpdateDataWatcher();
-					Manager.GetDisguise().updateDisguise(disguise);
+					//sheep.UpdateDataWatcher();
+					Manager.GetDisguise().applyDisguise(disguise, player);
 				}
 				
 				if (player.getExp() >= 0.999f)
@@ -221,15 +219,15 @@ public class PerkLazer extends Perk
 	
 	public void setWoolColor(Player player, DyeColor color)
 	{
-		DisguiseBase disguise = Manager.GetDisguise().getDisguise(player);
-		if (disguise != null && disguise instanceof DisguiseSheep)
+		SheepDisguise disguise = (SheepDisguise) Manager.GetDisguise().getDisguise(player);
+		if (disguise != null)
 		{
-			DisguiseSheep sheep = (DisguiseSheep)disguise;
-			sheep.setSheared(false);
-			sheep.setColor(color);
-			
-			sheep.UpdateDataWatcher();
-			Manager.GetDisguise().updateDisguise(disguise);
+			disguise.setColor(color);
+
+			//disguise.(false);
+
+			//sheep.UpdateDataWatcher();
+			Manager.GetDisguise().applyDisguise(disguise, player);
 		}
 	}
 }

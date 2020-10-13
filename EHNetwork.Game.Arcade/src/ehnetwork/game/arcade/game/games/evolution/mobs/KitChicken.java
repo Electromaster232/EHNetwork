@@ -7,10 +7,11 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.F;
 import ehnetwork.core.common.util.UtilPlayer;
-import ehnetwork.core.disguise.disguises.DisguiseChicken;
 import ehnetwork.game.arcade.ArcadeManager;
 import ehnetwork.game.arcade.kit.Kit;
 import ehnetwork.game.arcade.kit.KitAvailability;
@@ -51,10 +52,11 @@ public class KitChicken extends Kit
 		player.getWorld().playSound(player.getLocation(), Sound.CHICKEN_IDLE, 4f, 1f);
 
 		//Disguise
-		DisguiseChicken disguise = new DisguiseChicken(player);
-		disguise.setName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+		Disguise d1 = Manager.GetDisguise().createDisguise(EntityType.CHICKEN);
+		MobDisguise disguise = (MobDisguise) d1;
+		disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
 		disguise.setCustomNameVisible(true);
-		Manager.GetDisguise().disguise(disguise);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 	}
 
 	@EventHandler

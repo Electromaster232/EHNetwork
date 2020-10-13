@@ -14,10 +14,11 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import net.minecraft.server.v1_8_R3.DataWatcher;
+import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutAttachEntity;
+import net.minecraft.server.v1_8_R3.PacketPlayOutEntity.PacketPlayOutRelEntityMove;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_8_R3.PacketPlayOutRelEntityMove;
 import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntity;
 import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
 
@@ -175,8 +176,8 @@ public class Wall
 			packet1.d = (int) Math.floor((entry.getKey().getY() - 0.15625) * 32);
 			packet1.e = (int) Math.floor(entry.getKey().getZ() * 32);
 			DataWatcher watcher = new DataWatcher(null);
-			watcher.a(0, (byte) 32);
-			watcher.a(1, 0);
+			watcher.a(0, (byte) 32, Entity.META_ENTITYDATA, (byte) 32);
+			watcher.a(1, 0, Entity.META_AIR, 0);
 			packet1.l = watcher;
 
 			PacketPlayOutSpawnEntity packet2 = new PacketPlayOutSpawnEntity(((CraftPlayer) player).getHandle(), 70,

@@ -9,7 +9,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Random;
-import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,9 +26,7 @@ import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.block.Furnace;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftArrow;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLargeFireball;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Boat;
 import org.bukkit.entity.Egg;
 import org.bukkit.entity.Entity;
@@ -71,18 +68,17 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.NameTagVisibility;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
-import org.bukkit.scoreboard.TeamNameTagVisibility;
 import org.bukkit.util.Vector;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.EntityArrow;
 import net.minecraft.server.v1_8_R3.EntityLargeFireball;
+import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayInUseEntity;
 import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardTeam;
 import net.minecraft.server.v1_8_R3.ScoreboardTeam;
 import net.minecraft.server.v1_8_R3.TileEntity;
 import net.minecraft.server.v1_8_R3.TileEntityChest;
 import net.minecraft.server.v1_8_R3.WorldServer;
-import com.mojang.authlib.GameProfile;
 
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.F;
@@ -136,6 +132,8 @@ import ehnetwork.game.arcade.stats.WinWithoutWearingArmorStatTracker;
 import ehnetwork.minecraft.game.core.combat.CombatComponent;
 import ehnetwork.minecraft.game.core.combat.event.CombatDeathEvent;
 import ehnetwork.minecraft.game.core.damage.CustomDamageEvent;
+import org.golde.bukkit.corpsereborn.CorpseAPI.CorpseAPI;
+import org.golde.bukkit.corpsereborn.nms.Corpses;
 
 public abstract class SurvivalGames extends Game
 {
@@ -904,30 +902,7 @@ public abstract class SurvivalGames extends Game
 			ex.printStackTrace();
 		}
 
-		GameProfile newProfile = new GameProfile(UUID.randomUUID(), name);
-
-		newProfile.getProperties().putAll(((CraftPlayer) player).getHandle().getProfile().getProperties());
-
-		DisguisePlayer disguise = new DisguisePlayer(null, newProfile);
-
-		disguise.setSleeping(getFace(player.getLocation()));
-
-		getArcadeManager().GetDisguise().addFutureDisguise(disguise);
-
-		Entity entity = player.getWorld().spawnEntity(player.getLocation(), EntityType.ARROW);
-
-		try
-		{
-			EntityArrow entityArrow = ((CraftArrow) entity).getHandle();
-
-			Field at = EntityArrow.class.getDeclaredField("at");
-			at.setAccessible(true);
-			at.set(entityArrow, Integer.MIN_VALUE); // Despawn time
-		}
-		catch (Exception ex)
-		{
-			ex.printStackTrace();
-		}
+		Corpses.CorpseData cd1 = CorpseAPI.spawnCorpse(player, player.getLocation());
 	}
 
 	@EventHandler
@@ -1664,7 +1639,8 @@ public abstract class SurvivalGames extends Game
 
 			if (!open)
 			{
-				world.playBlockAction(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(),
+				BlockPosition b1 = new BlockPosition(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+				world.playBlockAction(b1,
 						net.minecraft.server.v1_8_R3.Block.getById(loc.getBlock().getTypeId()), 1, 0);
 
 				Iterator<TileEntityChest> itel = _openedChests.keySet().iterator();
@@ -1673,7 +1649,7 @@ public abstract class SurvivalGames extends Game
 				{
 					TileEntityChest tile = itel.next();
 
-					if (tile.x == loc.getBlockX() && tile.y == loc.getBlockY() && tile.z == loc.getBlockZ())
+					if (tile.getPosition() == b1)
 					{
 						itel.remove();
 					}
@@ -1715,7 +1691,7 @@ public abstract class SurvivalGames extends Game
 		{
 			if (UtilPlayer.is1_8(player))
 			{
-				UtilPlayer.sendPacket(player, packet);
+				UtilPlayer.sendPacket(player, (Packet) packet);
 			}
 		}
 	}
@@ -1744,7 +1720,7 @@ public abstract class SurvivalGames extends Game
 
 		if (UtilPlayer.is1_8(player))
 		{
-			UtilPlayer.sendPacket(player, packet);
+			UtilPlayer.sendPacket(player, (Packet) packet);
 		}
 	}
 

@@ -6,7 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemStack;
 
-import ehnetwork.core.disguise.disguises.DisguiseWolf;
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.WolfDisguise;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
@@ -62,9 +63,10 @@ public class KitHumanPeasant extends KitHuman
 		
 		player.setHealth(4);
 		
-		DisguiseWolf disguise = new DisguiseWolf(player);
-		disguise.setName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+		Disguise d1 = Manager.GetDisguise().createDisguise(EntityType.WOLF);
+		WolfDisguise disguise = (WolfDisguise) d1;
+		disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
 		disguise.setCustomNameVisible(true);
-		Manager.GetDisguise().disguise(disguise);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 	}
 }

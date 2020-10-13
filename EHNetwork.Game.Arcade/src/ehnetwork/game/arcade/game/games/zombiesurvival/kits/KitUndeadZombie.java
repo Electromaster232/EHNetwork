@@ -5,7 +5,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import ehnetwork.core.disguise.disguises.DisguiseSkeleton;
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.game.arcade.ArcadeManager;
 import ehnetwork.game.arcade.kit.Kit;
@@ -43,10 +44,14 @@ public class KitUndeadZombie extends Kit
 	public void GiveItems(Player player) 
 	{
 		player.getInventory().addItem(ItemStackFactory.Instance.CreateStack(Material.STONE_AXE));
-		
-		DisguiseSkeleton disguise = new DisguiseSkeleton(player);
-		disguise.setName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+
+		Disguise d1 = Manager.GetDisguise().createDisguise(EntityType.SKELETON);
+		MobDisguise disguise = (MobDisguise) d1;
+
+		disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor()
+				+ player.getName());
+
 		disguise.setCustomNameVisible(true);
-		Manager.GetDisguise().disguise(disguise);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 	}
 }

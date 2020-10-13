@@ -7,9 +7,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.UtilServer;
-import ehnetwork.core.disguise.disguises.DisguiseWither;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
@@ -75,15 +76,17 @@ public class KitWitherMinion extends Kit
 								+ C.Bold + "Human Finder X-9000"));
 
 		// Disguise
-		DisguiseWither disguise = new DisguiseWither(player);
+		Disguise d1 = Manager.GetDisguise().createDisguise(EntityType.SQUID);
+		MobDisguise disguise = (MobDisguise) d1;
+
 
 		if (Manager.GetGame().GetTeam(player) != null)
-			disguise.setName(Manager.GetGame().GetTeam(player).GetColor()
+			disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor()
 					+ player.getName());
-		else disguise.setName(player.getName());
+		else disguise.setCustomName(player.getName());
 
 		disguise.setCustomNameVisible(true);
-		Manager.GetDisguise().disguise(disguise);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)

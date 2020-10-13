@@ -7,7 +7,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
-import ehnetwork.core.disguise.disguises.DisguiseZombie;
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.game.arcade.ArcadeManager;
 import ehnetwork.game.arcade.kit.KitAvailability;
@@ -38,16 +39,12 @@ public class KitUndeadZombie extends KitUndead
 	public void GiveItems(Player player)
 	{
 		player.getInventory().addItem(ItemStackFactory.Instance.CreateStack(Material.STONE_AXE));
-		
-		DisguiseZombie disguise = new DisguiseZombie(player);
-		
-		if (Manager.GetGame().GetTeam(player) != null)
-		{
-			disguise.setName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
-			disguise.setCustomNameVisible(true);
-		}
-		
-		Manager.GetDisguise().disguise(disguise);
+
+		Disguise d1 = Manager.GetDisguise().createDisguise(EntityType.ZOMBIE);
+		MobDisguise disguise = (MobDisguise) d1;
+		disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+		disguise.setCustomNameVisible(true);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 	}
 
 	@EventHandler

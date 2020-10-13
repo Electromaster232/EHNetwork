@@ -8,8 +8,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.common.util.UtilInv;
-import ehnetwork.core.disguise.disguises.DisguiseSkeleton;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.game.arcade.ArcadeManager;
 import ehnetwork.game.arcade.kit.KitAvailability;
@@ -41,11 +42,12 @@ public class KitUndeadArcher extends KitUndead
 	{
 		player.getInventory().addItem(ItemStackFactory.Instance.CreateStack(Material.STONE_AXE));
 		player.getInventory().addItem(ItemStackFactory.Instance.CreateStack(Material.BOW));
-		
-		DisguiseSkeleton disguise = new DisguiseSkeleton(player);
-		disguise.setName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+
+		Disguise d1 = Manager.GetDisguise().createDisguise(EntityType.SKELETON);
+		MobDisguise disguise = (MobDisguise) d1;
+		disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
 		disguise.setCustomNameVisible(true);
-		Manager.GetDisguise().disguise(disguise);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 	}
 	
 	@EventHandler

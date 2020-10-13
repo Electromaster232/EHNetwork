@@ -16,6 +16,8 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
 
+import de.robingrether.idisguise.disguise.CreeperDisguise;
+import de.robingrether.idisguise.disguise.Disguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.F;
 import ehnetwork.core.common.util.UtilAction;
@@ -26,8 +28,6 @@ import ehnetwork.core.common.util.UtilParticle.ParticleType;
 import ehnetwork.core.common.util.UtilParticle.ViewDist;
 import ehnetwork.core.common.util.UtilPlayer;
 import ehnetwork.core.common.util.UtilServer;
-import ehnetwork.core.disguise.disguises.DisguiseBase;
-import ehnetwork.core.disguise.disguises.DisguiseCreeper;
 import ehnetwork.core.recharge.Recharge;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
@@ -201,44 +201,49 @@ public class PerkCreeperExplode extends SmashPerk
 		}
 	}
 
-	public DisguiseCreeper GetDisguise(Player player)
+	public CreeperDisguise GetDisguise(Player player)
 	{
-		DisguiseBase disguise = Manager.GetDisguise().getDisguise(player);
+		Disguise disguise = Manager.GetDisguise().getDisguise(player);
 		if (disguise == null)
 			return null;
 
-		if (!(disguise instanceof DisguiseCreeper))
+		if (!(disguise instanceof CreeperDisguise))
 			return null;
 
-		return (DisguiseCreeper)disguise;
+		return (CreeperDisguise) disguise;
+	}
+
+	public void SetPowered(Player player, boolean powered)
+	{
+		CreeperDisguise creeper = GetDisguise(player);
+		if (creeper == null)	return;
+
+		creeper.setPowered(powered);
+
+		Manager.GetDisguise().applyDisguise(creeper, player);
+	}
+
+	public boolean IsPowered(Player player)
+	{
+		CreeperDisguise creeper = GetDisguise(player);
+		if (creeper == null)	return false;
+
+		return creeper.isPowered();
 	}
 	
 	public int GetSize(Player player)
 	{
-		DisguiseCreeper creeper = GetDisguise(player);
-		if (creeper == null)	return 0;
-		
-		return creeper.bV();
+		return 1;
 	}
 	
 	public void DecreaseSize(Player player)
 	{
-		DisguiseCreeper creeper = GetDisguise(player);
-		if (creeper == null)	return;
-		
-		creeper.a(-1);
-		
-		Manager.GetDisguise().updateDisguise(creeper);
+		return;
 	}
 	
 	public void IncreaseSize(Player player)
 	{
-		DisguiseCreeper creeper = GetDisguise(player);
-		if (creeper == null)	return;
-		
-		creeper.a(1);
-		
-		Manager.GetDisguise().updateDisguise(creeper);
+		return;
 	}
 	
 	@EventHandler

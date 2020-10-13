@@ -13,6 +13,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import de.robingrether.idisguise.disguise.HorseDisguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.F;
 import ehnetwork.core.common.util.UtilBlock;
@@ -23,8 +24,6 @@ import ehnetwork.core.common.util.UtilParticle.ViewDist;
 import ehnetwork.core.common.util.UtilPlayer;
 import ehnetwork.core.common.util.UtilServer;
 import ehnetwork.core.common.util.UtilTime;
-import ehnetwork.core.disguise.disguises.DisguiseBase;
-import ehnetwork.core.disguise.disguises.DisguiseHorse;
 import ehnetwork.core.recharge.Recharge;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
@@ -70,12 +69,17 @@ public class PerkHorseKick extends SmashPerk
 			return;
 
 		//Horse Animation
-		DisguiseBase horse = Manager.GetDisguise().getDisguise(player);
+		/*DisguiseBase horse = Manager.GetDisguise().getDisguise(player);
 		if (horse != null && horse instanceof DisguiseHorse)
 		{
 			((DisguiseHorse)horse).kick();
 			Manager.GetDisguise().updateDisguise(horse);
 		}
+
+		HorseDisguise d1 = (HorseDisguise) Manager.GetDisguise().getDisguise(player);
+
+		 */
+
 
 		//Animation
 		_active.put(player, System.currentTimeMillis());
@@ -137,7 +141,7 @@ public class PerkHorseKick extends SmashPerk
 			if (!player.isValid() || player.getHealth() <= 0 || UtilTime.elapsed(_active.get(player), 1000))
 			{
 				playerIterator.remove();
-				
+				/*
 				//Horse Animation
 				DisguiseBase horse = Manager.GetDisguise().getDisguise(player);
 				if (horse != null && horse instanceof DisguiseHorse)
@@ -145,6 +149,8 @@ public class PerkHorseKick extends SmashPerk
 					((DisguiseHorse)horse).stopKick();
 					Manager.GetDisguise().updateDisguise(horse);
 				}
+
+				 */
 				
 				Manager.GetCondition().EndCondition(player, null, GetName());
 			}

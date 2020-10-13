@@ -7,9 +7,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Slime;
 import org.bukkit.inventory.ItemStack;
 
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.achievement.Achievement;
 import ehnetwork.core.common.util.C;
-import ehnetwork.core.disguise.disguises.DisguiseSlime;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.game.arcade.ArcadeManager;
 import ehnetwork.game.arcade.kit.Kit;
@@ -51,11 +52,13 @@ public class KitHiderTeleporter extends Kit
 	{
 		//Swap
 		player.getInventory().setItem(3, ItemStackFactory.Instance.CreateStack(Material.MAGMA_CREAM, (byte)0, 1, C.cYellow + C.Bold + "Click Block" + C.cWhite + C.Bold + " - " + C.cGreen + C.Bold + "Infest Block/Animal"));
-		
-		DisguiseSlime slime = new DisguiseSlime(player);
-		slime.SetSize(2);
-		slime.setName(C.cAqua + player.getName());
-		Manager.GetDisguise().disguise(slime);
+
+
+		Disguise d1 = Manager.GetDisguise().createDisguise(EntityType.SLIME);
+		MobDisguise disguise = (MobDisguise) d1;
+		disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+		disguise.setCustomNameVisible(false);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 	}
 	
 	@Override

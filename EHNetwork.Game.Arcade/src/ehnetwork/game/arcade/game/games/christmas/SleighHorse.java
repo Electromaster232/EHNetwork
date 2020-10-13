@@ -1,11 +1,11 @@
 package ehnetwork.game.arcade.game.games.christmas;
 
 import java.util.HashSet;
+import java.util.UUID;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Horse.Color;
@@ -15,15 +15,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import net.minecraft.server.v1_8_R3.DataWatcher;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntityArmorStand;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.EntityTrackerEntry;
 import net.minecraft.server.v1_8_R3.Packet;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntity;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityEquipment;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityTeleport;
-import net.minecraft.server.v1_8_R3.PacketPlayOutRelEntityMove;
-import net.minecraft.server.v1_8_R3.PacketPlayOutRelEntityMoveLook;
 import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
+import net.minecraft.server.v1_8_R3.Vector3f;
 
 import ehnetwork.core.common.util.UtilEnt;
 import ehnetwork.core.common.util.UtilPlayer;
@@ -74,7 +74,7 @@ public class SleighHorse
 
     public void onTick()
     {
-        EntityTrackerEntry entityTrackerEntry = (EntityTrackerEntry) ((CraftWorld) Ent.getWorld()).getHandle().tracker.trackedEntities
+        EntityTrackerEntry entityTrackerEntry = ((CraftWorld) Ent.getWorld()).getHandle().tracker.trackedEntities
                 .get(Ent.getEntityId());
         if (entityTrackerEntry != null)
         {
@@ -100,18 +100,18 @@ public class SleighHorse
                     int x = xP + pX;
                     int y = yP;
                     int z = zP + pZ;
-                    if (x >= -128 && x <= 127 && y >= -128 && y <= 127 && z >= -128 && z <= 127)
-                    {
-                        PacketPlayOutEntity relMove = pX != 0 || pZ != 0 ? new PacketPlayOutRelEntityMoveLook()
-                                : new PacketPlayOutRelEntityMove();
-                        relMove.a = hornsAndNose[i];
-                        relMove.b = (byte) x;
-                        relMove.c = (byte) y;
-                        relMove.d = (byte) z;
-                        relMove.e = ((byte) (int) (newLocation.getYaw() * 256.0F / 360.0F));
-                        packets1_8[i] = relMove;
-                    }
-                    else
+//                    if (x >= -128 && x <= 127 && y >= -128 && y <= 127 && z >= -128 && z <= 127)
+//                    {
+//                        PacketPlayOutEntity relMove = pX != 0 || pZ != 0 ? new PacketPlayOutEntity.PacketPlayOutRelEntityMoveLook()
+//                                : new PacketPlayOutEntity.PacketPlayOutRelEntityMove();
+//                        relMove.a = hornsAndNose[i];
+//                        relMove.b = (byte) x;
+//                        relMove.c = (byte) y;
+//                        relMove.d = (byte) z;
+//                        relMove.e = ((byte) (int) (newLocation.getYaw() * 256.0F / 360.0F));
+//                        packets1_8[i] = relMove;
+//                    }
+//                    else
                     {
                         x = (int) Math.floor(32 * newLocation.getX());
                         y = (int) Math.floor(32 * newLocation.getY());
@@ -139,8 +139,6 @@ public class SleighHorse
                 HashSet<EntityPlayer> cloned = (HashSet) trackedPlayers.clone();
                 for (EntityPlayer p : cloned)
                 {
-                    if (!UtilPlayer.is1_8(p.getBukkitEntity()))
-                        continue;
                     for (Packet packet : packets1_8)
                     {
                         p.playerConnection.sendPacket(packet);
@@ -150,10 +148,10 @@ public class SleighHorse
         }
     }
 
+
+
     public void spawnHorns(Player player)
     {
-        if (!UtilPlayer.is1_8(player))
-            return;
         Location loc = Ent == null ? _lastFacing : Ent.getLocation().add(0, 0.5, 0);
         for (int i = 0; i < 2; i++)
         {
@@ -165,20 +163,23 @@ public class SleighHorse
             packet.d = (int) (loc.getY() * 32);
             packet.e = (int) (loc.getZ() * 32) + this._previousDir[(i * 2) + 1];
             packet.f = ((byte) (int) (loc.getYaw() * 256.0F / 360.0F));
+            packet.uuid = UUID.randomUUID();
+
             // Setup datawatcher for armor stand
             DataWatcher watcher = new DataWatcher(null);
-            watcher.a(0, (byte) 32);
-            watcher.a(10, (byte) 4);
-            watcher.a(11, new Vector(0, i * 180, (i == 0 ? -1 : 1) * 60f));
+            watcher.a(0, (byte) 32, Entity.META_ENTITYDATA, (byte) 32);
+            watcher.a(10, (byte) 4, EntityArmorStand.META_ARMOR_OPTION, (byte) 4);
+            watcher.a(11, new Vector3f(0, i * 180, (i == 0 ? -1 : 1) * 60f), EntityArmorStand.META_HEAD_POSE, new Vector3f(0, i * 180, (i == 0 ? -1 : 1) * 60f));
             packet.l = watcher;
             PacketPlayOutEntityEquipment enquipPacket = new PacketPlayOutEntityEquipment();
             enquipPacket.a = id;
             enquipPacket.b = 4;
             enquipPacket.c = CraftItemStack.asNMSCopy(new ItemStack(Material.DEAD_BUSH));
-            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
-            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(enquipPacket);
+            UtilPlayer.sendPacket(player, packet);
+            UtilPlayer.sendPacket(player, enquipPacket);
         }
     }
+
 
     public void spawnHorse()
     {

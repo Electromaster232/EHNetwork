@@ -30,7 +30,6 @@ import ehnetwork.core.common.util.UtilParticle.ParticleType;
 import ehnetwork.core.common.util.UtilParticle.ViewDist;
 import ehnetwork.core.common.util.UtilPlayer;
 import ehnetwork.core.common.util.UtilServer;
-import ehnetwork.core.disguise.disguises.DisguiseFactory;
 import ehnetwork.core.recharge.Recharge;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
@@ -299,7 +298,7 @@ public class SneakyAssassins extends SoloGame
 				{
 					if (IsAlive(player))
 					{
-						Manager.GetDisguise().disguise(DisguiseFactory.createDisguise(player, _disguiseType));
+						Manager.GetDisguise().applyDisguise(Manager.GetDisguise().createDisguise(_disguiseType), player);
 						player.removePotionEffect(PotionEffectType.WITHER);
 					}
 				}

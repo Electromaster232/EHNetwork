@@ -12,10 +12,11 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.UtilEnt;
 import ehnetwork.core.common.util.UtilInv;
-import ehnetwork.core.disguise.disguises.DisguiseHorse;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.game.arcade.ArcadeManager;
 import ehnetwork.game.arcade.game.Game.GameState;
@@ -121,16 +122,14 @@ public class KitSkeletalHorse extends SmashKit
 		giveCoreItems(player);
 		
 		//Disguise
-		DisguiseHorse disguise = new DisguiseHorse(player);
-		disguise.setType(Variant.SKELETON_HORSE);
-
-		if (Manager.GetGame().GetTeam(player) != null)		
-			disguise.setName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
-		else			
-			disguise.setName(player.getName());
-		
+		Disguise d1 = Manager.GetDisguise().createDisguise(EntityType.HORSE);
+		MobDisguise disguise = (MobDisguise) d1;
+		if (Manager.GetGame().GetTeam(player) != null)
+			disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+		else
+			disguise.setCustomName(player.getName());
 		disguise.setCustomNameVisible(true);
-		Manager.GetDisguise().disguise(disguise);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 	}
 	
 	@Override

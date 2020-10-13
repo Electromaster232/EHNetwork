@@ -22,7 +22,6 @@ import org.bukkit.inventory.ItemStack;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.UtilMath;
 import ehnetwork.core.common.util.UtilPlayer;
-import ehnetwork.core.disguise.disguises.DisguiseVillager;
 import ehnetwork.game.arcade.game.games.mineware.Challenge;
 import ehnetwork.game.arcade.game.games.mineware.MineWare;
 import ehnetwork.minecraft.game.core.damage.CustomDamageEvent;
@@ -73,14 +72,14 @@ public class ChallengeMilkACow extends Challenge
 	{
 		setBorder(-16, 16, 0, 10, -16, 16);
 
-		for (Player player : Host.GetPlayers(true))
-		{
-			DisguiseVillager disguise = new DisguiseVillager(player);
-			disguise.setBaby();
-			Host.getArcadeManager().GetDisguise().disguise(disguise);
-			player.getInventory().setItem(0, new ItemStack(Material.BUCKET));
-			_score.put(player.getName(), 0);
-		}
+		//for (Player player : Host.GetPlayers(true))
+		//{
+		//	DisguiseVillager disguise = new DisguiseVillager(player);
+		//	disguise.setBaby();
+		//	Host.getArcadeManager().GetDisguise().disguise(disguise);
+		//	player.getInventory().setItem(0, new ItemStack(Material.BUCKET));
+		//	_score.put(player.getName(), 0);
+		//}
 	}
 
 	@Override

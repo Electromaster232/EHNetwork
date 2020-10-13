@@ -2,17 +2,18 @@ package ehnetwork.game.arcade.game.games.gravity;
 
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.util.Vector;
 
+import de.robingrether.idisguise.disguise.Disguise;
 import ehnetwork.core.common.util.UtilEnt;
 import ehnetwork.core.common.util.UtilMath;
 import ehnetwork.core.common.util.UtilParticle;
 import ehnetwork.core.common.util.UtilParticle.ParticleType;
 import ehnetwork.core.common.util.UtilParticle.ViewDist;
 import ehnetwork.core.common.util.UtilServer;
-import ehnetwork.core.disguise.disguises.DisguiseBat;
 import ehnetwork.game.arcade.game.games.gravity.objects.GravityBomb;
 import ehnetwork.game.arcade.game.games.gravity.objects.GravityHook;
 import ehnetwork.game.arcade.game.games.gravity.objects.GravityPlayer;
@@ -27,7 +28,6 @@ public abstract class GravityObject
 	public Vector Vel;
 	
 	public Zombie Base;
-	public DisguiseBat Bat;
 	
 	public long GrabDelay = 0;
 	
@@ -54,10 +54,9 @@ public abstract class GravityObject
 	
 		Base.setMaxHealth(60);
 		Base.setHealth(60);
-		
-		Bat = new DisguiseBat(Base);
-		Bat.setSitting(true);
-		Host.Manager.GetDisguise().disguise(Bat);
+
+		Disguise d1 = Host.Manager.GetDisguise().createDisguise(EntityType.BAT);
+		Host.Manager.GetDisguise().getApi().disguise(Base, d1);
 		
 		UtilEnt.Vegetate(Base, true);
 		//UtilEnt.ghost(Base, true, true);
@@ -219,7 +218,7 @@ public abstract class GravityObject
 	
 	public void SetMovingBat(boolean moving)
 	{
-		Bat.setSitting(!moving);
+		//Bat.setSitting(!moving);
 		//Host.Manager.GetDisguise().updateDisguise(Bat);
 	}
 	

@@ -1,10 +1,11 @@
 package ehnetwork.game.arcade.game.games.halloween.creatures;
 
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.entity.EntityTargetEvent;
 
-import ehnetwork.core.disguise.disguises.DisguiseSpider;
+import de.robingrether.idisguise.disguise.Disguise;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
 import ehnetwork.game.arcade.game.games.halloween.Halloween;
@@ -20,8 +21,8 @@ public class MobSpiderSmasher extends CreatureBase<Zombie> implements InterfaceM
 	@Override
 	public void SpawnCustom(Zombie ent) 
 	{
-		DisguiseSpider spider = new DisguiseSpider(ent);
-		Host.Manager.GetDisguise().disguise(spider);
+		Disguise d1 = Host.Manager.GetDisguise().createDisguise(EntityType.SPIDER);
+		Host.Manager.GetDisguise().getApi().disguise(ent, d1);
 		ent.setCustomName("Smashing Spider");
 	}
 	

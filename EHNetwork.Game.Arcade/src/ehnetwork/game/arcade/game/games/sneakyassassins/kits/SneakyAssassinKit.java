@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import ehnetwork.core.common.util.C;
-import ehnetwork.core.disguise.disguises.DisguiseFactory;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.game.arcade.ArcadeManager;
 import ehnetwork.game.arcade.kit.Kit;
@@ -39,7 +38,7 @@ public abstract class SneakyAssassinKit extends Kit
 	@Override
 	public void GiveItems(Player player)
 	{
-		Manager.GetDisguise().disguise(DisguiseFactory.createDisguise(player, _entityType));
+		Manager.GetDisguise().applyDisguise(Manager.GetDisguise().createDisguise(_entityType), player);
  
 		player.getInventory().addItem(new ItemStack(Material.WOOD_SWORD));
 		player.getInventory().setArmorContents(new ItemStack[]{

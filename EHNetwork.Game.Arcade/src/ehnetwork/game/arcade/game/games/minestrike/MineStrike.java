@@ -51,12 +51,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.NameTagVisibility;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Team;
-import org.bukkit.scoreboard.TeamNameTagVisibility;
 import org.bukkit.util.Vector;
 import net.minecraft.server.v1_8_R3.EntityArrow;
 
+import de.robingrether.idisguise.disguise.Disguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.F;
 import ehnetwork.core.common.util.UtilAction;
@@ -76,7 +77,6 @@ import ehnetwork.core.common.util.UtilServer;
 import ehnetwork.core.common.util.UtilTextMiddle;
 import ehnetwork.core.common.util.UtilTime;
 import ehnetwork.core.common.util.UtilWorld;
-import ehnetwork.core.disguise.disguises.DisguisePlayer;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.core.recharge.Recharge;
 import ehnetwork.core.recharge.RechargedEvent;
@@ -192,7 +192,7 @@ public class MineStrike extends TeamGame
 
 	private HashMap<GameTeam, Integer> _score = new HashMap<GameTeam, Integer>();
 
-	private HashMap<Player, DisguisePlayer> _disguise = new HashMap<Player, DisguisePlayer>();
+	private HashMap<Player, Disguise> _disguise = new HashMap<Player, Disguise>();
 
 	//Round Data (wiped at end of each round)
 	private HashMap<Entity, Gun> _gunsDropped = new HashMap<Entity, Gun>();
@@ -324,7 +324,7 @@ public class MineStrike extends TeamGame
 		System.out.println("Hiding Scoreboard Nametags for Other Teams");
 		for (Team curTeam : Scoreboard.GetScoreboard().getTeams())
 		{
-			curTeam.setNameTagVisibility(TeamNameTagVisibility.HIDE_FOR_OTHER_TEAMS);
+			curTeam.setNameTagVisibility(NameTagVisibility.HIDE_FOR_OTHER_TEAMS);
 			//UtilServer.getServer().dispatchCommand(UtilServer.getServer().getConsoleSender(), 
 			//		"scoreboard teams option " + curTeam.getName() + " nametagVisibility hideForOtherTeams");
 		}
@@ -1156,8 +1156,8 @@ public class MineStrike extends TeamGame
 	@EventHandler(priority=EventPriority.MONITOR)
 	public void removeArrowsFromPlayer(CustomDamageEvent event)
 	{
-		if (event.GetDamageePlayer() != null)
-			((CraftPlayer) event.GetDamageePlayer()).getHandle().p(0);
+		//if (event.GetDamageePlayer() != null)
+		//	((CraftPlayer) event.GetDamageePlayer()).getHandle().(0);
 	}
 
 	@EventHandler(priority=EventPriority.HIGH)
@@ -1628,7 +1628,7 @@ public class MineStrike extends TeamGame
 	{
 		for (Player player : GetTeam(ChatColor.AQUA).GetPlayers(true))
 		{
-			Block block = player.getTargetBlock(null, 5);
+			Block block = player.getTargetBlock((HashSet<Byte>) null, 5);
 
 			if (block == null || !_bomb.isBlock(block))
 				continue;
@@ -1673,7 +1673,7 @@ public class MineStrike extends TeamGame
 		if (_bombDefuser == null)
 			return;
 
-		Block block = _bombDefuser.getTargetBlock(null, 5);
+		Block block = _bombDefuser.getTargetBlock((HashSet<Byte>) null, 5);
 
 		if (!IsAlive(_bombDefuser) || block == null || !_bomb.isBlock(block)  || !_bombDefuser.isOnline() || UtilMath.offset(_bombDefuser.getLocation(), block.getLocation().add(0.5, 0, 0.5)) > 3)
 		{

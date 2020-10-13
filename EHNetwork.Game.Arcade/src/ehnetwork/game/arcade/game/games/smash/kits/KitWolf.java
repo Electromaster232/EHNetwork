@@ -7,10 +7,11 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.MobDisguise;
+import de.robingrether.idisguise.disguise.WolfDisguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.UtilInv;
-import ehnetwork.core.disguise.disguises.DisguiseBase;
-import ehnetwork.core.disguise.disguises.DisguiseWolf;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.game.arcade.ArcadeManager;
 import ehnetwork.game.arcade.game.Game.GameState;
@@ -103,15 +104,14 @@ public class KitWolf extends SmashKit
 		giveCoreItems(player);
 		
 		//Disguise
-		DisguiseWolf disguise = new DisguiseWolf(player);
-
-		if (Manager.GetGame().GetTeam(player) != null)		
-			disguise.setName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
-		else			
-			disguise.setName(player.getName());
-		
+		Disguise d1 = Manager.GetDisguise().createDisguise(EntityType.WOLF);
+		MobDisguise disguise = (MobDisguise) d1;
+		if (Manager.GetGame().GetTeam(player) != null)
+			disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+		else
+			disguise.setCustomName(player.getName());
 		disguise.setCustomNameVisible(true);
-		Manager.GetDisguise().disguise(disguise);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 	}
 	
 	@Override
@@ -120,23 +120,12 @@ public class KitWolf extends SmashKit
 		Manager.GetCondition().Factory().Strength(GetName(), player, player, 30, 1, false, false, false);
 		Manager.GetCondition().Factory().Speed(GetName(), player, player, 30, 2, false, false, false);
 		Manager.GetCondition().Factory().Regen(GetName(), player, player, 30, 2, false, false, false);
-		
-		DisguiseBase disguise = Manager.GetDisguise().getDisguise(player);
-		if (disguise instanceof DisguiseWolf)
-		{
-			((DisguiseWolf)disguise).setAngry(true);
-			Manager.GetDisguise().updateDisguise(disguise);
-		}
+
 	}
 	
 	@Override
 	public void deactivateSuperCustom(Player player)
 	{
-		DisguiseBase disguise = Manager.GetDisguise().getDisguise(player);
-		if (disguise instanceof DisguiseWolf)
-		{
-			((DisguiseWolf)disguise).setAngry(false);
-			Manager.GetDisguise().updateDisguise(disguise);
-		}
+		WolfDisguise disguise = (WolfDisguise) Manager.GetDisguise().getDisguise(player);
 	}
 }
