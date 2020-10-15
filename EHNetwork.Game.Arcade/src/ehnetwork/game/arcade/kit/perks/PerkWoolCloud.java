@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import org.bukkit.DyeColor;
 import org.bukkit.Effect;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
@@ -12,6 +13,7 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
 
+import de.robingrether.idisguise.disguise.SheepDisguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.F;
 import ehnetwork.core.common.util.UtilAction;
@@ -23,8 +25,6 @@ import ehnetwork.core.common.util.UtilParticle.ViewDist;
 import ehnetwork.core.common.util.UtilPlayer;
 import ehnetwork.core.common.util.UtilServer;
 import ehnetwork.core.common.util.UtilTime;
-import ehnetwork.core.disguise.disguises.DisguiseBase;
-import ehnetwork.core.disguise.disguises.DisguiseSheep;
 import ehnetwork.core.recharge.Recharge;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
@@ -130,15 +130,15 @@ public class PerkWoolCloud extends Perk
 	
 	public void setWoolColor(Player player, DyeColor color)
 	{
-		DisguiseBase disguise = Manager.GetDisguise().getDisguise(player);
-		if (disguise != null && disguise instanceof DisguiseSheep)
+		SheepDisguise disguise = (SheepDisguise) Manager.GetDisguise().createDisguise(EntityType.SHEEP);
+		if (disguise != null && disguise instanceof SheepDisguise)
 		{
-			DisguiseSheep sheep = (DisguiseSheep)disguise;
-			sheep.setSheared(false);
-			sheep.setColor(color);
+			//DisguiseSheep sheep = (DisguiseSheep)disguise;
+			//sheep.setSheared(false);
+			disguise.setColor(color);
 			
-			sheep.UpdateDataWatcher();
-			Manager.GetDisguise().updateDisguise(disguise);
+			//sheep.UpdateDataWatcher();
+			Manager.GetDisguise().applyDisguise(disguise, player);
 		}
 	}
 	

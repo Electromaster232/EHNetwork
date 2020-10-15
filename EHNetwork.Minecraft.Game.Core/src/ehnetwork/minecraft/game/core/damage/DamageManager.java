@@ -3,6 +3,9 @@ package ehnetwork.minecraft.game.core.damage;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 import ehnetwork.core.MiniPlugin;
@@ -19,12 +22,10 @@ import ehnetwork.core.npc.NpcManager;
 import ehnetwork.minecraft.game.core.combat.CombatManager;
 import ehnetwork.minecraft.game.core.condition.ConditionManager;
 import ehnetwork.minecraft.game.core.damage.compatibility.NpcProtectListener;
-
 import net.minecraft.server.v1_8_R3.DamageSource;
 import net.minecraft.server.v1_8_R3.EntityHuman;
 import net.minecraft.server.v1_8_R3.EntityLiving;
 
-import org.bukkit.Bukkit;
 import org.bukkit.EntityEffect;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -39,10 +40,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.entity.EntityCombustByEntityEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.player.PlayerVelocityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
@@ -57,10 +58,18 @@ public class DamageManager extends MiniPlugin
 
 	public boolean UseSimpleWeaponDamage = false;
 	public boolean DisableDamageChanges = false;
+	/**
+	 * The value of knockback that is applied when a player is attacked.
+	 * If 0, the value is calculated from log10(damage).
+	 */
+	private double _constantKnockback;
 
 	private boolean _enabled = true;
 
-	public DamageManager(JavaPlugin plugin, CombatManager combatManager, NpcManager npcManager, DisguiseManager disguiseManager, ConditionManager conditionManager) 
+	private final HashMap<String, Integer> _protectionTypeModifiers = new HashMap<>();
+	private final HashMap<String, DamageCause[]> _protectionCauses = new HashMap<>();
+
+	public DamageManager(JavaPlugin plugin, CombatManager combatManager, NpcManager npcManager, DisguiseManager disguiseManager, ConditionManager conditionManager)
 	{
 		super("Damage Manager", plugin);
 
@@ -74,13 +83,112 @@ public class DamageManager extends MiniPlugin
 			_lastDamageByPlayerTime.setAccessible(true);
 			_k = EntityLiving.class.getDeclaredMethod("damageArmor", float.class);
 			_k.setAccessible(true);
-		} 
+		}
 		catch (final Exception e)
 		{
 			System.out.println("Problem getting access to EntityLiving: " + e.getMessage());
 		}
 
-		registerEvents(new NpcProtectListener(npcManager));
+		if (npcManager != null)
+		{
+			registerEvents(new NpcProtectListener(npcManager));
+		}
+
+		_protectionTypeModifiers.put(Enchantment.PROTECTION_ENVIRONMENTAL.getName(), 1);
+		_protectionTypeModifiers.put(Enchantment.PROTECTION_FIRE.getName(), 2);
+		_protectionTypeModifiers.put(Enchantment.PROTECTION_EXPLOSIONS.getName(), 2);
+		_protectionTypeModifiers.put(Enchantment.PROTECTION_PROJECTILE.getName(), 2);
+		_protectionTypeModifiers.put(Enchantment.PROTECTION_FALL.getName(), 3);
+
+		_protectionCauses.put(Enchantment.PROTECTION_ENVIRONMENTAL.getName(), new DamageCause[] {DamageCause.BLOCK_EXPLOSION, DamageCause.CONTACT, DamageCause.CUSTOM, DamageCause.DROWNING, DamageCause.ENTITY_ATTACK, DamageCause.ENTITY_EXPLOSION, DamageCause.FALL, DamageCause.FALLING_BLOCK, DamageCause.FIRE, DamageCause.FIRE_TICK, DamageCause.LAVA, DamageCause.LIGHTNING, DamageCause.PROJECTILE, DamageCause.SUFFOCATION, DamageCause.THORNS});
+		_protectionCauses.put(Enchantment.PROTECTION_FIRE.getName(), new DamageCause[] {DamageCause.FIRE, DamageCause.FIRE_TICK, DamageCause.LAVA});
+		_protectionCauses.put(Enchantment.PROTECTION_EXPLOSIONS.getName(), new DamageCause[] {DamageCause.BLOCK_EXPLOSION, DamageCause.ENTITY_EXPLOSION});
+		_protectionCauses.put(Enchantment.PROTECTION_PROJECTILE.getName(), new DamageCause[] {DamageCause.PROJECTILE});
+		_protectionCauses.put(Enchantment.PROTECTION_FALL.getName(), new DamageCause[] {DamageCause.FALL});
+	}
+
+	private int getHighestLevel(Enchantment ench, ItemStack[] items)
+	{
+		int level = 0;
+
+		for (ItemStack item : items)
+		{
+			if (item == null && item.getType() == Material.AIR)
+			{
+				continue;
+			}
+			if (!item.containsEnchantment(ench))
+			{
+				continue;
+			}
+			if (item.getEnchantmentLevel(ench) <= level)
+			{
+				continue;
+			}
+			level = item.getEnchantmentLevel(ench);
+		}
+
+		return level;
+	}
+
+	private int getTotalEPF(Enchantment ench, ItemStack[] items)
+	{
+		if (!_protectionTypeModifiers.containsKey(ench.getName()))
+		{
+			return 0;
+		}
+		if (!_protectionCauses.containsKey(ench.getName()))
+		{
+			return 0;
+		}
+
+		int epf = 0;
+
+		for (ItemStack item : items)
+		{
+			if (item == null || item.getType() == Material.AIR)
+			{
+				continue;
+			}
+			if (!item.containsEnchantment(ench))
+			{
+				continue;
+			}
+			if (item.getEnchantmentLevel(ench) <= 0)
+			{
+				continue;
+			}
+
+			epf += (item.getEnchantmentLevel(ench) * _protectionTypeModifiers.get(ench.getName()));
+		}
+
+		return Math.min(20, epf);
+	}
+
+	private double getTotalEnchantReduction(ItemStack[] armor, DamageCause cause)
+	{
+		int epf = 0;
+
+		for (Enchantment ench : Enchantment.values())
+		{
+			if (!_protectionTypeModifiers.containsKey(ench.getName()))
+			{
+				continue;
+			}
+			if (!_protectionCauses.containsKey(ench.getName()))
+			{
+				continue;
+			}
+			if (!Arrays.asList(_protectionCauses.get(ench.getName())).contains(cause))
+			{
+				continue;
+			}
+
+			epf += getTotalEPF(ench, armor);
+		}
+
+		epf = Math.max(0, Math.min(20, epf));
+		return new BigDecimal(1).subtract(new BigDecimal(epf).divide(new BigDecimal(25))).doubleValue();
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -101,6 +209,10 @@ public class DamageManager extends MiniPlugin
 		LivingEntity damager = UtilEvent.GetDamagerEntity(event, true);
 		Projectile projectile = GetProjectile(event);
 
+		/*
+		 * Fishing rods are disabled because of their custom properties
+		 * we want them to behave like default MC.
+		 */
 		if (projectile instanceof Fish)
 			return;
 
@@ -124,59 +236,80 @@ public class DamageManager extends MiniPlugin
 		event.setCancelled(true);
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
-	public void removeDemArrowsCrazyMan(EntityDamageEvent event)
+	@EventHandler
+	public void onEntityCombust(EntityCombustByEntityEvent event)
 	{
-		if (event.isCancelled())
-		{
-			Projectile projectile = GetProjectile(event);
+		if (!_enabled)
+			return;
 
-			if (projectile instanceof Arrow)
-			{
-				projectile.teleport(new Location(projectile.getWorld(), 0, 0, 0));
-				projectile.remove();
-			}
-		}
+		if (!(event.getCombuster() instanceof Player || event.getCombuster() instanceof Arrow))
+			return;
+
+		event.setCancelled(true);
 	}
-	/*
-	private boolean GoldPower(LivingEntity damager) 
-	{
-		try
-		{
-			Player player = (Player)damager;
-			if (!Util().Gear().isGold(player.getItemInHand()))
-				return false;
 
-			if (!player.getInventory().contains(Material.GOLD_NUGGET))
-				return false;
-
-			UtilInv.remove(player, Material.GOLD_NUGGET, (byte)0, 1);
-			return true;
-		}
-		catch (Exception e)
-		{
-			return false;
-		}
-	}
+	/**
+	 * Removes arrows after hit, especially in cases where arrows may bounce, like if the damage was cancelled.
 	 */
-
-	public void NewDamageEvent(LivingEntity damagee, LivingEntity damager, Projectile proj, 
-			DamageCause cause, double damage, boolean knockback, boolean ignoreRate, boolean ignoreArmor,
-			String source, String reason)
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void removeArrows(EntityDamageEvent event)
 	{
-		NewDamageEvent(damagee, damager, proj, 
+		Projectile projectile = GetProjectile(event);
+
+		if (projectile instanceof Arrow)
+		{
+			projectile.teleport(new Location(projectile.getWorld(), 0, 0, 0));
+			projectile.remove();
+		}
+	}
+
+	/**
+	 * Removes arrows after hit, especially in cases where arrows may bounce, like if the damage was cancelled.
+	 */
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void removeArrows(CustomDamageEvent event)
+	{
+		Projectile projectile = event.GetProjectile();
+
+		if (projectile instanceof Arrow)
+		{
+			projectile.teleport(new Location(projectile.getWorld(), 0, 0, 0));
+			projectile.remove();
+		}
+	}
+
+	public CustomDamageEvent NewDamageEvent(LivingEntity damagee, LivingEntity damager, Projectile proj,
+											DamageCause cause, double damage, boolean knockback, boolean ignoreRate, boolean ignoreArmor,
+											String source, String reason)
+	{
+		return NewDamageEvent(damagee, damager, proj,
 				cause, damage, knockback, ignoreRate, ignoreArmor,
 				source, reason, false);
 	}
 
-	public void NewDamageEvent(LivingEntity damagee, LivingEntity damager, Projectile proj, 
-			DamageCause cause, double damage, boolean knockback, boolean ignoreRate, boolean ignoreArmor,
-			String source, String reason, boolean cancelled)
-	{	
-		_plugin.getServer().getPluginManager().callEvent(
-				new CustomDamageEvent(damagee, damager, proj, cause, damage, 
-						knockback, ignoreRate, ignoreArmor, 
-						source, reason, cancelled));
+	public CustomDamageEvent NewDamageEvent(LivingEntity damagee, LivingEntity damager, Projectile proj,
+											DamageCause cause, double damage, boolean knockback, boolean ignoreRate, boolean ignoreArmor,
+											String source, String reason, boolean cancelled)
+	{
+		return NewDamageEvent(damagee, damager, proj, null, cause, damage, knockback, ignoreRate, ignoreArmor, source, reason, cancelled);
+	}
+
+	public CustomDamageEvent NewDamageEvent(LivingEntity damagee, LivingEntity damager, Projectile proj, Location knockbackOrigin,
+											DamageCause cause, double damage, boolean knockback, boolean ignoreRate, boolean ignoreArmor,
+											String source, String reason)
+	{
+		return NewDamageEvent(damagee, damager, proj, knockbackOrigin, cause, damage, knockback, ignoreRate, ignoreArmor, source,
+				reason, false);
+	}
+
+	public CustomDamageEvent NewDamageEvent(LivingEntity damagee, LivingEntity damager, Projectile proj, Location knockbackOrigin,
+											DamageCause cause, double damage, boolean knockback, boolean ignoreRate, boolean ignoreArmor,
+											String source, String reason, boolean cancelled)
+	{
+		CustomDamageEvent customDamageEvent = new CustomDamageEvent(damagee, damager, proj, knockbackOrigin, cause,
+				damage, knockback, ignoreRate, ignoreArmor, source, reason, cancelled);
+		_plugin.getServer().getPluginManager().callEvent(customDamageEvent);
+		return customDamageEvent;
 	}
 
 	@EventHandler(priority = EventPriority.LOW)
@@ -188,12 +321,18 @@ public class DamageManager extends MiniPlugin
 			return;
 		}
 
+		if (event.GetProjectile() != null && event.GetDamageeEntity().equals(event.GetProjectile().getShooter()) && !event.getProjectileDamageSelf())
+		{
+			event.SetCancelled("Self Projectile Damage");
+			return;
+		}
+
 		if (event.GetDamageePlayer() != null)
 		{
 			Player damagee = event.GetDamageePlayer();
 
 			//Not Survival
-			if (damagee.getGameMode() != GameMode.SURVIVAL)
+			if (damagee.getGameMode() != GameMode.SURVIVAL && damagee.getGameMode() != GameMode.ADVENTURE)
 			{
 				event.SetCancelled("Damagee in Creative");
 				return;
@@ -206,14 +345,14 @@ public class DamageManager extends MiniPlugin
 			}
 
 			//Limit Mob/World Damage Rate
-			if (!event.IgnoreRate())
-			{
-				if (!_combatManager.Get(damagee.getName()).CanBeHurtBy(event.GetDamagerEntity(true)))
-				{
-					event.SetCancelled("World/Monster Damage Rate");
-					return;
-				}
-			}
+			//if (!event.IgnoreRate())
+			//{
+			//	if (!_combatManager.Get(damagee.getUniqueId()).CanBeHurtBy(event.GetDamagerEntity(true)))
+			//	{
+			//		event.SetCancelled("World/Monster Damage Rate");
+			//		return;
+			//	}
+			//}
 		}
 
 		if (event.GetDamagerPlayer(true) != null)
@@ -221,19 +360,19 @@ public class DamageManager extends MiniPlugin
 			Player damager = event.GetDamagerPlayer(true);
 
 			//Not Survival
-			if (damager.getGameMode() != GameMode.SURVIVAL)
+			if (damager.getGameMode() != GameMode.SURVIVAL && damager.getGameMode() != GameMode.ADVENTURE)
 			{
 				event.SetCancelled("Damager in Creative");
 				return;
 			}
 
 			//Damage Rate
-			if (!event.IgnoreRate())
-				if (!_combatManager.Get(damager.getName()).CanHurt(event.GetDamageeEntity()))
-				{
-					event.SetCancelled("PvP Damage Rate");
-					return;
-				}
+			//if (!event.IgnoreRate())
+		//		if (!_combatManager.Get(damager).CanHurt(event.GetDamageeEntity()))
+			//	{
+			//		event.SetCancelled("PvP Damage Rate");
+			//		return;
+			//	}
 		}
 	}
 
@@ -247,35 +386,13 @@ public class DamageManager extends MiniPlugin
 		Player damagee = event.GetDamageePlayer();
 		if (damagee != null)
 		{
-			for (ItemStack stack : damagee.getInventory().getArmorContents())
+			if (event.GetDamage() <= 0)
 			{
-				if (stack == null)
-					continue;
-
-				Map<Enchantment, Integer> enchants = stack.getEnchantments();
-				for (Enchantment e : enchants.keySet())
-				{
-					if (e.equals(Enchantment.PROTECTION_ENVIRONMENTAL))
-						event.AddMod("Ench Prot", damagee.getName(), 0.5 * (double)enchants.get(e), false);
-
-					else if (e.equals(Enchantment.PROTECTION_FIRE) && 
-							event.GetCause() == DamageCause.FIRE &&
-							event.GetCause() == DamageCause.FIRE_TICK &&
-							event.GetCause() == DamageCause.LAVA)
-						event.AddMod("Ench Prot", damagee.getName(), 0.5 * (double)enchants.get(e), false);
-
-					else if (e.equals(Enchantment.PROTECTION_FALL) && 
-							event.GetCause() == DamageCause.FALL)
-						event.AddMod("Ench Prot", damagee.getName(), 0.5 * (double)enchants.get(e), false);
-
-					else if (e.equals(Enchantment.PROTECTION_EXPLOSIONS) && 
-							event.GetCause() == DamageCause.ENTITY_EXPLOSION)
-						event.AddMod("Ench Prot", damagee.getName(), 0.5 * (double)enchants.get(e), false);
-
-					else if (e.equals(Enchantment.PROTECTION_PROJECTILE) && 
-							event.GetCause() == DamageCause.PROJECTILE)
-						event.AddMod("Ench Prot", damagee.getName(), 0.5 * (double)enchants.get(e), false);
-				}
+				return;
+			}
+			if (getTotalEnchantReduction(damagee.getInventory().getArmorContents(), event.GetCause()) > 0)
+			{
+				event.AddMult("Ench Prot", damagee.getName(), getTotalEnchantReduction(damagee.getInventory().getArmorContents(), event.GetCause()), false);
 			}
 		}
 
@@ -293,14 +410,27 @@ public class DamageManager extends MiniPlugin
 				if (e.equals(Enchantment.ARROW_KNOCKBACK) || e.equals(Enchantment.KNOCKBACK))
 					event.AddKnockback("Ench Knockback", 1 + (0.5 * (double)enchants.get(e)));
 
-				else if (e.equals(Enchantment.ARROW_DAMAGE))
-					event.AddMod("Enchant", "Ench Damage", 0.5 * (double)enchants.get(e), true);
+				else if (e.equals(Enchantment.ARROW_DAMAGE) || e.equals(Enchantment.DAMAGE_ALL))
+					event.AddMod("Enchant", "Ench Damage", 0.5 * (double)enchants.get(e), false);
 
-				else if (e.equals(Enchantment.ARROW_FIRE) || e.equals(Enchantment.FIRE_ASPECT))
+				else if (e.equals(Enchantment.FIRE_ASPECT))
 					if (_conditionManager != null)
-						_conditionManager.Factory().Ignite("Ench Fire", event.GetDamageeEntity(), damager, 
-								1 * (double)enchants.get(e), false, false);
+					{
+						double reduce = 0;
+						if (damagee != null)
+						{
+							reduce = (15 * getHighestLevel(Enchantment.PROTECTION_FIRE, damagee.getInventory().getArmorContents())) * (4 * (double)enchants.get(e));
+						}
+						_conditionManager.Factory().Ignite("Ench Fire", event.GetDamageeEntity(), damager,
+								(4 * (double)enchants.get(e)) - reduce, false, false);
+					}
 			}
+		}
+
+		if (event.GetProjectile() instanceof Arrow && event.GetProjectile().getFireTicks() > 0)
+		{
+			if (_conditionManager != null)
+				_conditionManager.Factory().Ignite("Arrow Fire", event.GetDamageeEntity(), damager, 5, false, false);
 		}
 	}
 
@@ -317,20 +447,35 @@ public class DamageManager extends MiniPlugin
 				Player player = event.GetDamagerPlayer(true);
 				if (player != null)
 				{
+					if (player.equals(event.GetDamageeEntity()) && !event.getProjectileDamageSelf()) return;
+
 					player.playSound(player.getLocation(), Sound.ORB_PICKUP, 0.5f, 0.5f);
 				}
 			}
 		}
+	}
 
+	/*
+	 * Should only be used to debug the damage event
+	 * No modification of the event should take place
+	 */
+	@EventHandler (priority = EventPriority.MONITOR)
+	public void debugDamageEvent(CustomDamageEvent event)
+	{
 		DisplayDamage(event);
 	}
 
-	private void Damage(CustomDamageEvent event) 
+	private void Damage(CustomDamageEvent event)
 	{
 		if (event.GetDamageeEntity() == null)
 			return;
 
 		if (event.GetDamageeEntity().getHealth() <= 0)
+			return;
+
+		if (event.GetProjectile() != null &&
+				event.GetDamageeEntity().equals(event.GetProjectile().getShooter()) &&
+				!event.getProjectileDamageSelf())
 			return;
 
 		//Player Conditions
@@ -348,14 +493,14 @@ public class DamageManager extends MiniPlugin
 		}
 
 		try
-		{	
+		{
 			double bruteBonus = 0;
-			if (event.IsBrute() && 
+			if (event.IsBrute() &&
 					(
-							event.GetCause() == DamageCause.ENTITY_ATTACK || 
-							event.GetCause() == DamageCause.PROJECTILE || 
-							event.GetCause() == DamageCause.CUSTOM
-							))// && event.GetDamage() > 2)
+							event.GetCause() == DamageCause.ENTITY_ATTACK ||
+									event.GetCause() == DamageCause.PROJECTILE ||
+									event.GetCause() == DamageCause.CUSTOM
+					))// && event.GetDamage() > 2)
 				bruteBonus = Math.min(8, event.GetDamage()*2);
 
 			//Do Damage
@@ -365,23 +510,31 @@ public class DamageManager extends MiniPlugin
 			event.GetDamageeEntity().playEffect(EntityEffect.HURT);
 
 			//Sticky Arrow
-			if (event.GetCause() == DamageCause.PROJECTILE)
-				((CraftLivingEntity)event.GetDamageeEntity()).getHandle().p(((CraftLivingEntity)event.GetDamageeEntity()).getHandle().getLastDamager());
+			if (event.GetCause() == DamageCause.PROJECTILE && event.GetProjectile() != null && event.GetProjectile() instanceof Arrow && event.getShowArrows())
+				((CraftLivingEntity)event.GetDamageeEntity()).getHandle().o(((CraftLivingEntity)event.GetDamageeEntity()).getHandle().bv() + 1);
 
 			//Knockback
-			if (event.IsKnockback() && event.GetDamagerEntity(true) != null)
+			if (event.IsKnockback() && (event.getKnockbackOrigin() != null || event.GetDamagerEntity(true) != null))
 			{
 				//Base
-				double knockback = event.GetDamage();
-				if (knockback < 2)	knockback = 2;
-				knockback = Math.log10(knockback);
+				double knockback = _constantKnockback;
+
+				if (_constantKnockback == 0)
+				{
+					knockback = Math.log10(Math.max(event.GetDamage(), 2));
+				}
 
 				//Mults
 				for (double cur : event.GetKnockback().values())
-					knockback = knockback * cur;
+				{
+					knockback *= cur;
+				}
 
 				//Origin
-				Location origin = event.GetDamagerEntity(true).getLocation();
+				Location origin = null;
+
+				if (event.GetDamagerEntity(true) != null)
+					origin = event.GetDamagerEntity(true).getLocation();
 				if (event.getKnockbackOrigin() != null)
 					origin = event.getKnockbackOrigin();
 
@@ -390,27 +543,25 @@ public class DamageManager extends MiniPlugin
 				trajectory.multiply(0.6 * knockback);
 				trajectory.setY(Math.abs(trajectory.getY()));
 
-				//Debug
-				if (event.GetDamageeEntity() instanceof Player && UtilGear.isMat(((Player)event.GetDamageeEntity()).getItemInHand(), Material.SUGAR))
+				if (event.GetProjectile() != null && event.getKnockbackOrigin() == null)
 				{
-					Bukkit.broadcastMessage("--------- " + 
-				UtilEnt.getName(event.GetDamageeEntity()) + " hurt by " + UtilEnt.getName(event.GetDamagerEntity(true)) + "-----------" );
-					
-					Bukkit.broadcastMessage(F.main("Debug", "Damage: " + event.GetDamage()));
+					trajectory = event.GetProjectile().getVelocity();
+					trajectory.setY(0);
+					trajectory.multiply(0.37 * knockback / trajectory.length());
+					trajectory.setY(0.06);
 				}
-
 
 				//Apply
 				double vel = 0.2 + trajectory.length() * 0.8;
 
-				UtilAction.velocity(event.GetDamageeEntity(), trajectory, vel, 
+				UtilAction.velocity(event.GetDamageeEntity(), trajectory, vel,
 						false, 0, Math.abs(0.2 * knockback), 0.4 + (0.04 * knockback), true);
 			}
 		}
 		catch (IllegalAccessException e)
 		{
 			e.printStackTrace();
-		} 
+		}
 		catch (IllegalArgumentException e)
 		{
 			e.printStackTrace();
@@ -421,16 +572,7 @@ public class DamageManager extends MiniPlugin
 		}
 	}
 
-	@EventHandler
-	public void debugVel2(PlayerVelocityEvent event)
-	{
-		if (UtilGear.isMat(((Player)event.getPlayer()).getItemInHand(), Material.SUGAR))
-		{
-			Bukkit.broadcastMessage(F.main("Debug", "Event: " + event.getVelocity().length()));
-		}
-	}
-
-	private void DisplayDamage(CustomDamageEvent event) 
+	private void DisplayDamage(CustomDamageEvent event)
 	{
 		for (Player player : UtilServer.getPlayers())
 		{
@@ -468,9 +610,9 @@ public class DamageManager extends MiniPlugin
 		if (damager != null)
 			entityDamager= ((CraftLivingEntity)damager).getHandle();
 
-		entityDamagee.aG = 1.5F;
+		entityDamagee.aC = 1.5F;
 
-		if ((float) entityDamagee.noDamageTicks > (float) entityDamagee.maxNoDamageTicks / 2.0F) 
+		if ((float) entityDamagee.noDamageTicks > (float) entityDamagee.maxNoDamageTicks / 2.0F)
 		{
 			if (damage <= entityDamagee.lastDamage)
 			{
@@ -479,11 +621,11 @@ public class DamageManager extends MiniPlugin
 
 			ApplyDamage(entityDamagee, damage - entityDamagee.lastDamage, ignoreArmor);
 			entityDamagee.lastDamage = damage;
-		}        
+		}
 		else
 		{
 			entityDamagee.lastDamage = damage;
-			entityDamagee.aw = entityDamagee.getHealth();
+			//entityDamagee.aw = entityDamagee.getHealth();
 			//entityDamagee.noDamageTicks = entityDamagee.maxNoDamageTicks;
 			ApplyDamage(entityDamagee, damage, ignoreArmor);
 			//entityDamagee.hurtTicks = entityDamagee.aW = 10;
@@ -499,7 +641,7 @@ public class DamageManager extends MiniPlugin
 				entityDamagee.killer = (EntityHuman)entityDamager;
 			}
 
-		if (entityDamagee.getHealth() <= 0) 
+		if (entityDamagee.getHealth() <= 0)
 		{
 			if (entityDamager != null)
 			{
@@ -512,7 +654,7 @@ public class DamageManager extends MiniPlugin
 		}
 	}
 
-	@EventHandler
+	@EventHandler (priority = EventPriority.MONITOR)
 	public void DamageSound(CustomDamageEvent event)
 	{
 		if (event.IsCancelled())
@@ -526,11 +668,11 @@ public class DamageManager extends MiniPlugin
 		if (damagee == null)    return;
 
 
-		/*if (_disguiseManager.getDisguise(damagee) != null)
-		{
-			_disguiseManager.getDisguise(damagee).playHurtSound();
-			return;
-		} */
+		//if (_disguiseManager.isDisguised(damagee))
+		//{
+		//	_disguiseManager.getDisguise(damagee).playHurtSound();
+		//	return;
+		//}
 
 		//Sound
 		Sound sound = Sound.HURT_FLESH;
@@ -553,35 +695,35 @@ public class DamageManager extends MiniPlugin
 
 			if (stack != null)
 			{
-				if (stack.getType().toString().contains("LEATHER_"))	
+				if (stack.getType().toString().contains("LEATHER_"))
 				{
 					sound = Sound.SHOOT_ARROW;
 					pitch = 2f;
 				}
-				else if (stack.getType().toString().contains("CHAINMAIL_"))	
+				else if (stack.getType().toString().contains("CHAINMAIL_"))
 				{
 					sound = Sound.ITEM_BREAK;
 					pitch = 1.4f;
 				}
-				else if (stack.getType().toString().contains("GOLD_"))	
+				else if (stack.getType().toString().contains("GOLD_"))
 				{
 					sound = Sound.ITEM_BREAK;
 					pitch = 1.8f;
 				}
-				else if (stack.getType().toString().contains("IRON_"))	
+				else if (stack.getType().toString().contains("IRON_"))
 				{
 					sound = Sound.BLAZE_HIT;
 					pitch = 0.7f;
 				}
-				else if (stack.getType().toString().contains("DIAMOND_"))	
+				else if (stack.getType().toString().contains("DIAMOND_"))
 				{
 					sound = Sound.BLAZE_HIT;
 					pitch = 0.9f;
-				}	
+				}
 			}
 		}
 		//Animal Sound
-		else 
+		else
 		{
 			UtilEnt.PlayDamageSound(damagee);
 			return;
@@ -594,7 +736,7 @@ public class DamageManager extends MiniPlugin
 	{
 		if (!ignoreArmor)
 		{
-			int j = 25 - (int) entityLiving.aV;
+			int j = 25 - entityLiving.br();
 			float k = damage * (float)j;
 
 			_k.invoke(entityLiving, damage);
@@ -602,15 +744,15 @@ public class DamageManager extends MiniPlugin
 		}
 
 		/**
-		if (entityLiving.hasEffect(MobEffectList.RESISTANCE)) 
-		{
-			int j = (entityLiving.getEffect(MobEffectList.RESISTANCE).getAmplifier() + 1) * 5;
-			int k = 25 - j;
-			int l = damage * k + _aS.getInt(entityLiving);
+		 if (entityLiving.hasEffect(MobEffectList.RESISTANCE)) 
+		 {
+		 int j = (entityLiving.getEffect(MobEffectList.RESISTANCE).getAmplifier() + 1) * 5;
+		 int k = 25 - j;
+		 int l = damage * k + _aS.getInt(entityLiving);
 
-			damage = l / 25;
-			_aS.setInt(entityLiving, l % 25);
-		}
+		 damage = l / 25;
+		 _aS.setInt(entityLiving, l % 25);
+		 }
 		 **/
 
 		entityLiving.setHealth(entityLiving.getHealth() - damage);
@@ -631,7 +773,7 @@ public class DamageManager extends MiniPlugin
 			if (event.getDamage() > 1)
 				event.setDamage(event.getDamage() - 1);
 
-			if (UtilGear.isWeapon(damager.getItemInHand()) && damager.getItemInHand().getType().name().contains("GOLD_")) 
+			if (UtilGear.isWeapon(damager.getItemInHand()) && damager.getItemInHand().getType().name().contains("GOLD_"))
 				event.setDamage(event.getDamage() + 2);
 
 			return;
@@ -655,7 +797,7 @@ public class DamageManager extends MiniPlugin
 		event.setDamage(damage);
 	}
 
-	private LivingEntity GetDamageeEntity(EntityDamageEvent event)
+	public LivingEntity GetDamageeEntity(EntityDamageEvent event)
 	{
 		if (event.getEntity() instanceof LivingEntity)
 			return (LivingEntity)event.getEntity();
@@ -663,7 +805,7 @@ public class DamageManager extends MiniPlugin
 		return null;
 	}
 
-	private Projectile GetProjectile(EntityDamageEvent event)
+	public Projectile GetProjectile(EntityDamageEvent event)
 	{
 		if (!(event instanceof EntityDamageByEntityEvent))
 			return null;
@@ -676,9 +818,32 @@ public class DamageManager extends MiniPlugin
 		return null;
 	}
 
+	public boolean IsEnabled()
+	{
+		return _enabled;
+	}
+
 	public void SetEnabled(boolean var)
 	{
 		_enabled = var;
+	}
+
+	/**
+	 * Sets the value of {@link #_constantKnockback}.
+	 **/
+	public void setConstantKnockback(double constantKnockback)
+	{
+		_constantKnockback = constantKnockback;
+	}
+
+	/**
+	 * Resets the configuration of damage manager and ensures it is enabled.
+	 */
+	public void resetConfiguration()
+	{
+		DisableDamageChanges = false;
+		_constantKnockback = 0;
+		SetEnabled(true);
 	}
 
 	public CombatManager GetCombatManager()
@@ -686,7 +851,7 @@ public class DamageManager extends MiniPlugin
 		return _combatManager;
 	}
 
-	public void setConditionManager(ConditionManager cm) 
+	public void setConditionManager(ConditionManager cm)
 	{
 		_conditionManager = cm;
 	}

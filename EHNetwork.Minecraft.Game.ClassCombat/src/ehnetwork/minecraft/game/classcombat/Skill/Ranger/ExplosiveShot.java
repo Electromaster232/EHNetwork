@@ -220,7 +220,7 @@ public class ExplosiveShot extends SkillActive
 			Factory.Condition().Factory().Falling(GetName(), cur, player, 6, false, true);
 
 			//Damage Event
-			Factory.Damage().NewDamageEvent(cur, player, null, 
+			Factory.Damage().NewDamageEvent(cur, player, null, cur.getLocation(),
 					DamageCause.CUSTOM, 10 * range, false, true, false,
 					player.getName(), GetName());	
 

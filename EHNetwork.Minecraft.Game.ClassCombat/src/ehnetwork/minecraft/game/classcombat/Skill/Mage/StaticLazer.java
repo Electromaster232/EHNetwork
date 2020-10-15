@@ -113,7 +113,7 @@ public class StaticLazer extends SkillChargeSword
 				continue;
 
 			//Damage Event
-			Factory.Damage().NewDamageEvent(other, player, null, 
+			Factory.Damage().NewDamageEvent(other, player, null, other.getLocation(),
 					DamageCause.CUSTOM, 6 + level * charge, true, true, false,
 					player.getName(), GetName());	
 			

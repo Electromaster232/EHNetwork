@@ -165,12 +165,12 @@ public class Takedown extends SkillActive
 		int damage = 3 + (level);
 
 		//Damage Event
-		Factory.Damage().NewDamageEvent(damagee, damager, null, 
+		Factory.Damage().NewDamageEvent(damagee, damager, null, damager.getLocation(),
 				DamageCause.CUSTOM, damage, false, true, false,
 				damager.getName(), GetName());	
 
 		//Damage Event
-		Factory.Damage().NewDamageEvent(damager, damagee, null, 
+		Factory.Damage().NewDamageEvent(damager, damagee, null, damager.getLocation(),
 				DamageCause.CUSTOM, damage/2, false, true, false,
 				damager.getName(), GetName() + " Recoil");	
 

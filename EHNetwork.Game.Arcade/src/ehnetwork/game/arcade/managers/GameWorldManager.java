@@ -4,14 +4,17 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
+import com.mineplex.spigot.ChunkPreLoadEvent;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
 import ehnetwork.game.arcade.ArcadeManager;
 import ehnetwork.game.arcade.game.Game.GameState;
 import ehnetwork.game.arcade.world.WorldData;
+import static org.bukkit.event.EventPriority.HIGHEST;
 
 public class GameWorldManager implements Listener
 {
@@ -55,7 +58,7 @@ public class GameWorldManager implements Listener
 		}
 	}
 	
-	/*
+
 	@EventHandler
 	public void ChunkLoad(ChunkPreLoadEvent event)
 	{
@@ -63,11 +66,12 @@ public class GameWorldManager implements Listener
 			if (Manager.GetGame().WorldData != null)
 				Manager.GetGame().WorldData.ChunkLoad(event);
 	}
-	*/
-	
+
+
 	@EventHandler
 	public void ChunkUnload(ChunkUnloadEvent event)
 	{
+		//event.setCancelled(true);
 		if (event.getWorld().getName().equals("world"))
 		{
 			event.setCancelled(true);
@@ -75,9 +79,26 @@ public class GameWorldManager implements Listener
 		}
 
 		if (Manager.GetGame() != null)
+		{
 			if (Manager.GetGame().WorldData != null)
-				Manager.GetGame().WorldData.ChunkUnload(event);
+			{
+
+				//if (Manager.GetGame().WorldChunkUnload)
+				//{
+				//	return;
+				//}
+				if (Manager.GetGame().WorldData.World == null)
+					return;
+
+				if (!event.getWorld().equals(Manager.GetGame().WorldData.World))
+					return;
+
+				event.setCancelled(true);
+			}
+		}
 	}
+
+
 
 	public void RegisterWorld(WorldData worldData)
 	{

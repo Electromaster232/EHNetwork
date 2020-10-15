@@ -156,7 +156,7 @@ public class FissureData
 						double damage = 2 + (0.4 * _level) + (_handled * (0.7 + 0.1 * _level));
 
 						//Damage Event
-						Host.Factory.Damage().NewDamageEvent(cur, _player, null, 
+						Host.Factory.Damage().NewDamageEvent(cur, _player, null, cur.getLocation(),
 								DamageCause.CUSTOM, damage, true, false, false,
 								_player.getName(), "Fissure");
 

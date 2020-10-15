@@ -214,7 +214,7 @@ public class KitKnight extends SmashKit
 		Horse horse = (Horse)damagee.getVehicle();
 
 		//Damage Event
-		CustomDamageEvent newEvent = new CustomDamageEvent(horse, event.GetDamagerEntity(true), event.GetProjectile(), 
+		CustomDamageEvent newEvent = new CustomDamageEvent(horse, event.GetDamagerEntity(true), event.GetProjectile(), horse.getEyeLocation(),
 				event.GetCause(), event.GetDamageInitial(), true, false, false,
 				UtilEnt.getName(event.GetDamagerPlayer(true)), event.GetReason(), false);
 
@@ -246,7 +246,7 @@ public class KitKnight extends SmashKit
 		Player player = (Player)horse.getPassenger();
 
 		//Damage Event
-		final CustomDamageEvent newEvent = new CustomDamageEvent(player, event.GetDamagerEntity(true), event.GetProjectile(), 
+		final CustomDamageEvent newEvent = new CustomDamageEvent(player, event.GetDamagerEntity(true), event.GetProjectile(), player.getLocation(),
 				event.GetCause(), event.GetDamageInitial(), true, false, false,
 				UtilEnt.getName(event.GetDamagerPlayer(true)), event.GetReason(), false);
 

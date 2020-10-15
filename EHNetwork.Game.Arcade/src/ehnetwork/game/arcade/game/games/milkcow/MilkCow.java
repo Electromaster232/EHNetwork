@@ -221,7 +221,7 @@ public class MilkCow extends SoloGame
 
 			//Move
 			EntityCreature ec = ((CraftCreature)cow).getHandle();
-			Navigation nav = ec.getNavigation();
+			Navigation nav = (Navigation) ec.getNavigation();
 
 			if (UtilMath.offset(cow, host) > 6)
 			{

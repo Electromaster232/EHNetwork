@@ -2,9 +2,11 @@ package ehnetwork.game.arcade.kit.perks;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -62,7 +64,7 @@ public class PerkStormSquid extends SmashPerk
 		if (event.getAction() == Action.PHYSICAL)
 			return;
 
-		Block block = player.getTargetBlock(null, 100);
+		Block block = player.getTargetBlock((Set<Material>) null, 100);
 		if (block == null)
 			return;
 		

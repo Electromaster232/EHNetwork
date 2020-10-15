@@ -113,7 +113,7 @@ public class AxeThrow extends SkillActive implements IThrown
 		double damage = 5.5 + 0.5 * level;
 		
 		//Damage Event
-		Factory.Damage().NewDamageEvent(target, data.GetThrower(), null, 
+		Factory.Damage().NewDamageEvent(target, data.GetThrower(), null, target.getLocation(),
 				DamageCause.CUSTOM, damage, true, true, false,
 				UtilEnt.getName(data.GetThrower()), GetName());
 	}

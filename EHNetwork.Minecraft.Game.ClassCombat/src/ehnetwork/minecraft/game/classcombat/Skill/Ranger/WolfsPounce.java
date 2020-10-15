@@ -130,7 +130,7 @@ public class WolfsPounce extends SkillChargeSword
 		int damage = (int)(6 * charge);
 
 		//Damage Event
-		Factory.Damage().NewDamageEvent(damagee, damager, null, 
+		Factory.Damage().NewDamageEvent(damagee, damager, null, damagee.getLocation(),
 				DamageCause.CUSTOM, damage, true, true, false,
 				damager.getName(), GetName());	
 

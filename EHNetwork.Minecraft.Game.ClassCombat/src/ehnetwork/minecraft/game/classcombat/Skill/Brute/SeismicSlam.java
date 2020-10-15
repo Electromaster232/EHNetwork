@@ -152,7 +152,7 @@ public class SeismicSlam extends SkillActive
 					continue;
 
 				//Damage Event
-				Factory.Damage().NewDamageEvent(cur, player, null, 
+				Factory.Damage().NewDamageEvent(cur, player, null, player.getLocation(),
 						DamageCause.CUSTOM, (1+level) * targets.get(cur) + 0.5, false, true, false,
 						player.getName(), GetName());	
 

@@ -197,7 +197,7 @@ public class PerkWolf extends SmashPerk
 			loc.add(UtilAlg.getTrajectory2d(ent, wolf).multiply(1));
 
 			EntityCreature ec = ((CraftCreature)wolf).getHandle();
-			Navigation nav = ec.getNavigation();
+			Navigation nav = (Navigation) ec.getNavigation();
 			nav.a(loc.getX(), loc.getY(), loc.getZ(), 1);
 		}
 	}

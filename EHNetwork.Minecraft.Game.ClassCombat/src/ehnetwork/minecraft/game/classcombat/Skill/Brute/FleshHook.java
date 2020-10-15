@@ -148,7 +148,7 @@ public class FleshHook extends SkillActiveCharge implements IThrown
 		Factory.Condition().Factory().Falling(GetName(), target, player, 10, false, true);
 
 		//Damage Event
-		Factory.Damage().NewDamageEvent(target, player, null, 
+		Factory.Damage().NewDamageEvent(target, player, null, target.getLocation(),
 				DamageCause.CUSTOM, velocity * (1 + (1*level)), false, true, false,
 				player.getName(), GetName());
 		

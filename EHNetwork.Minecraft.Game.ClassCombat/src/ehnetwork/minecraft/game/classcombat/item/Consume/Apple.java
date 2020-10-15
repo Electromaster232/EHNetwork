@@ -56,7 +56,7 @@ public class Apple extends ItemUsable
 			return;
 
 		//Damage Event
-		Factory.Damage().NewDamageEvent(target, data.GetThrower(), null, 
+		Factory.Damage().NewDamageEvent(target, data.GetThrower(), null, data.GetThrower().getLocation(),
 				DamageCause.CUSTOM, 2, true, true, false,
 				UtilEnt.getName(data.GetThrower()), GetName());
 

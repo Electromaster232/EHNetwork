@@ -159,7 +159,7 @@ public class SnowmanBoss
 					Recharge.Instance.useForce(minion.Target, "Snowman Hit", 1000);
 
 					//Damage Event
-					Host.Manager.GetDamage().NewDamageEvent(minion.Target, minion.Ent, null, 
+					Host.Manager.GetDamage().NewDamageEvent(minion.Target, minion.Ent, null, minion.Target.getLocation(),
 							DamageCause.ENTITY_ATTACK, 6, false, false, false,
 							null, null);
 				}

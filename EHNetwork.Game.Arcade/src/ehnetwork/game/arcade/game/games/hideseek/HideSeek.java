@@ -720,7 +720,7 @@ public class HideSeek extends TeamGame
                     UtilAlg.getTrajectory(_mobs.get(ent), ent.getLocation()).multiply(Math.random() * 3));
 
             EntityCreature ec = ((CraftCreature) ent).getHandle();
-            Navigation nav = ec.getNavigation();
+            Navigation nav = (Navigation) ec.getNavigation();
             nav.a(loc.getX(), loc.getY(), loc.getZ(), 1f);
         }
     }

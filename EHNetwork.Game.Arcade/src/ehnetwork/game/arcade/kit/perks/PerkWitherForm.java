@@ -4,18 +4,17 @@ import java.util.ArrayList;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton.SkeletonType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.util.Vector;
 
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.common.util.UtilAction;
 import ehnetwork.core.common.util.UtilAlg;
 import ehnetwork.core.common.util.UtilBlock;
-import ehnetwork.core.disguise.disguises.DisguiseSkeleton;
-import ehnetwork.core.disguise.disguises.DisguiseWither;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
 import ehnetwork.game.arcade.kit.SmashKit;
@@ -37,15 +36,15 @@ public class PerkWitherForm extends SmashPerk
 		Manager.GetDisguise().undisguise(player);
 
 		//Disguise
-		DisguiseWither disguise = new DisguiseWither(player);
+		MobDisguise disguise = (MobDisguise) Manager.GetDisguise().createDisguise(EntityType.WITHER);
 
 		if (Manager.GetGame().GetTeam(player) != null)		
-			disguise.setName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+			disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
 		else			
-			disguise.setName(player.getName());
+			disguise.setCustomName(player.getName());
 
 		disguise.setCustomNameVisible(true);
-		Manager.GetDisguise().disguise(disguise);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 	}
 
 	@Override
@@ -54,17 +53,17 @@ public class PerkWitherForm extends SmashPerk
 		Manager.GetDisguise().undisguise(player);
 		
 		//Disguise
-		DisguiseSkeleton disguise = new DisguiseSkeleton(player);
+		MobDisguise disguise = (MobDisguise) Manager.GetDisguise().createDisguise(EntityType.SKELETON);
 
 		if (Manager.GetGame().GetTeam(player) != null)		
-			disguise.setName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+			disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
 		else			
-			disguise.setName(player.getName());
+			disguise.setCustomName(player.getName());
 
 		disguise.setCustomNameVisible(true);
-		disguise.SetSkeletonType(SkeletonType.WITHER);
-		disguise.hideArmor();
-		Manager.GetDisguise().disguise(disguise);
+		//disguise.SetSkeletonType(SkeletonType.WITHER);
+		//disguise.hideArmor();
+		Manager.GetDisguise().applyDisguise(disguise, player);
 		
 		player.setFlying(false);
 	}

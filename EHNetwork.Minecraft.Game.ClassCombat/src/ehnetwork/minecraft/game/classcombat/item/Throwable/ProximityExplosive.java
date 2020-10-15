@@ -129,7 +129,7 @@ public class ProximityExplosive extends ItemUsable
 					player.getEyeLocation()), 2.4*hit.get(player), false, 0, 0.6*hit.get(player), 1.6, true);
 			
 			//Damage Event
-			Factory.Damage().NewDamageEvent(player, thrower, null, 
+			Factory.Damage().NewDamageEvent(player, thrower, null, player.getLocation(),
 					DamageCause.CUSTOM, 10*hit.get(player), false, true, false,
 					UtilEnt.getName(thrower), GetName());
 			

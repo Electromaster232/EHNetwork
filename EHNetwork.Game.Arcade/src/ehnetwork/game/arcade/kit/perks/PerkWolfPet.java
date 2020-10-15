@@ -173,7 +173,7 @@ public class PerkWolfPet extends Perk
 
 					//Move
 					EntityCreature ec = ((CraftCreature)wolf).getHandle();
-					Navigation nav = ec.getNavigation();
+					Navigation nav = (Navigation) ec.getNavigation();
 					nav.a(target.getX(), target.getY(), target.getZ(), speed);
 
 					wolf.setTarget(null);

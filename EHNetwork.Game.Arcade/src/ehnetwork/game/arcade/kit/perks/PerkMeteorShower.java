@@ -2,7 +2,9 @@ package ehnetwork.game.arcade.kit.perks;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Set;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 
@@ -25,7 +27,7 @@ public class PerkMeteorShower extends SmashPerk
 	@Override
 	public void addSuperCustom(Player player)
 	{ 
-		_meteors.add(new MeteorShowerData(player, player.getTargetBlock(null, 128).getLocation()));
+		_meteors.add(new MeteorShowerData(player, player.getTargetBlock((Set<Material>) null, 128).getLocation()));
 	}
 	
 	@EventHandler

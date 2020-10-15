@@ -2,6 +2,7 @@ package ehnetwork.game.arcade.game.games.draw.tools;
 
 
 import java.util.HashMap;
+import java.util.Set;
 
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -37,7 +38,7 @@ public abstract class Tool
 	{
 		if (!UtilEvent.isAction(event, ActionType.R))
 			return;
-		Block block = event.getPlayer().getTargetBlock(null, 60);
+		Block block = event.getPlayer().getTargetBlock((Set<Material>) null, 60);
 
 		if (block == null)
 			return;
@@ -70,7 +71,7 @@ public abstract class Tool
 		_new = new HashMap<Block, Byte>();
 		
 		//Calculate New
-		Block end = _drawer.getTargetBlock(null, 64);
+		Block end = _drawer.getTargetBlock((Set<Material>) null, 64);
 		if (end != null && Host.getCanvas().contains(end))
 		{
 			customDraw(end);

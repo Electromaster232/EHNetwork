@@ -4,6 +4,7 @@ package ehnetwork.core.disguise;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.robingrether.idisguise.api.DisguiseAPI;
@@ -71,7 +72,11 @@ public class DisguiseManager extends MiniPlugin
 
 	public DisguiseAPI getApi(){return api;}
 
-
+	public void clearDisguises(){
+		for(Entity p : disguiseList.keySet()){
+			api.undisguise((LivingEntity) p);
+		}
+	}
 
 }
 

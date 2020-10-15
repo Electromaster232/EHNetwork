@@ -55,6 +55,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 
+import net.minecraft.server.v1_8_R3.Packet;
+
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.F;
 import ehnetwork.core.common.util.NautHashMap;
@@ -287,7 +289,7 @@ public class UHC extends TeamGame
 		{
 			if (UtilPlayer.is1_8(player))
 			{
-				UtilPlayer.sendPacket(player, packet);
+				UtilPlayer.sendPacket(player, (Packet) packet);
 			}
 		}
 	}
@@ -384,7 +386,7 @@ public class UHC extends TeamGame
 
 		if (UtilPlayer.is1_8(player))
 		{
-			UtilPlayer.sendPacket(player, packet);
+			UtilPlayer.sendPacket(player, (Packet) packet);
 		}
 	}
 

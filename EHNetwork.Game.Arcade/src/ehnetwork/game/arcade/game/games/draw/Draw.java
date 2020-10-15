@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -464,7 +465,7 @@ public class Draw extends SoloGame
 				continue;
 			}
 				
-			Block block = player.getTargetBlock(null, 200);
+			Block block = player.getTargetBlock((Set<Material>) null, 200);
 			if (block == null || !_canvas.contains(block))	
 				continue;
 
@@ -566,7 +567,7 @@ public class Draw extends SoloGame
 		if (!_drawers.HasPlayer(player))
 			return;
 
-		Block block = player.getTargetBlock(null, 200);
+		Block block = player.getTargetBlock((Set<Material>) null, 200);
 		if (block == null || !_canvas.contains(block))	
 			return;
 
@@ -609,7 +610,7 @@ public class Draw extends SoloGame
 		if (!_drawers.HasPlayer(player))
 			return;
 
-		Block block = player.getTargetBlock(null, 200);
+		Block block = player.getTargetBlock((Set<Material>) null, 200);
 		if (block == null || block.getType() != Material.WOOL || _canvas.contains(block))	
 			return;
 

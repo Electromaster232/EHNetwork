@@ -204,7 +204,7 @@ public class PerkSkeletons extends Perk
 					Location target = skel.getLocation().add(UtilAlg.getTrajectory(skel, player).multiply(3));
 
 					EntityCreature ec = ((CraftCreature) skel).getHandle();
-					Navigation nav = ec.getNavigation();
+					Navigation nav = (Navigation) ec.getNavigation();
 					nav.a(target.getX(), target.getY(), target.getZ(), speed);
 
 					skel.setTarget(null);

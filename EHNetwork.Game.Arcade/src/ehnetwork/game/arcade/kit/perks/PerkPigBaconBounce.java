@@ -16,6 +16,8 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
+import de.robingrether.idisguise.disguise.Disguise;
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.F;
 import ehnetwork.core.common.util.UtilAction;
@@ -27,8 +29,6 @@ import ehnetwork.core.common.util.UtilParticle.ParticleType;
 import ehnetwork.core.common.util.UtilParticle.ViewDist;
 import ehnetwork.core.common.util.UtilPlayer;
 import ehnetwork.core.common.util.UtilServer;
-import ehnetwork.core.disguise.disguises.DisguiseBase;
-import ehnetwork.core.disguise.disguises.DisguisePigZombie;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.core.projectile.IThrown;
 import ehnetwork.core.projectile.ProjectileUser;
@@ -69,9 +69,9 @@ public class PerkPigBaconBounce extends SmashPerk implements IThrown
 			return;
 		
 		float energy = 0.2f;
-		
-		DisguiseBase disguise = Manager.GetDisguise().getDisguise(player);
-		if (disguise != null && disguise instanceof DisguisePigZombie)
+
+		Disguise disguise = Manager.GetDisguise().getDisguise(player);
+		if (disguise != null && disguise instanceof MobDisguise)
 			energy = energy * 0.7f;
 
 		//Energy

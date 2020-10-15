@@ -7,13 +7,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.UtilParticle;
 import ehnetwork.core.common.util.UtilParticle.ParticleType;
 import ehnetwork.core.common.util.UtilParticle.ViewDist;
 import ehnetwork.core.common.util.UtilPlayer;
 import ehnetwork.core.common.util.UtilServer;
-import ehnetwork.core.disguise.disguises.DisguiseMagmaCube;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
 import ehnetwork.game.arcade.kit.Perk;
@@ -48,7 +48,7 @@ public class PerkMagmaBoost extends Perk
 		if (killer == null || killer.equals(killed) || !Kit.HasKit(killer))
 			return;
 
-		DisguiseMagmaCube slime = (DisguiseMagmaCube)Manager.GetDisguise().getDisguise(killer);
+		MobDisguise slime = (MobDisguise)Manager.GetDisguise().getDisguise(killer);
 		if (slime == null)
 			return;
 		
@@ -60,8 +60,8 @@ public class PerkMagmaBoost extends Perk
 		
 		_kills.put(killer, size);
 		
-		slime.SetSize(size + 1);
-		Manager.GetDisguise().updateDisguise(slime);
+		//slime.SetSize(size + 1);
+		//Manager.GetDisguise().updateDisguise(slime);
 		
 		killer.setExp(0.99f * (size/3f));
 	}

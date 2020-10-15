@@ -1,5 +1,6 @@
 package ehnetwork.minecraft.game.classcombat.Skill.Knight;
 
+import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,6 +54,7 @@ public class Cleave extends Skill
 
 		//Damagee
 		LivingEntity damagee = event.GetDamageeEntity();
+		Location location = damager.getLocation();
 		if (damagee == null)	return;
 
 		//Damage
@@ -65,7 +67,7 @@ public class Cleave extends Skill
 				if (Factory.Relation().canHurt(damager, other))
 				{
 					//Damage Event
-					Factory.Damage().NewDamageEvent(other, damager, null, 
+					Factory.Damage().NewDamageEvent(other, damager, null, location,
 							DamageCause.ENTITY_ATTACK, (0.25 + (level * 0.25)) * event.GetDamageInitial(), true, false, false,
 							damager.getName(), GetName());
 				}

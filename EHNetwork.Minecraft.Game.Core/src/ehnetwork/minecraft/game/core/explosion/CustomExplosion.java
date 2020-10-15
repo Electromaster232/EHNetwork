@@ -282,7 +282,7 @@ public class CustomExplosion extends Explosion
 
 					if (entity.getBukkitEntity() instanceof LivingEntity)
 					{
-						_manager.NewDamageEvent((LivingEntity) entity.getBukkitEntity(), _owner, null,
+						_manager.NewDamageEvent((LivingEntity) entity.getBukkitEntity(), _owner, null, entity.getBukkitEntity().getLocation(),
 								DamageCause.ENTITY_EXPLOSION, damage, true, _ignoreRate, false, _damageReason, _damageReason);
 					}
 					else

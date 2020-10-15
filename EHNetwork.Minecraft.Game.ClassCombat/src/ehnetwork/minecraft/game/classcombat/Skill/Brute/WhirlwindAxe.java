@@ -80,7 +80,7 @@ public class WhirlwindAxe extends SkillActive
 			//Damage Event
 			if (UtilMath.offset(cur, player) < 4)
 			{
-				Factory.Damage().NewDamageEvent(cur, player, null, 
+				Factory.Damage().NewDamageEvent(cur, player, null, cur.getLocation(),
 						DamageCause.CUSTOM, 2 + (1 + level) * targets.get(cur), false, true, false,
 						player.getName(), GetName());
 			}

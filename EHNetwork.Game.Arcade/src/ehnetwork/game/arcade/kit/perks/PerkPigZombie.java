@@ -4,16 +4,16 @@ import java.util.HashSet;
 
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.F;
 import ehnetwork.core.common.util.UtilPlayer;
-import ehnetwork.core.disguise.disguises.DisguisePig;
-import ehnetwork.core.disguise.disguises.DisguisePigZombie;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.core.updater.UpdateType;
 import ehnetwork.core.updater.event.UpdateEvent;
@@ -66,15 +66,15 @@ public class PerkPigZombie extends SmashPerk
 				player.getInventory().remove(Material.IRON_BOOTS);
 				
 				//Disguise
-				DisguisePig disguise = new DisguisePig(player);
+				MobDisguise disguise = (MobDisguise) Manager.GetDisguise().createDisguise(EntityType.PIG_ZOMBIE);
 				
 				if (Manager.GetGame().GetTeam(player) != null)		
-					disguise.setName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+					disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
 				else			
-					disguise.setName(player.getName());
+					disguise.setCustomName(player.getName());
 				
 				disguise.setCustomNameVisible(true);
-				Manager.GetDisguise().disguise(disguise);
+				Manager.GetDisguise().applyDisguise(disguise, player);
 				
 				//Sound
 				player.getWorld().playSound(player.getLocation(), Sound.PIG_IDLE, 2f, 1f);
@@ -99,16 +99,16 @@ public class PerkPigZombie extends SmashPerk
 				player.getInventory().setBoots(new ItemStack(Material.IRON_BOOTS));
 				
 				//Disguise
-				DisguisePigZombie disguise = new DisguisePigZombie(player);
+				MobDisguise disguise = (MobDisguise) Manager.GetDisguise().createDisguise(EntityType.PIG_ZOMBIE);
 
-				if (Manager.GetGame().GetTeam(player) != null)		
-					disguise.setName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
-				else			
-					disguise.setName(player.getName());
-				
+				if (Manager.GetGame().GetTeam(player) != null)
+					disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+				else
+					disguise.setCustomName(player.getName());
+
 				disguise.setCustomNameVisible(true);
-				Manager.GetDisguise().disguise(disguise);
-				
+				Manager.GetDisguise().applyDisguise(disguise, player);
+
 				//Sound
 				player.getWorld().playSound(player.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 2f, 1f);
 				player.getWorld().playSound(player.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 2f, 1f);

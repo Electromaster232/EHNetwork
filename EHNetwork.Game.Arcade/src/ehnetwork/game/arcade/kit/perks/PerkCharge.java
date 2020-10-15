@@ -64,7 +64,8 @@ public class PerkCharge extends Perk
 				//Damage Event
 				Manager.GetDamage().NewDamageEvent(cur, player, null, 
 						DamageCause.CUSTOM, 3, false, false, false,
-						player.getName(), GetName());	
+						player.getName(), GetName());
+
 
 				//Velocity
 				UtilAction.velocity(cur, dir, 1 + 0.8 * targets.get(cur), true, 0, 0.8 + 0.4 * targets.get(cur), 1.6, true);

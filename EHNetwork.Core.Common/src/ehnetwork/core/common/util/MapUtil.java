@@ -5,6 +5,22 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.craftbukkit.v1_8_R3.CraftChunk;
+import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.util.CraftMagicNumbers;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.world.WorldUnloadEvent;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
+
 import net.minecraft.server.v1_8_R3.Block;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.ChunkCoordIntPair;
@@ -16,23 +32,9 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutMultiBlockChange;
 import net.minecraft.server.v1_8_R3.RegionFile;
 import net.minecraft.server.v1_8_R3.RegionFileCache;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_8_R3.CraftChunk;
-import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.world.WorldUnloadEvent;
-import org.bukkit.plugin.java.JavaPlugin;
-
 public class MapUtil
 {
-	/* public static void ReplaceOreInChunk(Chunk chunk, Material replacee, Material replacer)
+	/*public static void ReplaceOreInChunk(Chunk chunk, Material replacee, Material replacer)
 	{
 		net.minecraft.server.v1_8_R3.Chunk c = ((CraftChunk) chunk).getHandle();
 
@@ -45,19 +47,26 @@ public class MapUtil
 					int bX = c.locX << 4 | x & 0xF;
 					int bY = y & 0xFF;
 					int bZ = c.locZ << 4 | z & 0xF;
-					BlockPosition blockPosition1 = new BlockPosition(bX, bY , bZ);
-					c.b(blockPosition1, replacer);
 
+					if (c.getTypeAbs(bX, bY, bZ).k() == replacee.getId())
+					{
+						c.b(bX & 0xF, bY, bZ & 0xF, replacer.getId());
+					}
 				}
 			}
 		}
 
 		c.initLighting();
-	} */
+	}*/
 
 	public static void QuickChangeBlockAt(Location location, Material setTo)
 	{
 		QuickChangeBlockAt(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ(), setTo);
+	}
+
+	public static void QuickChangeBlockAt(Location location, Material setTo, byte data)
+	{
+		QuickChangeBlockAt(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ(), setTo, data);
 	}
 
 	public static void QuickChangeBlockAt(Location location, int id, byte data)
@@ -80,9 +89,11 @@ public class MapUtil
 	{
 		Chunk chunk = world.getChunkAt(x >> 4, z >> 4);
 		net.minecraft.server.v1_8_R3.Chunk c = ((CraftChunk) chunk).getHandle();
-		BlockPosition blockPosition1 = new BlockPosition(x, y , z);
-		c.a(blockPosition1, data);
-		((CraftWorld) world).getHandle().notify(blockPosition1);
+
+		//c.a(x & 0xF, y, z & 0xF, Block.getById(id), data);
+		IBlockData blockData = CraftMagicNumbers.getBlock(id).fromLegacyData(data);
+		c.a(getBlockPos(x, y, z), blockData);
+		((CraftWorld) world).getHandle().notify(getBlockPos(x, y, z));
 	}
 
 	public static int GetHighestBlockInCircleAt(World world, int bx, int bz, int radius)
@@ -136,24 +147,22 @@ public class MapUtil
 		if (changeChunkBlock(x & 15, y, z & 15, ((CraftWorld) world).getHandle().getChunkAt(x >> 4, z >> 4),
 				Block.getById(id), data))
 		{
-			BlockPosition blockPosition1 = new BlockPosition(x, y , z);
 			if (notifyPlayers)
-				((CraftWorld) world).getHandle().notify(blockPosition1);
+				((CraftWorld) world).getHandle().notify(getBlockPos(x, y, z));
 		}
 	}
-	
+
 	public static void ChunkBlockSet(World world, int x, int y, int z, int id, byte data, boolean notifyPlayers)
 	{
 		world.getBlockAt(x, y, z).setTypeIdAndData(id, data, notifyPlayers);
 	}
 
 	private static boolean changeChunkBlock(int x, int y, int z, net.minecraft.server.v1_8_R3.Chunk chunk, Block block,
-			byte data)
+											byte data)
 	{
-		BlockPosition blockPosition1 = new BlockPosition(x, y , z);
-		IBlockData d1 = block.getBlockData();
-		chunk.a(blockPosition1, d1);
-		return true;
+		chunk.a(getBlockPos(x, y, z), block.fromLegacyData(data));
+		return true; // todo?
+//		return chunk.a(x, y, z, block, data);
 	}
 
 	public static void SendChunkForPlayer(net.minecraft.server.v1_8_R3.Chunk chunk, Player player)
@@ -170,11 +179,11 @@ public class MapUtil
 
 	@SuppressWarnings("unchecked")
 	public static void SendMultiBlockForPlayer(int x, int z, short[] dirtyBlocks, int dirtyCount, World world,
-			Player player)
+											   Player player)
 	{
 		// System.out.println("Sending MultiBlockChunk " + x + ", " + z);
-		((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutMultiBlockChange(dirtyCount,
-				dirtyBlocks, ((CraftWorld) world).getHandle().getChunkAt(x, z)));
+		UtilPlayer.sendPacket(player, new PacketPlayOutMultiBlockChange(dirtyCount, dirtyBlocks, ((CraftWorld) world).getHandle()
+				.getChunkAt(x, z)));
 	}
 
 	public static void UnloadWorld(JavaPlugin plugin, World world)
@@ -194,7 +203,7 @@ public class MapUtil
 			{
 				e.printStackTrace();
 			}
-			
+
 			((CraftWorld) world).getHandle().saveLevel();
 		}
 
@@ -240,23 +249,7 @@ public class MapUtil
 			System.out.println("Error removing world from bukkit master list: " + ex.getMessage());
 		}
 
-		MinecraftServer ms = null;
-
-		try
-		{
-			Field f = server.getClass().getDeclaredField("console");
-			f.setAccessible(true);
-			ms = (MinecraftServer) f.get(server);
-			f.setAccessible(false);
-		}
-		catch (IllegalAccessException ex)
-		{
-			System.out.println("Error getting minecraftserver variable: " + ex.getMessage());
-		}
-		catch (NoSuchFieldException ex)
-		{
-			System.out.println("Error getting minecraftserver variable: " + ex.getMessage());
-		}
+		MinecraftServer ms = server.getServer();
 
 		ms.worlds.remove(ms.worlds.indexOf(craftWorld.getHandle()));
 	}
@@ -264,32 +257,50 @@ public class MapUtil
 	@SuppressWarnings({ "rawtypes" })
 	public static boolean ClearWorldReferences(String worldName)
 	{
-		HashMap regionfiles = (HashMap) RegionFileCache.a;
-
-		try
+		synchronized (RegionFileCache.class)
 		{
-			for (Iterator<Object> iterator = regionfiles.entrySet().iterator(); iterator.hasNext();)
-			{
-				Map.Entry e = (Map.Entry) iterator.next();
-				RegionFile file = (RegionFile) e.getValue();
+			HashMap regionfiles = (HashMap) RegionFileCache.a;
 
-				try
+			try
+			{
+				for (Iterator<Object> iterator = regionfiles.entrySet().iterator(); iterator.hasNext(); )
 				{
-					file.c();
-					iterator.remove();
-				}
-				catch (Exception ex)
-				{
-					ex.printStackTrace();
+					Map.Entry e = (Map.Entry) iterator.next();
+					RegionFile file = (RegionFile) e.getValue();
+
+					try
+					{
+						file.c();
+						iterator.remove();
+					}
+					catch (Exception ex)
+					{
+						ex.printStackTrace();
+					}
 				}
 			}
-		}
-		catch (Exception ex)
-		{
-			System.out.println("Exception while removing world reference for '" + worldName + "'!");
-			ex.printStackTrace();
-		}
+			catch (Exception ex)
+			{
+				System.out.println("Exception while removing world reference for '" + worldName + "'!");
+				ex.printStackTrace();
+			}
 
-		return true;
+			return true;
+		}
+	}
+
+	public static BlockPosition getBlockPos(Location loc)
+	{
+		return getBlockPos(loc.toVector());
+	}
+
+	public static BlockPosition getBlockPos(Vector v)
+	{
+		return getBlockPos(v.getBlockX(), v.getBlockY(), v.getBlockZ());
+	}
+
+	public static BlockPosition getBlockPos(int x, int y, int z)
+	{
+		return new BlockPosition(x, y, z);
 	}
 }

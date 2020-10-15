@@ -270,7 +270,7 @@ public class ZombieSurvival extends SoloGame
 			{
 				//Move
 				EntityCreature ec = ((CraftCreature)mob).getHandle();
-				Navigation nav = ec.getNavigation();
+				Navigation nav = (Navigation) ec.getNavigation();
 				
 				if (UtilMath.offset(mob.getLocation(), data.Target) > 20)
 				{

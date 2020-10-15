@@ -112,10 +112,12 @@ public class WorldData
 						else
 						{
 							World = WorldUtil.LoadWorld(new WorldCreator(GetFolder()));
+							//assert World != null;
+							//World.setDifficulty(Difficulty.HARD);
 						}						
 						TimingManager.stop("WorldData loading world.");
 						
-						World.setDifficulty(Difficulty.HARD);
+
 
 						TimingManager.start("WorldData loading WorldConfig.");
 						//Load World Data
@@ -432,20 +434,10 @@ public class WorldData
 		
 		World = null;
 	}
-	
-	public void ChunkUnload(ChunkUnloadEvent event) 
-	{
-		if (World == null)
-			return;
-		
-		if (!event.getWorld().equals(World))
-			return;
-		
-		event.setCancelled(true);
-	}
 
 	public void ChunkLoad(ChunkPreLoadEvent event)
 	{
+		//System.out.println("Chunkload!");
 		if (World == null)
 			return;
 		

@@ -21,11 +21,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import de.robingrether.idisguise.disguise.Disguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.UtilAction;
 import ehnetwork.core.common.util.UtilFirework;
 import ehnetwork.core.common.util.UtilInv;
-import ehnetwork.core.disguise.disguises.DisguiseBase;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.core.projectile.IThrown;
 import ehnetwork.core.projectile.ProjectileUser;
@@ -76,9 +76,9 @@ public class PerkRevealer extends Perk implements IThrown
 	private static class RevealedPlayerInfo
 	{
 		public int _expirationSeconds = 5;
-		public DisguiseBase _disguise;
+		public Disguise _disguise;
 
-		public RevealedPlayerInfo(DisguiseBase disguise)
+		public RevealedPlayerInfo(Disguise disguise)
 		{
 			_disguise = disguise;
 		}
@@ -133,7 +133,7 @@ public class PerkRevealer extends Perk implements IThrown
 				{
 					it.remove();
 
-					Manager.GetDisguise().disguise(entry.getValue()._disguise);
+					Manager.GetDisguise().applyDisguise(entry.getValue()._disguise, entry.getKey());
 				}
 				else
 					entry.getValue()._expirationSeconds--;

@@ -3,9 +3,11 @@ package ehnetwork.minecraft.game.core.damage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import ehnetwork.core.common.util.C;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.bukkit.ChatColor;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -14,6 +16,9 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+
+import ehnetwork.core.common.util.C;
+
 
 public class CustomDamageEvent extends Event implements Cancellable
 {
@@ -29,6 +34,7 @@ public class CustomDamageEvent extends Event implements Cancellable
 
 	private HashMap<String, Double> _knockbackMod = new HashMap<String, Double>();
 
+	private Map<String, Object> _metadata = new HashMap<>();
 	//Ents
 	private LivingEntity _damageeEntity;
 	private Player _damageePlayer;
@@ -38,20 +44,22 @@ public class CustomDamageEvent extends Event implements Cancellable
 	private Location _knockbackOrigin = null;
 
 	//Flags
-	private boolean _ignoreArmor = false; 
-	private boolean _ignoreRate = false;		
+	private boolean _ignoreArmor = false;
+	private boolean _ignoreRate = false;
 	private boolean _knockback = true;
 	private boolean _damageeBrute = false;
 	private boolean _damageToLevel = true;
+	private boolean _arrowShow = true;
+	private boolean _projectileDamageSelf = false;
 
-	public CustomDamageEvent(LivingEntity damagee, LivingEntity damager, Projectile projectile, 
-			DamageCause cause, double damage, boolean knockback, boolean ignoreRate, boolean ignoreArmor,
-			String initialSource, String initialReason, boolean cancelled)
+	public CustomDamageEvent(LivingEntity damagee, LivingEntity damager, Projectile projectile, Location knockbackOrigin,
+							 DamageCause cause, double damage, boolean knockback, boolean ignoreRate, boolean ignoreArmor, String initialSource,
+							 String initialReason, boolean cancelled)
 	{
 		_eventCause = cause;
 
 		//if (initialSource == null || initialReason == null)
-			_initialDamage = damage;
+		_initialDamage = damage;
 
 		_damageeEntity = damagee;
 		if (_damageeEntity != null && _damageeEntity instanceof Player)			_damageePlayer = (Player)_damageeEntity;
@@ -67,23 +75,25 @@ public class CustomDamageEvent extends Event implements Cancellable
 
 		if (initialSource != null && initialReason != null)
 			AddMod(initialSource, initialReason, 0, true);
-		
+
 		if (_eventCause == DamageCause.FALL)
 			_ignoreArmor = true;
-		
+
 		if (cancelled)
 			SetCancelled("Pre-Cancelled");
+
+		_knockbackOrigin = knockbackOrigin;
 	}
 
 	@Override
-	public HandlerList getHandlers() 
+	public HandlerList getHandlers()
 	{
 		return handlers;
 	}
 
 	public static HandlerList getHandlerList()
 	{
-		return handlers; 
+		return handlers;
 	}
 
 	public void AddMult(String source, String reason, double mod, boolean useAttackName)
@@ -91,6 +101,10 @@ public class CustomDamageEvent extends Event implements Cancellable
 		_damageMult.add(new DamageChange(source, reason, mod, useAttackName));
 	}
 
+	public void AddMod(String source, double mod)
+	{
+		AddMod(source, "", mod, false);
+	}
 
 	public void AddMod(String source, String reason, double mod, boolean useAttackName)
 	{
@@ -118,7 +132,7 @@ public class CustomDamageEvent extends Event implements Cancellable
 
 		for (DamageChange mult : _damageMod)
 			damage += mult.GetDamage();
-		
+
 		for (DamageChange mult : _damageMult)
 			damage *= mult.GetDamage();
 
@@ -140,18 +154,18 @@ public class CustomDamageEvent extends Event implements Cancellable
 		if (ranged)
 			return _damagerEntity;
 
-		else if (_projectile == null)	
+		else if (_projectile == null)
 			return _damagerEntity;
 
 		return null;
 	}
 
-	public Player GetDamagerPlayer(boolean ranged)
+	public Player GetDamagerPlayer(boolean passthroughRanged)
 	{
-		if (ranged)
+		if (passthroughRanged)
 			return _damagerPlayer;
 
-		else if (_projectile == null)	
+		else if (_projectile == null)
 			return _damagerPlayer;
 
 		return null;
@@ -160,6 +174,37 @@ public class CustomDamageEvent extends Event implements Cancellable
 	public Projectile GetProjectile()
 	{
 		return _projectile;
+	}
+
+	public boolean getProjectileDamageSelf()
+	{
+		return _projectileDamageSelf;
+	}
+
+	public void setProjectileDamageSelf(boolean projectileDamageSelf)
+	{
+		_projectileDamageSelf = projectileDamageSelf;
+		if(!projectileDamageSelf)
+		{
+			_cancellers.remove("Self Projectile Damage");
+		}
+		else
+		{
+			if(!_cancellers.contains("Self Projectile Damage"))
+			{
+				_cancellers.add("Self Projectile Damage");
+			}
+		}
+	}
+
+	public void setShowArrows(boolean show)
+	{
+		_arrowShow = show;
+	}
+
+	public boolean getShowArrows()
+	{
+		return _arrowShow;
 	}
 
 	public DamageCause GetCause()
@@ -174,15 +219,24 @@ public class CustomDamageEvent extends Event implements Cancellable
 
 	public void SetIgnoreArmor(boolean ignore)
 	{
+		if (ignore)
+		{
+			_cancellers.removeIf(reason -> reason.equals("World/Monster Damage Rate"));
+		}
+
 		_ignoreArmor = ignore;
 	}
 
-	public void SetIgnoreRate(boolean ignore) 
+	/**
+	 * A warning to those using this method, the {@link DamageManager} cancels for rate on {@link org.bukkit.event.EventPriority#LOW}, which is a problem.
+	 * So only call this on {@link org.bukkit.event.EventPriority#LOWEST} otherwise it will not work. It's stupid but there you go.
+	 */
+	public void SetIgnoreRate(boolean ignore)
 	{
 		_ignoreRate = ignore;
 	}
 
-	public void SetKnockback(boolean knockback) 
+	public void SetKnockback(boolean knockback)
 	{
 		_knockback = knockback;
 	}
@@ -197,41 +251,48 @@ public class CustomDamageEvent extends Event implements Cancellable
 		return _damageeBrute;
 	}
 
-	public String GetReason() 
+	public String GetReason()
 	{
-		String reason = "";
+		StringBuilder reason = new StringBuilder();
 
 		//Get Reason
 		for (DamageChange change : _damageMod)
+		{
 			if (change.UseReason())
-				reason += C.mSkill + change.GetReason() + ChatColor.GRAY + ", ";
+			{
+				reason
+						.append(C.mSkill)
+						.append(change.GetReason())
+						.append(C.mBody)
+						.append(", ");
+			}
+		}
 
 		//Trim Reason
 		if (reason.length() > 0)
 		{
-			reason = reason.substring(0, reason.length() - 2);
-			return reason;
+			return reason.substring(0, reason.length() - 2);
 		}
 
 		return null;
 	}
 
-	public boolean IsKnockback() 
+	public boolean IsKnockback()
 	{
 		return _knockback;
 	}
 
-	public boolean IgnoreRate() 
+	public boolean IgnoreRate()
 	{
 		return _ignoreRate;
 	}
 
-	public boolean IgnoreArmor() 
+	public boolean IgnoreArmor()
 	{
 		return _ignoreArmor;
 	}
 
-	public void SetDamager(LivingEntity ent) 
+	public void SetDamager(LivingEntity ent)
 	{
 		if (ent == null)
 			return;
@@ -242,28 +303,24 @@ public class CustomDamageEvent extends Event implements Cancellable
 		if (ent instanceof Player)
 			_damagerPlayer = (Player)ent;
 	}
-	
-	public void setDamagee(LivingEntity ent) 
+
+	public void setDamagee(LivingEntity ent)
 	{
 		_damageeEntity = ent;
-		
-		_damageePlayer = null;
-		if (ent instanceof Player)
-			_damageePlayer = (Player)ent;
+		_damageePlayer = ent instanceof Player ? (Player) ent : null;
 	}
-	
-	public void changeReason(String initial, String reason)
+
+	public void setDamager(LivingEntity ent)
 	{
-		for (DamageChange change : _damageMod)
-			if (change.GetReason().equals(initial))
-				change.setReason(reason);
+		_damagerEntity = ent;
+		_damagerPlayer = ent instanceof Player ? (Player) ent : null;
 	}
-	
+
 	public void setKnockbackOrigin(Location loc)
 	{
 		_knockbackOrigin = loc;
 	}
-	
+
 	public Location getKnockbackOrigin()
 	{
 		return _knockbackOrigin;
@@ -279,43 +336,85 @@ public class CustomDamageEvent extends Event implements Cancellable
 		return _damageMult;
 	}
 
-	public HashMap<String, Double> GetKnockback() 
+	public HashMap<String, Double> GetKnockback()
 	{
 		return _knockbackMod;
 	}
 
-	public ArrayList<String> GetCancellers() 
+	public double getKnockbackValue()
+	{
+		double value = 0.0d;
+
+		for (double knockback : _knockbackMod.values())
+		{
+			value += knockback;
+		}
+
+		return value;
+	}
+
+	/**
+	 * Invert knockback modifier values to their negative counterparts.
+	 */
+	public void invertKnockback()
+	{
+		for (String key : _knockbackMod.keySet())
+		{
+			double value = _knockbackMod.get(key);
+			_knockbackMod.put(key, -value);
+		}
+	}
+
+	public ArrayList<String> GetCancellers()
 	{
 		return _cancellers;
 	}
-	
+
 	public void SetDamageToLevel(boolean val)
 	{
 		_damageToLevel = val;
 	}
 
-	public boolean DisplayDamageToLevel() 
+	public boolean DisplayDamageToLevel()
 	{
 		return _damageToLevel;
 	}
 
-    @Override
-    public boolean isCancelled()
-    {
-        return IsCancelled();
-    }
+	@Override
+	public boolean isCancelled()
+	{
+		return IsCancelled();
+	}
 
-    @Override
-    @Deprecated
-    /**
-     * Don't call this method. Use SetCancelled(String) instead.
-     * 
-     * You will be made the butt of jokes if you use this method.
-     */
-    public void setCancelled(boolean isCancelled)
-    {
-        SetCancelled("No reason given because SOMEONE IS AN IDIOT");
-    }
+	public void setMetadata(String key, Object value)
+	{
+		Validate.notNull(key);
+		_metadata.put(key, value);
+	}
 
-	
+	/**
+	 * Gets all Metadata associated with this event. There is
+	 * no standardized metadata that should be expected.
+	 *
+	 * @see #setMetadata(String, Object)
+	 * @return non-null map of metadata
+	 */
+	public Map<String, Object> getMetadata()
+	{
+		return _metadata;
+	}
+
+	@Override
+	@Deprecated
+	/**
+	 * Don't call this method. Use SetCancelled(String) instead.
+	 *
+	 * You will be made the butt of jokes if you use this method.
+	 */
+	public void setCancelled(boolean isCancelled)
+	{
+		SetCancelled("No reason given because SOMEONE IS AN IDIOT");
+	}
+
+
 }

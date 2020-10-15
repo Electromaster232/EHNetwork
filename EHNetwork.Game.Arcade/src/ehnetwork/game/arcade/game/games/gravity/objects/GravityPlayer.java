@@ -123,7 +123,7 @@ public class GravityPlayer extends GravityObject
 		}
 		
 		//Requires near block OR batsit
-		if (!Bat.isSitting() && !nearBlock)
+		if (!nearBlock)
 			return;
 		
 		GrabDelay = System.currentTimeMillis();

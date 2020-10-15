@@ -232,7 +232,7 @@ public class BlockToss extends SkillCharge implements IThrown
 		int level = getLevel(data.GetThrower());
 		
 		//Damage Event
-		Factory.Damage().NewDamageEvent(target, data.GetThrower(), null, 
+		Factory.Damage().NewDamageEvent(target, data.GetThrower(), null, target.getLocation(),
 				DamageCause.CUSTOM, data.GetThrown().getVelocity().length() * (3 + 0.6 * level), true, true, false,
 				UtilEnt.getName(data.GetThrower()), GetName());
 

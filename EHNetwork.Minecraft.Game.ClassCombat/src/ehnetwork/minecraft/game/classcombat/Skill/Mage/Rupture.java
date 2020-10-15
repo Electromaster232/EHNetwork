@@ -284,7 +284,7 @@ public class Rupture extends SkillActiveCharge
 				UtilPlayer.message((Player)cur, F.main(GetClassType().name(), F.name(player.getName()) +" hit you with " + F.skill(GetName(level)) + "."));
 			
 			//Damage Event
-			Factory.Damage().NewDamageEvent(cur, player, null, 
+			Factory.Damage().NewDamageEvent(cur, player, null, cur.getLocation(),
 					DamageCause.CUSTOM, 1 + (charge * (3 + level)), false, true, false,
 					player.getName(), GetName());
 		}

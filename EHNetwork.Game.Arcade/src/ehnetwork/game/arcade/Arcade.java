@@ -4,6 +4,9 @@ import java.io.File;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 import net.minecraft.server.v1_8_R3.BiomeBase;
@@ -55,7 +58,7 @@ import ehnetwork.game.arcade.game.GameServerConfig;
 import ehnetwork.minecraft.game.core.combat.CombatManager;
 import ehnetwork.minecraft.game.core.damage.DamageManager;
 
-public class Arcade extends JavaPlugin
+public class Arcade extends JavaPlugin implements Listener
 {      
 	private String WEB_CONFIG = "webServer";
 
@@ -130,7 +133,7 @@ public class Arcade extends JavaPlugin
 		
 		ProjectileManager projectileManager = new ProjectileManager(this);
 		HologramManager hologramManager = new HologramManager(this);
-		
+		getServer().getPluginManager().registerEvents(this, this);
 		//Inventory
 		InventoryManager inventoryManager = new InventoryManager(this, _clientManager);
 		PetManager petManager = new PetManager(this, _clientManager, _donationManager, disguiseManager, creature, blockRestore, webServerAddress);
@@ -252,5 +255,10 @@ public class Arcade extends JavaPlugin
 
 			System.out.println("Deleted Old Game: " + file.getName());
 		}
+	}
+
+	@EventHandler
+	public void onPlayerCommand(PlayerCommandPreprocessEvent event){
+		CommandCenter.Instance.OnPlayerCommandPreprocess(event);
 	}
 }

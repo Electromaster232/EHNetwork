@@ -15,6 +15,7 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import de.robingrether.idisguise.disguise.MobDisguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.F;
 import ehnetwork.core.common.util.UtilAction;
@@ -26,7 +27,6 @@ import ehnetwork.core.common.util.UtilParticle.ViewDist;
 import ehnetwork.core.common.util.UtilPlayer;
 import ehnetwork.core.common.util.UtilServer;
 import ehnetwork.core.common.util.UtilTime;
-import ehnetwork.core.disguise.disguises.DisguiseSlime;
 import ehnetwork.core.projectile.IThrown;
 import ehnetwork.core.projectile.ProjectileUser;
 import ehnetwork.core.recharge.Recharge;
@@ -68,12 +68,7 @@ public class PerkSlimeRocket extends SmashPerk implements IThrown
 			else if (player.getExp() > 0.55)		size = 2;
 			
 			
-			DisguiseSlime slime = (DisguiseSlime)Manager.GetDisguise().getDisguise(player);
-			if (slime != null && slime.GetSize() != size)
-			{
-				slime.SetSize(size);
-				Manager.GetDisguise().updateDisguise(slime);
-			}
+			MobDisguise slime = (MobDisguise)Manager.GetDisguise().getDisguise(player);
 
 			if (player.isBlocking())
 				continue;

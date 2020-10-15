@@ -212,7 +212,7 @@ public class ArcticArmor extends Skill
 				}
 								
 				//Damage Event
-				Factory.Damage().NewDamageEvent(cur, damager, null, 
+				Factory.Damage().NewDamageEvent(cur, damager, null, cur.getLocation(),
 						DamageCause.CUSTOM, 2, false, true, false,
 						damager == null ? null : damager.getName(), "Arctic Ice");	
 			}

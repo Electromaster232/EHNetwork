@@ -89,7 +89,7 @@ public class GlacialBlade extends SkillActive implements IThrown
 			return;
 
 		//Damage
-		Factory.Damage().NewDamageEvent(target, data.GetThrower(), null, 
+		Factory.Damage().NewDamageEvent(target, data.GetThrower(), null, target.getLocation(),
 				DamageCause.CUSTOM, 3.5, false, true, false,
 				UtilEnt.getName(data.GetThrower()), GetName());
 	}

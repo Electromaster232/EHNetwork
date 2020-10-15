@@ -167,7 +167,7 @@ public class Fire extends MiniPlugin
 						
 
 			//Damage Event
-			_damageManager.NewDamageEvent(ent, fireData.GetOwner(), null, 
+			_damageManager.NewDamageEvent(ent, fireData.GetOwner(), null, ent.getLocation(),
 					DamageCause.CUSTOM, fireData.GetDamage(), false, true, false,
 					UtilEnt.getName(fireData.GetOwner()), fireData.GetName());
 		}

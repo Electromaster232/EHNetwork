@@ -152,7 +152,7 @@ public class HiltSmash extends SkillActive
 		_used.add(player);
 
 		//Damage Event
-		Factory.Damage().NewDamageEvent((LivingEntity)ent, player, null, 
+		Factory.Damage().NewDamageEvent((LivingEntity)ent, player, null, player.getLocation(),
 				DamageCause.CUSTOM, 2 + level, false, true, false,
 				player.getName(), GetName());
 		

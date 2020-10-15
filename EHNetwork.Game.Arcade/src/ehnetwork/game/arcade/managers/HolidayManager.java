@@ -18,6 +18,7 @@ import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.util.Vector;
+import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockAction;
 
 import ehnetwork.core.common.util.UtilBlock;
@@ -224,7 +225,8 @@ public class HolidayManager implements Listener
 
 	private void sendChestPackets(Block block)
 	{
-		PacketPlayOutBlockAction packet = new PacketPlayOutBlockAction(block.getX(), block.getY(), block.getZ(),
+		BlockPosition b1 = new BlockPosition(block.getX(), block.getY(), block.getZ());
+		PacketPlayOutBlockAction packet = new PacketPlayOutBlockAction(b1,
 				CraftMagicNumbers.getBlock(block), 1, 1);
 
 		for (Player other : UtilServer.getPlayers())

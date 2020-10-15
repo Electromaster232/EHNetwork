@@ -286,7 +286,7 @@ public class PumpkinKing extends CreatureBase<Skeleton>
 
 			//Move
 			EntityCreature ec = ((CraftCreature)GetEntity()).getHandle();
-			Navigation nav = ec.getNavigation();
+			Navigation nav = (Navigation) ec.getNavigation();
 			nav.a(loc.getX(), loc.getY(), loc.getZ(), 1f);
 		}
 		else

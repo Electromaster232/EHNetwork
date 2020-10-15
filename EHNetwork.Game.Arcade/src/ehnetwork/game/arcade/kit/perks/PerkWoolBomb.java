@@ -8,6 +8,7 @@ import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -16,6 +17,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import de.robingrether.idisguise.disguise.MobDisguise;
+import de.robingrether.idisguise.disguise.SheepDisguise;
 import ehnetwork.core.common.util.C;
 import ehnetwork.core.common.util.F;
 import ehnetwork.core.common.util.UtilAction;
@@ -28,8 +31,6 @@ import ehnetwork.core.common.util.UtilParticle.ViewDist;
 import ehnetwork.core.common.util.UtilPlayer;
 import ehnetwork.core.common.util.UtilServer;
 import ehnetwork.core.common.util.UtilTime;
-import ehnetwork.core.disguise.disguises.DisguiseBase;
-import ehnetwork.core.disguise.disguises.DisguiseSheep;
 import ehnetwork.core.itemstack.ItemStackFactory;
 import ehnetwork.core.projectile.IThrown;
 import ehnetwork.core.projectile.ProjectileUser;
@@ -123,32 +124,20 @@ public class PerkWoolBomb extends Perk implements IThrown
 		Recharge.Instance.useForce(player, GetName() + " Rate", 800);
 		
 		//Disguise
-		DisguiseBase disguise = Manager.GetDisguise().getDisguise(player);
-		if (disguise != null && disguise instanceof DisguiseSheep)
-		{
-			DisguiseSheep sheep = (DisguiseSheep)disguise;
-			sheep.setSheared(true);
-			
-			sheep.UpdateDataWatcher();
-			Manager.GetDisguise().updateDisguise(disguise);
-		}
+		MobDisguise d1 = (MobDisguise) Manager.GetDisguise().createDisguise(EntityType.WITHER);
+		SheepDisguise disguise = (SheepDisguise) d1;
+		if (Manager.GetGame().GetTeam(player) != null)
+			disguise.setCustomName(Manager.GetGame().GetTeam(player).GetColor() + player.getName());
+		else
+			disguise.setCustomName(player.getName());
+
+		disguise.setCustomNameVisible(true);
+		Manager.GetDisguise().applyDisguise(disguise, player);
 	}
 	
 	@EventHandler
 	public void rechargeWool(RechargedEvent event)
 	{
-		if (event.GetAbility().equals(GetName()))
-		{
-			DisguiseBase disguise = Manager.GetDisguise().getDisguise(event.GetPlayer());
-			if (disguise != null && disguise instanceof DisguiseSheep)
-			{
-				DisguiseSheep sheep = (DisguiseSheep)disguise;
-				sheep.setSheared(false);
-				
-				sheep.UpdateDataWatcher();
-				Manager.GetDisguise().updateDisguise(disguise);
-			}
-		}
 	}
 	
 	private boolean solidify(LivingEntity ent, boolean inform)

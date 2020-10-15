@@ -107,7 +107,7 @@ public class PerkChicken extends Perk
 			if ((xDiff + yDiff + zDiff) > 4)
 			{
 				EntityCreature ec = ((CraftCreature) chicken).getHandle();
-				Navigation nav = ec.getNavigation();
+				Navigation nav = (Navigation) ec.getNavigation();
 
 				int xIndex = -1;
 				int zIndex = -1;

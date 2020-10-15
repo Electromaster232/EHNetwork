@@ -135,7 +135,7 @@ public class SnowFight extends TeamGame
 		{
 			if(IsOnIce(player))
 			{
-				Bukkit.getPluginManager().callEvent(new CustomDamageEvent(player, null, null, DamageCause.CUSTOM, 2.0D, false, true, true, "Ice", "Ice", false));
+				Bukkit.getPluginManager().callEvent(new CustomDamageEvent(player, null, null, player.getLocation(), DamageCause.CUSTOM, 2.0D, false, true, true, "Ice", "Ice", false));
 			}
 		}
 		
@@ -492,7 +492,7 @@ public class SnowFight extends TeamGame
 				if(player instanceof Player)
 				{
 					Player damagee = (Player) player;
-					Bukkit.getPluginManager().callEvent(new CustomDamageEvent(damagee, null, null, DamageCause.CUSTOM, damage, false, true, true, "Ice Meteoroid", "Ice Meteoroid", false));
+					Bukkit.getPluginManager().callEvent(new CustomDamageEvent(damagee, null, null, damagee.getLocation(), DamageCause.CUSTOM, damage, false, true, true, "Ice Meteoroid", "Ice Meteoroid", false));
 				}
 			}
 			
