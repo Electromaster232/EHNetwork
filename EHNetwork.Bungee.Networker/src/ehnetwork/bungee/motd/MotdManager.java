@@ -1,9 +1,11 @@
 package ehnetwork.bungee.motd;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import ehnetwork.serverdata.Region;
@@ -22,7 +24,7 @@ public class MotdManager implements Listener, Runnable
 	private DataRepository<GlobalMotd> _repository;
 
 	private Random _random = new Random();
-	private String _firstLine = "                §b§l§m   §8§l§m[ §r §9§lMineplex§r §f§lGames§r §8§l§m ]§b§l§m   §r";
+	private String _firstLine = "                §b§l§m   §8§l§m[ §r §9§lEHNetwork§r §f§lGames§r §8§l§m ]§b§l§m   §r";
 	private List<String> _motdLines;
 	
 	public MotdManager(Plugin plugin)
@@ -39,12 +41,26 @@ public class MotdManager implements Listener, Runnable
 		if (new File("updateMOTD.dat").exists())
 		{
 			List<String> lines = new ArrayList<String>();
-			lines.add("             §b§l◄§f§lNEW§b§l►     §f§l◄§b§lSKYWARS§f§l►     §b§l◄§f§lNEW§b§l►");
+			//lines.add("             §b§l◄§f§lNEW§b§l►     §f§l◄§b§lSKYWARS§f§l►     §b§l◄§f§lNEW§b§l►");
 			//lines.add("                     §d§lRank Sale §a§l40% Off");
 			//lines.add("                        §f§l◄§c§lMAINTENANCE§f§l►");
-			
-			updateMainMotd("                §b§l§m   §8§l§m[ §r §9§lMineplex§r §f§lGames§r §8§l§m ]§b§l§m   §r", lines);
-			System.out.println("Updated Bungee MOTD");
+			File myObj = new File("updateMOTD.dat");
+			try
+			{
+				Scanner myReader = new Scanner(myObj);
+				while (myReader.hasNextLine())
+				{
+					String data = myReader.nextLine();
+					lines.add(data);
+				}
+				String headline = lines.get(0);
+				lines.remove(0);
+
+				updateMainMotd(headline, lines);
+				System.out.println("Updated Bungee MOTD");
+			}catch(FileNotFoundException e){
+				e.printStackTrace();
+			}
 		}
 	}
  
