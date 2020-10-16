@@ -1,9 +1,12 @@
 package ehnetwork.game.survival;
 
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
-import net.minecraft.server.v1_7_R4.MinecraftServer;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 
 import ehnetwork.core.TablistFix;
 import ehnetwork.core.account.CoreClientManager;
@@ -45,10 +48,11 @@ import ehnetwork.core.teleport.Teleport;
 import ehnetwork.core.updater.FileUpdater;
 import ehnetwork.core.updater.Updater;
 import ehnetwork.core.visibility.VisibilityManager;
+import ehnetwork.game.survival.managers.JumpManager;
 import ehnetwork.minecraft.game.core.combat.CombatManager;
 import ehnetwork.minecraft.game.core.damage.DamageManager;
 
-public class Survival extends JavaPlugin
+public class Survival extends JavaPlugin implements Listener
 {      
 	private String WEB_CONFIG = "webServer";
 
@@ -83,7 +87,8 @@ public class Survival extends JavaPlugin
 		CommandCenter.Initialize(this);		
 		_clientManager = new CoreClientManager(this, webServerAddress);
 		CommandCenter.Instance.setClientManager(_clientManager);
-
+		JumpManager jumpManager = new JumpManager(this);
+		getServer().getPluginManager().registerEvents(this, this);
 
 		ItemStackFactory.Initialize(this, false);  
 		Recharge.Initialize(this);   
@@ -106,7 +111,7 @@ public class Survival extends JavaPlugin
 		new FileUpdater(this, portal, serverStatusManager.getCurrentServerName(), serverStatusManager.getRegion());
 		PacketHandler packetHandler = new PacketHandler(this);
 		
-		DisguiseManager disguiseManager = new DisguiseManager(this, packetHandler);
+		DisguiseManager disguiseManager = new DisguiseManager(this);
 
 		_damageManager = new DamageManager(this, new CombatManager(this), new NpcManager(this, creature), disguiseManager, null);
 
@@ -132,13 +137,13 @@ public class Survival extends JavaPlugin
 		MountManager mountManager = new MountManager(this, _clientManager, _donationManager, blockRestore, disguiseManager);
 		GadgetManager gadgetManager = new GadgetManager(this, _clientManager, _donationManager, inventoryManager, mountManager, petManager, preferenceManager, disguiseManager, blockRestore, projectileManager);
 		CosmeticManager cosmeticManager = new CosmeticManager(this, _clientManager, _donationManager, inventoryManager, gadgetManager, mountManager, petManager, null);
-		cosmeticManager.setInterfaceSlot(7);
+		cosmeticManager.disable();
 		
 		//Arcade Manager  
-		 _gameManager = new SurvivalManager(this, serverStatusManager, _clientManager, _donationManager, _damageManager, statsManager, achievementManager, disguiseManager, creature, teleport, new Blood(this), chat, portal, preferenceManager, inventoryManager, packetHandler, cosmeticManager, projectileManager, petManager, hologramManager, webServerAddress, _brandListener);
+		 _gameManager = new SurvivalManager(this, serverStatusManager, _clientManager, _donationManager, _damageManager, statsManager, achievementManager, disguiseManager, creature, teleport, new Blood(this), chat, portal, preferenceManager, inventoryManager, packetHandler, cosmeticManager, projectileManager, petManager, hologramManager, webServerAddress, _brandListener, jumpManager);
 		
 		new MemoryFix(this);
-		new CustomTagFix(this, packetHandler);
+		//new CustomTagFix(this, packetHandler);
 		new TablistFix(this);
 		
 		//Updates
@@ -159,6 +164,12 @@ public class Survival extends JavaPlugin
 	public void onDisable() 
 	{
 
+	}
+
+
+	@EventHandler
+	public void commandProcess(PlayerCommandPreprocessEvent event){
+		CommandCenter.Instance.OnPlayerCommandPreprocess(event);
 	}
 
 

@@ -40,7 +40,7 @@ public enum GameType
 	Evolution(ehnetwork.game.arcade.game.games.evolution.Evolution.class, GameDisplay.Evolution),
 	//FlappyBird(FlappyBird.class, "Flappy Bird", Material.FEATHER, (byte)0, GameCategory.ARCADE, 17),
 	Gravity(ehnetwork.game.arcade.game.games.gravity.Gravity.class, GameDisplay.Gravity),
-	Halloween(ehnetwork.game.arcade.game.games.halloween.Halloween.class, GameDisplay.Halloween, "http://chivebox.com/file/c/hh.zip", true),
+	Halloween(ehnetwork.game.arcade.game.games.halloween.Halloween.class, GameDisplay.Halloween, "http://djelectro.endl.site/insecure/hh.zip", false),
 	HideSeek(ehnetwork.game.arcade.game.games.hideseek.HideSeek.class, GameDisplay.HideSeek),
 	HoleInTheWall(ehnetwork.game.arcade.game.games.holeinwall.HoleInTheWall.class, GameDisplay.HoleInTheWall),
 	Horse(ehnetwork.game.arcade.game.games.horsecharge.Horse.class, GameDisplay.Horse),

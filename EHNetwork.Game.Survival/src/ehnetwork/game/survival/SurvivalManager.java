@@ -11,8 +11,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -77,12 +76,16 @@ import ehnetwork.core.task.TaskManager;
 import ehnetwork.core.teleport.Teleport;
 import ehnetwork.core.timing.TimingManager;
 import ehnetwork.core.updater.event.UpdateEvent;
+import ehnetwork.game.survival.commands.BuildAllowCommand;
 import ehnetwork.game.survival.commands.BuildRemoveCommand;
+import ehnetwork.game.survival.commands.BuildRequestCommand;
 import ehnetwork.game.survival.commands.CosmeticsCommand;
 import ehnetwork.game.survival.commands.DoubleJumpCommand;
 import ehnetwork.game.survival.commands.FlyCommand;
 import ehnetwork.game.survival.commands.GodCommand;
 import ehnetwork.game.survival.commands.OofCommand;
+import ehnetwork.game.survival.commands.VanishCommand;
+import ehnetwork.game.survival.managers.JumpManager;
 import ehnetwork.game.survival.managers.ProtectionManager;
 import ehnetwork.minecraft.game.classcombat.Class.ClassManager;
 import ehnetwork.minecraft.game.classcombat.Skill.SkillFactory;
@@ -93,10 +96,6 @@ import ehnetwork.minecraft.game.core.IRelation;
 import ehnetwork.minecraft.game.core.condition.ConditionManager;
 import ehnetwork.minecraft.game.core.damage.DamageManager;
 import ehnetwork.minecraft.game.core.fire.Fire;
-import ehnetwork.game.survival.commands.BuildAllowCommand;
-import ehnetwork.game.survival.commands.BuildRequestCommand;
-import ehnetwork.game.survival.commands.VanishCommand;
-import ehnetwork.game.survival.managers.JumpManager;
 import static org.bukkit.Bukkit.getServer;
 import static org.bukkit.Bukkit.getWorlds;
 
@@ -110,7 +109,7 @@ public class SurvivalManager extends MiniPlugin implements IRelation
 	private DisguiseManager _disguiseManager;
 	private DonationManager _donationManager;
 	private ConditionManager _conditionManager;
-	private JumpManager _jumpManager;
+
 	private PetManager _petManager;
 	private Creature _creature;
 	private DamageManager _damageManager;
@@ -129,6 +128,7 @@ public class SurvivalManager extends MiniPlugin implements IRelation
 	private Energy _energy;
 	private ClassShopManager _classShopManager;
 	private ClassCombatShop _classShop;
+	private JumpManager _jumpManager;
 	private EloManager _eloManager;
 
 	// Managers
@@ -169,7 +169,7 @@ public class SurvivalManager extends MiniPlugin implements IRelation
 						   CoreClientManager clientManager, DonationManager donationManager, DamageManager damageManager,
 						   StatsManager statsManager, AchievementManager achievementManager, DisguiseManager disguiseManager, Creature creature, Teleport teleport, Blood blood, Chat chat,
 						   Portal portal, PreferencesManager preferences, InventoryManager inventoryManager, PacketHandler packetHandler,
-						   CosmeticManager cosmeticManager, ProjectileManager projectileManager, PetManager petManager, HologramManager hologramManager, String webAddress, BrandListener brandListener)
+						   CosmeticManager cosmeticManager, ProjectileManager projectileManager, PetManager petManager, HologramManager hologramManager, String webAddress, BrandListener brandListener, JumpManager jumpManager)
 	{
 		super("Game Manager", plugin);
 
@@ -184,6 +184,7 @@ public class SurvivalManager extends MiniPlugin implements IRelation
 		_explosionManager = new Explosion(plugin, _blockRestore);
 		_explosionManager.SetDebris(false);
 
+		_jumpManager = jumpManager;
 		_clientManager = clientManager;
 		_serverStatusManager = serverStatusManager;
 		_chat = chat;
@@ -199,7 +200,7 @@ public class SurvivalManager extends MiniPlugin implements IRelation
 
 		_protectionManager = new ProtectionManager(this);
 
-		//_jumpManager = new JumpManager(this);
+
 
 		_donationManager = donationManager;
 
@@ -336,6 +337,9 @@ public class SurvivalManager extends MiniPlugin implements IRelation
 		});
 
 		getPacketHandler().addPacketHandler(_resourcePacketHandler);
+		cosmeticManager.disable();
+		cosmeticManager.getGadgetManager().disable();
+		cosmeticManager.setActive(false);
 	}
 
 	@Override
@@ -378,6 +382,8 @@ public class SurvivalManager extends MiniPlugin implements IRelation
 	{
 		return _clientManager;
 	}
+
+	public JumpManager getJumpManager(){return _jumpManager;}
 
 
 	public ConditionManager GetCondition()
@@ -471,9 +477,6 @@ public class SurvivalManager extends MiniPlugin implements IRelation
 	public ServerStatusManager GetServerStatusManager()
 	{
 		return _serverStatusManager;
-	}
-	public JumpManager GetJumpManager() {
-		return _jumpManager;
 	}
 
 	public WorldGuardPlugin GetWorldGuard() {
@@ -641,7 +644,7 @@ public class SurvivalManager extends MiniPlugin implements IRelation
 		
 		UtilInv.Clear(player);
 
-		((CraftEntity) player).getHandle().getDataWatcher().watch(0, Byte.valueOf((byte) 0));
+		//((CraftEntity) player).getHandle().getDataWatcher().watch(0, Byte.valueOf((byte) 0));
 
 		player.setSprinting(false);
 		player.setSneaking(false);
@@ -666,7 +669,7 @@ public class SurvivalManager extends MiniPlugin implements IRelation
 		((CraftPlayer) player).getHandle().k = true;
 
 		// Arrows go bye bye.
-		((CraftPlayer) player).getHandle().p(0);
+		//((CraftPlayer) player).getHandle().p(0);
 
 		//Remove all conditions
 		GetCondition().EndCondition(player, null, null);

@@ -304,7 +304,7 @@ public class WorldData
 				{
 					try
 					{
-						MinX = Integer.parseInt(tokens[1]);
+						MinX = Integer.parseInt(tokens[1]) + 50;
 						CurX = MinX;
 					}
 					catch (Exception e)
@@ -317,7 +317,7 @@ public class WorldData
 				{
 					try
 					{
-						MaxX = Integer.parseInt(tokens[1]);
+						MaxX = Integer.parseInt(tokens[1]) + 50;
 					}
 					catch (Exception e)
 					{
@@ -328,7 +328,7 @@ public class WorldData
 				{
 					try
 					{
-						MinZ = Integer.parseInt(tokens[1]);
+						MinZ = Integer.parseInt(tokens[1]) + 50;
 						CurZ = MinZ;
 					}
 					catch (Exception e)
@@ -340,7 +340,7 @@ public class WorldData
 				{
 					try
 					{
-						MaxZ = Integer.parseInt(tokens[1]);
+						MaxZ = Integer.parseInt(tokens[1]) + 50;
 					}
 					catch (Exception e)
 					{
@@ -362,7 +362,7 @@ public class WorldData
 				{
 					try
 					{
-						MaxY = Integer.parseInt(tokens[1]);
+						MaxY = Integer.parseInt(tokens[1]) + 50;
 					}
 					catch (Exception e)
 					{
@@ -406,9 +406,9 @@ public class WorldData
 	{
 		long startTime = System.currentTimeMillis();
 		
-		for (; CurX <= MaxX; CurX += 16)
+		for (; CurX <= MaxX + 60; CurX += 16)
         {	
-            for (; CurZ <= MaxZ; CurZ += 16) 
+            for (; CurZ <= MaxZ + 60; CurZ += 16)
             {
     			if (System.currentTimeMillis() - startTime >= maxMilliseconds)
     				return false;
@@ -448,13 +448,13 @@ public class WorldData
 		int z = event.getZ();
 		
 
-		if (x >= MinX >> 4 && x <= MaxX >> 4 && z >= MinZ >> 4 && z <= MaxZ >> 4)
-		{
-			return;
-		}
+		//if (x >= MinX >> 4 && x <= MaxX >> 4 && z >= MinZ >> 4 && z <= MaxZ >> 4)
+		//{
+		//	return;
+		//}
 	
 		
-		event.setCancelled(true);
+		//event.setCancelled(true);
 	}
 	
 	public int GetNewId() 
