@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Mineplex.Bungee.Mineplexer:jar">
+    <output-path>$PROJECT_DIR$/bin/REE</output-path>
+    <root id="archive" name="Mineplexer.jar">
+      <element id="module-output" name="EHNetwork.Bungee.Networker" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/httpcore-4.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-io-2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/httpclient-4.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-codec-1.6.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PROJECT_DIR$/EHNetwork.Bungee.Networker/plugin.yml" />
+      <element id="module-output" name="EHNetwork.ServerData" />
+      <element id="module-output" name="EHNetwork.ServerMonitor" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-logging-1.1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-pool2-2.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/jedis-2.4.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/gson-2.2.1.jar" path-in-jar="/" />
+      <element id="module-output" name="EHNetwork.Database" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/jooq-3.5.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-dbcp2-2.0.1.jar" path-in-jar="/" />
+      <element id="module-output" name="EHNetwork.PlayerCache" />
+    </root>
+  </artifact>
+</component>

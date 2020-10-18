@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact name="Nautilus.Game.Arcade:test">
+    <output-path>$PROJECT_DIR$/../Testing/Arcade/plugins</output-path>
+    <root id="root">
+      <element id="artifact" artifact-name="Nautilus.Game.Arcade:jar" />
+    </root>
+  </artifact>
+</component>

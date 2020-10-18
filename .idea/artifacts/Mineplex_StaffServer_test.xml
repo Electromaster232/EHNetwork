@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact name="Mineplex.StaffServer:test">
+    <output-path>$PROJECT_DIR$/../Testing/StaffServer/plugins</output-path>
+    <root id="root">
+      <element id="artifact" artifact-name="Mineplex.StaffServer:jar" />
+    </root>
+  </artifact>
+</component>

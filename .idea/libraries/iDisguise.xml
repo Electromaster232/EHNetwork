@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="iDisguise">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Libraries/iDisguise.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Nautilus.Game.Survival:test">
+    <output-path>$PROJECT_DIR$/out/artifacts/Nautilus_Game_Survival_test</output-path>
+    <root id="archive" name="Nautilus.Game.Survival_test.jar">
+      <element id="artifact" artifact-name="Nautilus.Game.Survival:jar" />
+    </root>
+  </artifact>
+</component>

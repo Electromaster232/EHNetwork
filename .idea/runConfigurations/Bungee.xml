@@ -1,0 +1,23 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Bungee" type="Application" factoryName="Application" singleton="true">
+    <option name="MAIN_CLASS_NAME" value="net.md_5.bungee.Bootstrap" />
+    <module name="EHNetwork.Bungee.Networker" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Testing/Bungee" />
+    <RunnerSettings RunnerId="Cover" />
+    <RunnerSettings RunnerId="Debug">
+      <option name="DEBUG_PORT" value="" />
+      <option name="TRANSPORT" value="0" />
+      <option name="LOCAL" value="true" />
+    </RunnerSettings>
+    <RunnerSettings RunnerId="Run" />
+    <ConfigurationWrapper RunnerId="Cover" />
+    <ConfigurationWrapper RunnerId="Debug" />
+    <ConfigurationWrapper RunnerId="Run" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+      <option name="BuildArtifacts" enabled="true">
+        <artifact name="Mineplex.Bungee.Mineplexer:test" />
+      </option>
+    </method>
+  </configuration>
+</component>

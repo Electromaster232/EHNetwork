@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="spigot-1.8.8-1.9-SNAPSHOT-remapped">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Libraries/spigot-1.8.8-1.9-SNAPSHOT-remapped.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/Libraries/spigot-1.8.8-1.9-SNAPSHOT-remapped.jar!/" />
+    </SOURCES>
+  </library>
+</component>

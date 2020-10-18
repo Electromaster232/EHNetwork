@@ -1,0 +1,21 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Arcade" type="Application" factoryName="Application" singleton="true">
+    <option name="MAIN_CLASS_NAME" value="org.bukkit.craftbukkit.Main" />
+    <module name="Classpath.Dummy" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Testing/Arcade" />
+    <RunnerSettings RunnerId="Debug">
+      <option name="DEBUG_PORT" value="" />
+      <option name="TRANSPORT" value="0" />
+      <option name="LOCAL" value="true" />
+    </RunnerSettings>
+    <RunnerSettings RunnerId="Run" />
+    <ConfigurationWrapper RunnerId="Debug" />
+    <ConfigurationWrapper RunnerId="Run" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+      <option name="BuildArtifacts" enabled="true">
+        <artifact name="Nautilus.Game.Arcade:test" />
+      </option>
+    </method>
+  </configuration>
+</component>

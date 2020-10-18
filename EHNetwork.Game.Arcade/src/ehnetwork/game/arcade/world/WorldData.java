@@ -304,7 +304,7 @@ public class WorldData
 				{
 					try
 					{
-						MinX = Integer.parseInt(tokens[1]) + 50;
+						MinX = Integer.parseInt(tokens[1]);
 						CurX = MinX;
 					}
 					catch (Exception e)
@@ -328,7 +328,7 @@ public class WorldData
 				{
 					try
 					{
-						MinZ = Integer.parseInt(tokens[1]) + 50;
+						MinZ = Integer.parseInt(tokens[1]);
 						CurZ = MinZ;
 					}
 					catch (Exception e)
@@ -448,13 +448,13 @@ public class WorldData
 		int z = event.getZ();
 		
 
-		//if (x >= MinX >> 4 && x <= MaxX >> 4 && z >= MinZ >> 4 && z <= MaxZ >> 4)
-		//{
-		//	return;
-		//}
+		if (x >= MinX >> 4 && x <= MaxX >> 4 && z >= MinZ >> 4 && z <= MaxZ >> 4)
+		{
+			return;
+		}
 	
 		
-		//event.setCancelled(true);
+		event.setCancelled(true);
 	}
 	
 	public int GetNewId() 

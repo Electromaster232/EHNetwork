@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="CorpseReborn">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Libraries/CorpseReborn.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/Libraries/CorpseReborn.jar!/doc" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

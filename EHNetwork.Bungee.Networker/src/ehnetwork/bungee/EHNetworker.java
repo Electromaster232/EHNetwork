@@ -1,5 +1,7 @@
 package ehnetwork.bungee;
 
+import java.io.File;
+
 import ehnetwork.bungee.motd.MotdManager;
 import ehnetwork.bungee.playerCount.PlayerCount;
 import ehnetwork.bungee.playerTracker.PlayerTracker;
@@ -13,7 +15,9 @@ public class EHNetworker extends Plugin
 	public void onEnable()
 	{		
 		new MotdManager(this);
-		new LobbyBalancer(this);
+		if(!new File("IgnoreBalance.dat").exists()){
+			new LobbyBalancer(this);
+		}
 		PlayerCount playerCount = new PlayerCount(this);
 		new FileUpdater(this);
 		new PlayerStats(this);

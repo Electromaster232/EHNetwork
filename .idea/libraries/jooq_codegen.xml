@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="jooq-codegen">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Libraries/jooq-3.5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Libraries/jooq-codegen-3.5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Libraries/jooq-meta-3.5.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

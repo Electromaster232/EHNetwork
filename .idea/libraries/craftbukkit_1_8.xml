@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="craftbukkit-1.8">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Libraries/craftbukkit-1.8.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/Libraries/craftbukkit-1.8.jar!/" />
+      <root url="file://$USER_HOME$/Downloads/Spigot/Spigot/Spigot-API/src/main/javadoc" />
+    </SOURCES>
+  </library>
+</component>
